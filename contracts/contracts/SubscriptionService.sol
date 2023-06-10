@@ -5,6 +5,12 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract SubscriptionService is Ownable {
 
+    uint256 feePercentage;
+
+    constructor (uint256 _feePercentage) {
+        feePercentage = _feePercentage;
+    }
+
     struct Subscription {
         uint256 start;
         uint256 end;
@@ -45,6 +51,17 @@ contract SubscriptionService is Ownable {
         Subscription memory newSub = Subscription(start_time, end_time);
         creators[creatorAddress].subscriptions[msg.sender] = newSub;
 
+        // Calculate the tax amount
+        uint256 taxAmount = (msg.value * feePercentage) / 100;
+        // Transfer the tax to the contract owner
+        payable(owner()).transfer(taxAmount);
+
+        // Calculate the payment amount for the creator after deducting the tax
+        uint256 creatorPayment = msg.value - taxAmount;
+        // Transfer the payment to the creator address
+        (bool success, ) = payable(creatorAddress).call{value: creatorPayment}("");
+        require(success, "Payment transfer failed");
+
         emit SubscriptionPaid(creatorAddress, msg.sender, start_time, end_time);
         emit UserIsSubscribed(creatorAddress, msg.sender);
     }
@@ -84,7 +101,7 @@ contract SubscriptionService is Ownable {
     function subscriptionStart(address creatorAddress, address userAddress) public view returns (uint256) {
         return creators[creatorAddress].subscriptions[userAddress].start;
     }
-    
+
     function subscriptionEnd(address creatorAddress, address userAddress) public view returns (uint256) {
         return creators[creatorAddress].subscriptions[userAddress].end;
     }
