@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract SubscriptionService is Ownable {
 
-    uint256 feePercentage;
+    uint256 public feePercentage;
 
     constructor (uint256 _feePercentage) {
         feePercentage = _feePercentage;
@@ -17,7 +17,6 @@ contract SubscriptionService is Ownable {
     }
 
     struct Creator {
-        // price per x days
         uint256 price30Days;
         uint256 price90Days;
         uint256 price180Days;
@@ -40,12 +39,16 @@ contract SubscriptionService is Ownable {
         emit PageCreated(msg.sender, _price30Days, _price90Days, _price180Days, _price365Days);
     }
 
-    function payForSubscription(address creatorAddress, uint256 daysSubscribing) public payable {
+    function payForSubscription(address payable creatorAddress, uint256 daysSubscribing) public payable {
         require(creators[creatorAddress].price30Days > 0, "Creator not found");
         require(msg.value >= calculatePrice(creatorAddress, daysSubscribing), "Insufficient payment");
         require(isValidSubscriptionPeriod(daysSubscribing), "Invalid subscription period");
 
         uint256 start_time = block.timestamp;
+        // handle subscribing when having an active subscription
+        if (subscriptionEnd(creatorAddress, msg.sender) > start_time) {
+            start_time = subscriptionEnd(creatorAddress, msg.sender);
+        }
         uint256 end_time = start_time + (daysSubscribing * 1 days);
 
         Subscription memory newSub = Subscription(start_time, end_time);
@@ -53,14 +56,16 @@ contract SubscriptionService is Ownable {
 
         // Calculate the tax amount
         uint256 taxAmount = (msg.value * feePercentage) / 100;
-        // Transfer the tax to the contract owner
-        payable(owner()).transfer(taxAmount);
-
         // Calculate the payment amount for the creator after deducting the tax
         uint256 creatorPayment = msg.value - taxAmount;
+
+         // Transfer the tax amount to the owner address
+        (bool success, ) = payable(owner()).call{value: taxAmount}("");
+        require(success, "Tax payment transfer failed");
+        
         // Transfer the payment to the creator address
-        (bool success, ) = payable(creatorAddress).call{value: creatorPayment}("");
-        require(success, "Payment transfer failed");
+        (bool success2, ) = payable(creatorAddress).call{value: creatorPayment}("");
+        require(success2, "Creator payment transfer failed");
 
         emit SubscriptionPaid(creatorAddress, msg.sender, start_time, end_time);
         emit UserIsSubscribed(creatorAddress, msg.sender);
