@@ -30,6 +30,7 @@ contract SubscriptionService is Ownable {
     }
 
     mapping(address => Creator) public creators;
+    mapping(address => bool) public creatorPageExists;
     mapping(address => User) internal users;
 
     event PageCreated(address indexed creatorAddress, uint256 price30Days, uint256 price90Days, uint256 price180Days, uint256 price365Days);
@@ -37,13 +38,49 @@ contract SubscriptionService is Ownable {
     event UserIsSubscribed(address creator, address sub);
     event UserNotSubscribed(address creator, address sub);
 
+    function changeContractFee(uint8 newFee) public onlyOwner {
+        feePercentage = newFee;
+    }
+
     function createPage(uint256 _price30Days, uint256 _price90Days, uint256 _price180Days, uint256 _price365Days) public {
-        require(_price30Days >= 0 && _price90Days >= 0 && _price180Days >= 0 && _price365Days >= 0, "Price has to be greater than 0");
+        require(!creatorPageExists[msg.sender], "Creator has an existing page");
         creators[msg.sender].price30Days = _price30Days;
         creators[msg.sender].price90Days = _price90Days;
         creators[msg.sender].price180Days = _price180Days;
         creators[msg.sender].price365Days = _price365Days;
+        creatorPageExists[msg.sender] = true;
         emit PageCreated(msg.sender, _price30Days, _price90Days, _price180Days, _price365Days);
+    }
+
+    function changeSubscriptionFee(uint256 interval, uint256 newFee) internal {
+        require(interval == 30 || interval == 90 || interval == 180 || interval == 365, "Invalid interval");
+        Creator storage creator = creators[msg.sender];
+
+        if (interval == 30) {
+            creator.price30Days = newFee;
+            return;
+        }
+        if (interval == 90) {
+            creator.price90Days = newFee;
+            return;
+        }
+        if (interval == 180) {
+            creator.price180Days = newFee;
+            return;
+        }
+        if (interval == 365) {
+            creator.price365Days = newFee;
+            return;
+        }
+    }
+
+    function changeManySubscriptionFee(uint256[] calldata intervals, uint256[] calldata newFees) public {
+        require(intervals.length == newFees.length, "Arrays length mismatch");
+        require(creatorPageExists[msg.sender], "You have not created a page");
+
+        for (uint256 i = 0; i < intervals.length; i++) {
+            changeSubscriptionFee(intervals[i], newFees[i]);
+        }
     }
 
     function payForSubscription(address payable creatorAddress, uint256 daysSubscribing) public payable {

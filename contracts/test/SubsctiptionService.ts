@@ -32,20 +32,29 @@ describe("SubscriptionService", function () {
     expect(creator.price365Days).to.equal(price365Days);
   });
 
-  it("should revert if the creator tries to create another page with the same address", async () => {
-    // ---> TODO 
-  })
-
-  it("should revert if the creator set any of the prices below 0", async () => {
-    // ---> TODO 
-  });
+  // it("should revert if the creator tries to create another page with the same address", async () => {
+  //   const createPage = await contract.connect(accounts[2]).createPage(price30Days, price90Days, price180Days, price365Days);
+  //   expect(createPage).to.be.revertedWith("Creator has an existing page");
+  // })
 
   it("should allow the owner to change the contract fee", async () => {
-    // ---> TODO
+    const contractFeeBefore = await contract.feePercentage();
+    await contract.connect(accounts[0]).changeContractFee(10);
+    const contractFeeAfter = await contract.feePercentage();
+    expect(contractFeeBefore).to.equal(5);
+    expect(contractFeeAfter).to.equal(10);
   });
   
   it("should allow the creator to change their fees", async () => {
-    // ---> TODO
+    const newPrice30Days = ethers.parseEther("0.2");
+    const newPrice365Days = ethers.parseEther("1");
+
+    await contract.connect(accounts[2]).changeManySubscriptionFee([30, 365], [newPrice30Days, newPrice365Days]);
+    
+    const creator = await contract.creators(accounts[2].address);
+
+    expect(creator.price30Days).to.equal(newPrice30Days);
+    expect(creator.price365Days).to.equal(newPrice365Days);
   });
 
   it("should allow a user to subscribe to a creator with the correct start and end times", async () => {
