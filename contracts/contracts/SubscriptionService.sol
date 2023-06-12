@@ -5,9 +5,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract SubscriptionService is Ownable {
 
-    uint256 public feePercentage;
+    uint8 public feePercentage;
 
-    constructor (uint256 _feePercentage) {
+    constructor (uint8 _feePercentage) {
         feePercentage = _feePercentage;
     }
 
@@ -21,10 +21,16 @@ contract SubscriptionService is Ownable {
         uint256 price90Days;
         uint256 price180Days;
         uint256 price365Days;
-        mapping(address => Subscription) subscriptions;
+        mapping(address => Subscription) subscribers;
+        address[] subscriberList;
+    }
+
+    struct User {
+        address[] subscriptions;
     }
 
     mapping(address => Creator) public creators;
+    mapping(address => User) internal users;
 
     event PageCreated(address indexed creatorAddress, uint256 price30Days, uint256 price90Days, uint256 price180Days, uint256 price365Days);
     event SubscriptionPaid(address indexed creatorAddress, address indexed subscriberAddress, uint256 start, uint256 end);
@@ -40,7 +46,8 @@ contract SubscriptionService is Ownable {
     }
 
     function payForSubscription(address payable creatorAddress, uint256 daysSubscribing) public payable {
-        require(creators[creatorAddress].price30Days > 0, "Creator not found");
+        Creator storage creator = creators[creatorAddress];
+        require(creator.price30Days > 0, "Creator not found");
         require(msg.value >= calculatePrice(creatorAddress, daysSubscribing), "Insufficient payment");
         require(isValidSubscriptionPeriod(daysSubscribing), "Invalid subscription period");
 
@@ -52,7 +59,14 @@ contract SubscriptionService is Ownable {
         uint256 end_time = start_time + (daysSubscribing * 1 days);
 
         Subscription memory newSub = Subscription(start_time, end_time);
-        creators[creatorAddress].subscriptions[msg.sender] = newSub;
+        creators[creatorAddress].subscribers[msg.sender] = newSub;
+
+        // push user into creators subscribers list if not already present
+        // push creator into users subscriptions if not already present
+        if (newSubscriber(creatorAddress, msg.sender)) {
+            creator.subscriberList.push(msg.sender);
+            users[msg.sender].subscriptions.push(creatorAddress);
+        }
 
         // Calculate the tax amount
         uint256 taxAmount = (msg.value * feePercentage) / 100;
@@ -89,25 +103,34 @@ contract SubscriptionService is Ownable {
         }
     }
 
-    // input creator_address
-    function isSubscribed(address creator_address) public view returns (bool){
-        return _isSubscribed(creator_address,msg.sender);
+   //TODO SEE IF EVENT NEEDED
+    function isSubscribed(address creatorAddress, address subscriberAddress) public view returns (bool) {
+       return subscriptionEnd(creatorAddress, subscriberAddress) >= block.timestamp;
     }
 
-   //TODO SEE IF EVENT NEEDED
-    function _isSubscribed(address creator_address,address sub_address) public view returns (bool){
-        if(creators[creator_address].subscriptions[sub_address].end >= block.timestamp){
-            return true;
-        } else{
-            return false;
+    function newSubscriber(address creatorAddress, address subscriberAddress) public view returns (bool) {
+        address[] memory userSubscriptions = getUserSubscriptions(subscriberAddress);
+        for (uint256 i = 0; i < userSubscriptions.length; i++) {
+            if (userSubscriptions[i] == creatorAddress) {
+                return false;
+            }
         }
+        return true;
     }
 
     function subscriptionStart(address creatorAddress, address userAddress) public view returns (uint256) {
-        return creators[creatorAddress].subscriptions[userAddress].start;
+        return creators[creatorAddress].subscribers[userAddress].start;
     }
 
     function subscriptionEnd(address creatorAddress, address userAddress) public view returns (uint256) {
-        return creators[creatorAddress].subscriptions[userAddress].end;
+        return creators[creatorAddress].subscribers[userAddress].end;
+    }
+
+    function getCreatorSubscribers(address creatorAddress) public view returns (address[] memory) {
+        return creators[creatorAddress].subscriberList;
+    }
+
+    function getUserSubscriptions(address userAddress) public view returns (address[] memory) {
+        return users[userAddress].subscriptions;
     }
 }

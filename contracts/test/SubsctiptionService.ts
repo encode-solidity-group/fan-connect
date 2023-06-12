@@ -40,7 +40,7 @@ describe("SubscriptionService", function () {
 
     await contract.connect(accounts[1]).payForSubscription(creator, subscriptionDuration, { value: price });
     
-    const subscribed = await contract._isSubscribed(creator, user);
+    const subscribed = await contract.isSubscribed(creator, user);
     const startTime = await contract.subscriptionStart(creator, user);
     const endTime = await contract.subscriptionEnd(creator, user);
     
@@ -53,7 +53,7 @@ describe("SubscriptionService", function () {
     const creator = accounts[2].address;
     const user = accounts[1].address;
 
-    const subscribed = await contract._isSubscribed(creator, user);
+    const subscribed = await contract.isSubscribed(creator, user);
 
     expect(subscribed).false;
   });
@@ -87,4 +87,65 @@ describe("SubscriptionService", function () {
     expect(Number(ethers.formatEther(creatorBalanceAfter - creatorBalanceBefore))).to.equal(creatorFee);
   });
 
+  it("should add to the end time if a user is subscribing again to the same creator", async () => {
+    const creator = accounts[2].address;
+    const user = accounts[1].address;
+    const subscriptionDuration = 90;
+    const price = ethers.parseEther("0.3");
+    
+    const subscriptionDuration2 = 30;
+    const price2 = ethers.parseEther("0.1");
+
+    await contract.connect(accounts[1]).payForSubscription(creator, subscriptionDuration, { value: price });
+    const firstStartTime = await contract.subscriptionStart(creator, user);
+    const firstEndtime = await contract.subscriptionEnd(creator, user);
+
+    await contract.connect(accounts[1]).payForSubscription(creator, subscriptionDuration2, { value: price2 });
+    const secondStartTime = await contract.subscriptionStart(creator, user);
+    const secondEndTime = await contract.subscriptionEnd(creator, user);
+    
+    expect(secondStartTime).to.equal(firstEndtime);
+    expect(secondEndTime).to.be.closeTo(firstStartTime + BigInt((subscriptionDuration + subscriptionDuration2) * (24 * 60 * 60)), 60); // Allow 1 minute difference
+  });
+
+  it("should show a list of all the creators subscribers without duplicates", async () => {
+    const user1 = accounts[1];
+    const user2 = accounts[3];
+    const creator = accounts[2].address;
+    const subscriptionDuration = 30;
+    const price = ethers.parseEther("0.1");
+
+    await contract.connect(user1).payForSubscription(creator, subscriptionDuration, { value: price });
+    await contract.connect(user1).payForSubscription(creator, subscriptionDuration, { value: price });
+    await contract.connect(user2).payForSubscription(creator, subscriptionDuration, { value: price });
+    await contract.connect(user2).payForSubscription(creator, subscriptionDuration, { value: price });
+
+    const creatorSubscribers = await contract.getCreatorSubscribers(creator);
+
+    expect(creatorSubscribers.length).to.equal(2);
+    expect(creatorSubscribers).to.deep.equal([user1.address, user2.address]);
+  });
+
+  it("should show a list of all the users subscriptions without duplicates", async () => {
+    const creator1 = accounts[2].address;
+    const creator2 = accounts[3].address;
+    const user = accounts[1];
+    const subscriptionDuration = 30;
+    const price = ethers.parseEther("0.1");
+
+    await contract.connect(accounts[3]).createPage(price30Days, price90Days, price180Days, price365Days);
+    await contract.connect(user).payForSubscription(creator1, subscriptionDuration, { value: price });
+    await contract.connect(user).payForSubscription(creator2, subscriptionDuration, { value: price });
+    await contract.connect(user).payForSubscription(creator1, subscriptionDuration, { value: price });
+    await contract.connect(user).payForSubscription(creator2, subscriptionDuration, { value: price });
+
+    const userSubscriptions = await contract.getUserSubscriptions(user.address);
+
+    expect(userSubscriptions.length).to.equal(2);
+    expect(userSubscriptions).to.deep.equal([creator1, creator2]);
+  });
+
+  it("should show a list of a creators active and non active subscribers", async () => {
+
+  });
 });
