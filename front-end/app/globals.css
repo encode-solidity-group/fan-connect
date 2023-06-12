@@ -16,6 +16,12 @@
   }
 }
 
+html, body {
+  max-width: 1480px;
+  margin: 0 auto;
+}
+
+
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
