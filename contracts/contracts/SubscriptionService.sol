@@ -33,11 +33,12 @@ contract SubscriptionService is Ownable {
     mapping(address => User) internal users;
 
     event PageCreated(address indexed creatorAddress, uint256 price30Days, uint256 price90Days, uint256 price180Days, uint256 price365Days);
-    event SubscriptionPaid(address indexed creatorAddress, address indexed subscriberAddress, uint256 start, uint256 end);
+    event SubscriptionPaid(address indexed creatorAddress, address indexed userAddress, uint256 start, uint256 end);
     event UserIsSubscribed(address creator, address sub);
     event UserNotSubscribed(address creator, address sub);
 
-    function createPage(uint256 _price30Days, uint256 _price90Days, uint256 _price180Days, uint256 _price365Days) public{
+    function createPage(uint256 _price30Days, uint256 _price90Days, uint256 _price180Days, uint256 _price365Days) public {
+        require(_price30Days >= 0 && _price90Days >= 0 && _price180Days >= 0 && _price365Days >= 0, "Price has to be greater than 0");
         creators[msg.sender].price30Days = _price30Days;
         creators[msg.sender].price90Days = _price90Days;
         creators[msg.sender].price180Days = _price180Days;
@@ -103,13 +104,13 @@ contract SubscriptionService is Ownable {
         }
     }
 
-   //TODO SEE IF EVENT NEEDED
-    function isSubscribed(address creatorAddress, address subscriberAddress) public view returns (bool) {
-       return subscriptionEnd(creatorAddress, subscriberAddress) >= block.timestamp;
+    function isSubscribed(address creatorAddress, address userAddress) public view returns (bool) {
+       return subscriptionEnd(creatorAddress, userAddress) >= block.timestamp;
     }
 
-    function newSubscriber(address creatorAddress, address subscriberAddress) public view returns (bool) {
-        address[] memory userSubscriptions = getUserSubscriptions(subscriberAddress);
+    function newSubscriber(address creatorAddress, address userAddress) public view returns (bool) {
+        address[] memory userSubscriptions = getUserSubscriptions(userAddress);
+
         for (uint256 i = 0; i < userSubscriptions.length; i++) {
             if (userSubscriptions[i] == creatorAddress) {
                 return false;
@@ -133,4 +134,27 @@ contract SubscriptionService is Ownable {
     function getUserSubscriptions(address userAddress) public view returns (address[] memory) {
         return users[userAddress].subscriptions;
     }
+
+    function getActiveSubscribers(address creatorAddress) public view returns (address[] memory) {
+        Creator storage creator = creators[creatorAddress];
+        address[] memory subscribers = getCreatorSubscribers(creatorAddress);
+        address[] memory activeSubscribers = new address[](subscribers.length);
+        uint256 activeCount = 0;
+
+        for (uint256 i = 0; i < subscribers.length; i++) {
+            if (creator.subscribers[subscribers[i]].end >= block.timestamp) {
+                activeSubscribers[activeCount] = subscribers[i];
+                activeCount++;
+            }
+        }
+
+        // Resize the activeSubscribers array to remove the empty elements
+        assembly {
+            mstore(activeSubscribers, activeCount)
+        }
+
+        return activeSubscribers;
+    }
+
+
 }

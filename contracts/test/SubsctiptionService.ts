@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { ethers } from "hardhat";
+import { ethers, network } from "hardhat";
 import { SubscriptionService } from "../typechain-types";
 import { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 
@@ -30,6 +30,22 @@ describe("SubscriptionService", function () {
     expect(creator.price90Days).to.equal(price90Days);
     expect(creator.price180Days).to.equal(price180Days);
     expect(creator.price365Days).to.equal(price365Days);
+  });
+
+  it("should revert if the creator tries to create another page with the same address", async () => {
+    // ---> TODO 
+  })
+
+  it("should revert if the creator set any of the prices below 0", async () => {
+    // ---> TODO 
+  });
+
+  it("should allow the owner to change the contract fee", async () => {
+    // ---> TODO
+  });
+  
+  it("should allow the creator to change their fees", async () => {
+    // ---> TODO
   });
 
   it("should allow a user to subscribe to a creator with the correct start and end times", async () => {
@@ -146,6 +162,34 @@ describe("SubscriptionService", function () {
   });
 
   it("should show a list of a creators active and non active subscribers", async () => {
+    const creator = accounts[2].address;
 
+    const user0 = accounts[0];
+    const user1 = accounts[1];
+    const subscriptionDuration1 = 30;
+    const price1 = ethers.parseEther("0.1");
+
+    const user2 = accounts[3];
+    const subscriptionDuration2 = 90;
+    const price2 = ethers.parseEther("0.3");
+
+    await contract.connect(user0).payForSubscription(creator, subscriptionDuration1, { value: price1 });
+    await contract.connect(user1).payForSubscription(creator, subscriptionDuration1, { value: price1 });
+    await contract.connect(user2).payForSubscription(creator, subscriptionDuration2, { value: price2 });
+
+    // Increase the timestamp by 31 days
+    await network.provider.send("evm_increaseTime", [31 * 86400]);
+
+    // Mine a new block to update the timestamp
+    await network.provider.send("evm_mine");
+
+    const activeSubscribers = await contract.getActiveSubscribers(creator);
+    const allSubscribers = await contract.getCreatorSubscribers(creator);
+    const nonActiveSubscribers = allSubscribers.length - activeSubscribers.length;
+
+    expect(activeSubscribers.length).to.equal(1);
+    expect(activeSubscribers).to.deep.equal([user2.address]);
+    expect(nonActiveSubscribers).to.equal(2);
   });
+
 });
