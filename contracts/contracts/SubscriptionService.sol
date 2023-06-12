@@ -192,6 +192,5 @@ contract SubscriptionService is Ownable {
 
         return activeSubscribers;
     }
-
-
+    
 }

@@ -32,11 +32,17 @@ describe("SubscriptionService", function () {
     expect(creator.price365Days).to.equal(price365Days);
   });
 
-  // it("should revert if the creator tries to create another page with the same address", async () => {
-  //   const createPage = await contract.connect(accounts[2]).createPage(price30Days, price90Days, price180Days, price365Days);
-  //   expect(createPage).to.be.revertedWith("Creator has an existing page");
-  // })
-
+  it("should revert if the creator tries to create another page with the same address", async () => {
+    try {
+      await contract.connect(accounts[2]).createPage(price30Days, price90Days, price180Days, price365Days);
+      // If the createPage function doesn't revert, fail the test
+      expect.fail("Expected revert");
+    } catch (error: any) {
+      // Check if the error message matches the expected revert reason
+      expect(error.message).to.include("Creator has an existing page");
+    }
+  });
+  
   it("should allow the owner to change the contract fee", async () => {
     const contractFeeBefore = await contract.feePercentage();
     await contract.connect(accounts[0]).changeContractFee(10);
