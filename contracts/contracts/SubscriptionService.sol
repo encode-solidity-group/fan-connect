@@ -5,10 +5,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract SubscriptionService is Ownable {
 
-    uint8 public feePercentage;
+    uint8 public contractFeePercentage;
 
-    constructor (uint8 _feePercentage) {
-        feePercentage = _feePercentage;
+    constructor (uint8 _contractFeePercentage) {
+        contractFeePercentage = _contractFeePercentage;
     }
 
     struct Subscription {
@@ -39,7 +39,7 @@ contract SubscriptionService is Ownable {
     event UserNotSubscribed(address creator, address sub);
 
     function changeContractFee(uint8 newFee) public onlyOwner {
-        feePercentage = newFee;
+        contractFeePercentage = newFee;
     }
 
     function createPage(uint256 _price30Days, uint256 _price90Days, uint256 _price180Days, uint256 _price365Days) public {
@@ -107,7 +107,7 @@ contract SubscriptionService is Ownable {
         }
 
         // Calculate the tax amount
-        uint256 taxAmount = (msg.value * feePercentage) / 100;
+        uint256 taxAmount = (msg.value * contractFeePercentage) / 100;
         // Calculate the payment amount for the creator after deducting the tax
         uint256 creatorPayment = msg.value - taxAmount;
 
@@ -192,5 +192,5 @@ contract SubscriptionService is Ownable {
 
         return activeSubscribers;
     }
-    
+
 }

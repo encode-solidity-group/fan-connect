@@ -21,7 +21,7 @@ describe("SubscriptionService", function () {
   });
 
   it("should set the correct fee", async () => {
-    expect(await contract.feePercentage()).to.equal(contractFee);
+    expect(await contract.contractFeePercentage()).to.equal(contractFee);
   })
   
   it("should allow a creator to create a page with prices", async () => {
@@ -44,9 +44,9 @@ describe("SubscriptionService", function () {
   });
   
   it("should allow the owner to change the contract fee", async () => {
-    const contractFeeBefore = await contract.feePercentage();
+    const contractFeeBefore = await contract.contractFeePercentage();
     await contract.connect(accounts[0]).changeContractFee(10);
-    const contractFeeAfter = await contract.feePercentage();
+    const contractFeeAfter = await contract.contractFeePercentage();
     expect(contractFeeBefore).to.equal(5);
     expect(contractFeeAfter).to.equal(10);
   });
