@@ -16,7 +16,7 @@ const inter = Inter({
 function Home() {
   return (
     <div className={`${inter.className}`}>
-      {/* <ConnectButton /> */}
+      <ConnectButton />
       <Login />
     </div>
   )

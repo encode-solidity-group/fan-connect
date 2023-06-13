@@ -13,7 +13,7 @@ import { mainnet, polygon, optimism, arbitrum } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
 
-import SubscriptionService from '../../../../contracts/artifacts/contracts/SubscriptionService.sol/SubscriptionService.json';
+import SubscriptionService from '../../../SubscriptionJson/SubscriptionService.json';
 
 const { chains, publicClient } = configureChains(
   [mainnet, polygon, optimism, arbitrum],

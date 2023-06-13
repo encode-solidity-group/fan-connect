@@ -2,7 +2,7 @@ import { useAccount, useContractRead  } from 'wagmi';
 import { useIsMounted } from './useIsMounted';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
-import SubscriptionService from '../../contracts/artifacts/contracts/SubscriptionService.sol/SubscriptionService.json';
+import SubscriptionService from '../SubscriptionJson/SubscriptionService.json';
 
 
 function Wallet() {
