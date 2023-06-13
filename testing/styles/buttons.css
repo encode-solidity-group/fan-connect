@@ -1,0 +1,51 @@
+.enterButton {
+  position: relative;
+  width: 16rem;
+  height: 4rem;
+  font-size: 1.25rem;
+  background-color: transparent;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  color: #eac1db;
+  transition: 0.3s all;
+}
+.enterButton > .base { display: block; }
+.enterButton > .onHover { display: none; }
+.enterButton:hover> .base { display: none; }
+.enterButton:hover > .onHover { display: block; }
+.enterButton:focus {
+  outline: none;
+  border: none;
+}
+.enterButton:before {
+  content: '';
+  position: absolute;
+  height: 2rem;
+  width: 3rem;
+  top: 0; left: 0;
+  border-top: 0.125rem solid #eac1db;
+  border-left: 0.125rem solid #eac1db;
+  transition: 0.3s all;
+}
+.enterButton:after {
+  content: '';
+  position: absolute;
+  height: 2rem;
+  width: 3rem;
+  bottom: 0; right: 0;
+  border-bottom: 0.125rem solid #eac1db;
+  border-right: 0.125rem solid #eac1db;
+  transition: 0.3s all;
+}
+.enterButton:hover:before,
+.enterButton:hover:after {
+  width: calc(16rem - 0.125rem);
+  height: calc(4rem - 0.125rem);
+}
+.enterButton:active {
+  -webkit-transform: scale(0.9,0.9);
+     -moz-transform: scale(0.9,0.9);
+      -ms-transform: scale(0.9,0.9);
+          transform: scale(0.9,0.9);
+}
