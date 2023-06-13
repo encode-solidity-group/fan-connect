@@ -7,6 +7,13 @@ import './styles/button.css';
 import './styles/slider.css';
 import './styles/typewriter.css';
 
+const slides = () => {
+  const images = [];
+  for (let i = 0; i < 30; i++) {
+    images.push(<Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />)
+  }
+  return images;
+};
 
 export default function Home() {
   return (
@@ -44,43 +51,14 @@ export default function Home() {
               <br />
               creators and customize your profile.
             </p>
-            <GetPosts/>
+            {/* <GetPosts/> */}
           </div>
         </div>
       </div>
       <div className="slider mt-44 glassMorph">
         <div className="slide-track">
           <div className="slide">
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
+            {slides()}
           </div>
         </div>
       </div>
