@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
+import GetPosts from './components/GetPosts';
 import './styles/glass.css';
 import './styles/button.css';
 import './styles/slider.css';
@@ -43,6 +44,7 @@ export default function Home() {
               <br />
               creators and customize your profile.
             </p>
+            <GetPosts/>
           </div>
         </div>
       </div>
