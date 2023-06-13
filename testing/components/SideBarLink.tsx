@@ -1,10 +1,16 @@
 import React from 'react'
+import { IconType } from 'react-icons';
 
-const SideBarLink = ({text, Icon}) => {
+interface PageProps {
+  text: string;
+  Icon: IconType;
+}
+
+const SideBarLink = ({text, Icon}: PageProps) => {
   return (
-    <div className="text-[#d9d9d9] flex items-center justify-center xl:justify-start text-xl space-x-3 px-4 py-2 w-fill">
+    <div className="text-[#d9d9d9] flex items-center justify-center lg:justify-start text-xl space-x-3 px-4 py-2 w-fill">
       <Icon />
-      <span className="hidden xl:inline">{text}</span>
+      <span className="hidden lg:inline">{text}</span>
     </div>
   )
 }

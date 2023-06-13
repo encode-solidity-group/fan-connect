@@ -1,6 +1,6 @@
 import React from 'react';
-import SideBar from '../../components/SideBar';
-import Feed from '../../components/Feed';
+import SideBar from '../../../components/SideBar';
+import Feed from '../../../components/Feed';
 
 const UserHome = () => {
   return (

@@ -19,7 +19,7 @@ const Feed = () => {
     };
   }, [db]);
 
-  console.log(posts);
+  // console.log(posts);
   return <div className="sm:ml-[196px] xl:ml-[560px] w-[600px] min-h-screen text-white py-2">
     <div className="sticky top-0 bg-black flex justify-between font-medium text-[20px] px-4 py-2">
       Home

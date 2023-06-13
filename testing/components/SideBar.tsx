@@ -9,33 +9,37 @@ import { useSession } from 'next-auth/react';
 
 const SideBar = () => {
   const { data: session } = useSession();
+  const userAddress = session?.user?.name;
+
   return (
-    <div className="hidden sm:flex flex-col items-center xl:items-start xl:w-[340px] p-2 fixed h-full border-r border-red-200 pr-0 xl:pr-8">
+    <div className="hidden sm:flex flex-col items-center lg:items-start lg:w-[340px] fixed h-full border-r border-red-200">
 
-      <div className="flex items-center justify-center w-44 h-44 hoverEffect p-0 xl:ml-24">
-
+      <div className="flex items-center justify-center w-44 h-44 hoverEffect mx-auto p-4 lg:p-0">
         <Image src="/logo.png" alt="FanConnectLogo" width={300} height={200} />
-
       </div>
 
-      <div className="space-y-2 mt-4 mb-2.5 xl:ml-24">
-        <SideBarLink text="Home" Icon={AiFillHome} />
-        <SideBarLink text="Messages" Icon={AiOutlineInbox} />
-        {/* TODO FIX LINK */}
-        <Link href="/profile/[profileId]/create">
+      <div className="flex-col mx-auto">
+        <Link href={'/'}>
+          <SideBarLink text="Home" Icon={AiFillHome} />
+        </Link>
+
+        <Link href={'/'}>
+          <SideBarLink text="Messages" Icon={AiOutlineInbox} />
+        </Link>
+
+        <Link href={`/profile/${userAddress}/create`}>
           <SideBarLink text="Create Community" Icon={AiOutlineTeam} />
         </Link>
-        <Link href="/Profile">
+
+        <Link href={`/profile/${userAddress}`}>
           <SideBarLink text="Profile" Icon={AiOutlineUser} />
+          <div className="text-[#d9d9d9] flex items-center justify-center">
+            <div className="hidden lg:inline leading-5 font-bold">
+              {session?.user?.name?.slice(0, 4)}...{session?.user?.name?.slice(38)}
+            </div>
+          </div>
         </Link>
       </div>
-      <Link href="/Profile">
-        <div className="text-[#d9d9d9] flex items-center justify-center my-auto xl:ml-auto xl:mr-5 px-4 py-2">
-          <div className="hidden xl:inline leading-5">
-            <h4 className="font-bold">{session?.user?.name?.slice(-3)}...{session?.user?.name?.slice(38)}</h4>
-          </div>
-        </div>
-      </Link>
     </div>
   );
 };
