@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { getFirestore, collection, addDoc, onSnapshot } from "firebase/firestore";
-import { initializeApp } from 'firebase/app';
+"use client";
+import React, { useEffect, useState } from "react";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+} from "firebase/firestore";
+import { subscriptionApp } from "../firebaseConfig";
+import { createPost } from "../utils/createPost";
 
-// Your firebase configuration
-const firebaseConfig = {
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = getFirestore(subscriptionApp);
 
 function GetPosts() {
   const [data, setData] = useState([]);
@@ -17,7 +19,7 @@ function GetPosts() {
 
     // Listen for collection changes
     const unsubscribe = onSnapshot(colRef, (snapshot) => {
-      const documents = snapshot.docs.map(doc => doc.data());
+      const documents = snapshot.docs.map((doc) => doc.data());
       setData(documents);
     });
 
@@ -28,16 +30,18 @@ function GetPosts() {
   const addData = async () => {
     await addDoc(collection(db, "posts"), {
       author: "hello world",
-      content: "from local"
+      content: "from local",
     });
   };
 
   return (
     <div>
       {data.map((doc, index) => (
-        <p key={index}>Data: {doc.author} {doc.content}</p>
+        <p key={index}>
+          Data: {doc.author} {doc.content}
+        </p>
       ))}
-      <button onClick={addData}>Add Data</button>
+      <button onClick={() => createPost('user2', 'hello world')}>Add Data</button>
     </div>
   );
 }

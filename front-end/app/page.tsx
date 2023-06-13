@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import GetPosts from './components/GetPosts';
@@ -51,7 +50,7 @@ export default function Home() {
               <br />
               creators and customize your profile.
             </p>
-            {/* <GetPosts/> */}
+            <GetPosts/>
           </div>
         </div>
       </div>
