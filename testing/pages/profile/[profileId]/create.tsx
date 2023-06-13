@@ -73,6 +73,8 @@ function Create() {
 
   const { write } = useContractWrite(config);
 
+  // TODO: MAKE SURE BUTTON WORKS
+
   return (
     <div >
       <ConnectButton />

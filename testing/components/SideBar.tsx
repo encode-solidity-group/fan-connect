@@ -21,6 +21,7 @@ const SideBar = () => {
       <div className="space-y-2 mt-4 mb-2.5 xl:ml-24">
         <SideBarLink text="Home" Icon={AiFillHome} />
         <SideBarLink text="Messages" Icon={AiOutlineInbox} />
+        {/* TODO FIX LINK */}
         <Link href="/profile/[profileId]/create">
           <SideBarLink text="Create Community" Icon={AiOutlineTeam} />
         </Link>
