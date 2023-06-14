@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import Input from './Input'
+import Link from 'next/link'
 import { useSession } from 'next-auth/react';
 import { useContractRead,useContractWrite } from 'wagmi';
 import{ethers} from 'ethers'
@@ -34,7 +35,7 @@ const ProfileFeed = ({profile_id}) => {
         abi: contractJson.abi,
         functionName: 'payForSubscription',
         args: [profile_id,daysSubscribed],
-        value: ethers.utils.parseEther(price != undefined ? price.toString() : '0')
+        value: price
       });
   
 
@@ -84,6 +85,15 @@ const ProfileFeed = ({profile_id}) => {
   const renderSubscriptions = () => {
     //TODO: PRINT OUT LIST OF ALL THE CREATORS YOU ARE SUBSCRIBED TO
     // ONLY IF userAddress = profile_id
+    return (userSubscriptions && userSubscriptions.map((subscription, index) => (
+      <div key={index} className='p-4 border-y'>
+        
+        <Link href={`/profile/${subscription}`}>
+            <p>creator: {subscription}</p>
+        </Link>
+      </div>
+    ))
+    );
   }
 
   return (
