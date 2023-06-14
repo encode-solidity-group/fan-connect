@@ -19,13 +19,6 @@ export default function ContractFee({userAddress}: PageProps) {
     functionName: 'changeContractFee',
   });
 
-  const { data } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
-    abi: contractJson.abi,
-    functionName: 'contractFeePercentage',
-    watch: true
-  });
-
   const { data: owner } = useContractRead({
     address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
     abi: contractJson.abi,
