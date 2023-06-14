@@ -32,10 +32,11 @@ const ProfileFeed = ({profile_id}) => {
   const { data:subscribe, isLoading:subscribeIsLoading, isSuccess:subscribeIsSuccess, write:subscribeWrite } = useContractWrite({
         address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
         abi: contractJson.abi,
-        functionName: 'calculatePrice',
+        functionName: 'payForSubscription',
         args: [profile_id,daysSubscribed],
-        value: price ,
+        value: ethers.utils.parseEther(price != undefined ? price.toString() : '0')
       });
+  
 
 
 
