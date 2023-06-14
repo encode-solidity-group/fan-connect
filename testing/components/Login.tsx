@@ -1,8 +1,22 @@
 import react from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import {useEffect} from 'react';
+import {useAccount } from 'wagmi'
+import { useRouter } from 'next/router';
+
 
 export default function Login() {
+  const router = useRouter();
+  const {address } = useAccount();
+
+  // useEffect(() => {
+  //   if (address) {
+  //     const profileUrl = `/profile/${address}/create`;
+  //     router.replace(profileUrl);
+  //   }
+  // }, [address]);
+
   return (
     <main>
       <div className="flex px-5 py-5 ">
@@ -26,7 +40,7 @@ export default function Login() {
       </div>
       <div className="glassMorph">
         <div className="mx-48 -mt-4 py-20 flex items-center justify-between">
-          <Link href="/profile">
+          <Link href={`/profile/${address}`}>
             <button className="enterButton">
               <div className="base">Discover More</div>
               <div className="onHover">Create Profile</div>
