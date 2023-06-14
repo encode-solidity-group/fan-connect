@@ -1,26 +1,25 @@
 import React from 'react';
 import Image from 'next/image';
-import logo from '../public/logo.png';
 import SideBarLink from './SideBarLink';
 import { AiFillHome, AiOutlineInbox, AiOutlineTeam, AiOutlineUser } from 'react-icons/ai';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
 import ContractFee from './ContractFee';
-
+import { useAccount } from 'wagmi';
 
 const SideBar = () => {
-  const { data: session } = useSession();
-  const userAddress = session?.user?.name;
+  const { address: userAddress } = useAccount();
 
   return (
     <div className="hidden sm:flex flex-col items-center fixed lg:items-start lg:w-[340px] h-screen border-r border-red-200">
 
       <div className="flex items-center justify-center w-44 h-44 hoverEffect mx-auto p-4 lg:p-0">
-        <Image src="/logo.png" alt="FanConnectLogo" width={300} height={200} />
+        <Link href={'/'}>
+          <Image src="/logo.png" alt="FanConnectLogo" width={300} height={200} />
+        </Link>
       </div>
 
       <div className="flex-col mx-auto">
-        <Link href={'/'}>
+        <Link href={'/home'}>
           <SideBarLink text="Home" Icon={AiFillHome} />
         </Link>
 
@@ -36,13 +35,12 @@ const SideBar = () => {
           <SideBarLink text="Profile" Icon={AiOutlineUser} />
           <div className="text-[#d9d9d9] flex items-center justify-center">
             <div className="hidden lg:inline leading-5 font-bold">
-              {session?.user?.name?.slice(0, 4)}...{session?.user?.name?.slice(38)}
+              {userAddress?.slice(0, 4)}...{userAddress?.slice(38)}
             </div>
           </div>
         </Link>
       </div>
       <ContractFee />
-
     </div>
   );
 };
