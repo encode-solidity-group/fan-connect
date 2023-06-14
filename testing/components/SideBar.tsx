@@ -5,6 +5,7 @@ import SideBarLink from './SideBarLink';
 import { AiFillHome, AiOutlineInbox, AiOutlineTeam, AiOutlineUser } from 'react-icons/ai';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
+import ContractFee from './ContractFee';
 
 
 const SideBar = () => {
@@ -40,6 +41,8 @@ const SideBar = () => {
           </div>
         </Link>
       </div>
+      <ContractFee />
+
     </div>
   );
 };
