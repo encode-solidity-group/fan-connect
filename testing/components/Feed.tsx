@@ -41,13 +41,15 @@ const Feed = () => {
   console.log(posts);
 
   const renderFeed = () => {
-    return posts.map((post, index) => (
-      <div key={index} className='p-4 border-y'>
-        <p>time: {new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
-        <p>author: {post.username}</p>
-        <p>text: {post.text}</p>
-      </div>
-    ));
+    return (
+      posts && posts.map((post, index) => (
+        <div key={index} className='p-4 border-y'>
+          <p>time: {new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
+          <p>author: {post.username}</p>
+          <p>text: {post.text}</p>
+        </div>
+      ))
+    );
   }
 
   return (

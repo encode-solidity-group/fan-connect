@@ -6,6 +6,7 @@ function UserProfile() {
   const profileId = router.query.profileId;
   return (
     <div>
+      <SideBar />
       This is the user profile.
       {profileId}
     </div>
