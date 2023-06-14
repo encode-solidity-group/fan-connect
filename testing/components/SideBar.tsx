@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import logo from '../public/logo.png';
 import SideBarLink from './SideBarLink';
@@ -8,11 +8,14 @@ import ContractFee from './ContractFee';
 import { useAccount } from 'wagmi';
 
 const SideBar = () => {
-  const { address: userAddress } = useAccount();
+  const {address} = useAccount();
+  const [userAddress, setUserAddress] = useState<string>();
 
-  if (!userAddress) {
-    return <></>
-  }
+  useEffect(() => {
+    if (address) {
+      setUserAddress(address);
+    }
+  }, [address])
 
   return (
     <div className="hidden sm:flex flex-col items-center fixed lg:items-start lg:w-[340px] h-screen border-r border-red-200">
