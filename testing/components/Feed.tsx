@@ -9,6 +9,7 @@ const Feed = () => {
   useEffect(() => {
     const unsubscribe = onSnapshot(
       query(collection(db, 'posts'), orderBy('timestamp', 'desc')),
+      // query(collection(db, 'posts')),
       (snapshot) => {
         setPosts(snapshot.docs);
       }
@@ -25,6 +26,11 @@ const Feed = () => {
       Home
     </div>
     <Input />
+    {posts.map((post, index) => (
+        <div key={index}>
+          <p>{post.data().username}: {post.data().text}</p>
+        </div>
+      ))}
 
   </div>;
 };
