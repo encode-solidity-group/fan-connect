@@ -8,7 +8,7 @@ interface PageProps {
 
 const SideBarLink = ({text, Icon}: PageProps) => {
   return (
-    <div className="text-[#d9d9d9] flex items-center justify-center lg:justify-start text-xl space-x-3 px-4 py-2 w-fill">
+    <div className="text-[#d9d9d9] flex items-center justify-center lg:justify-start text-xl space-x-4 py-4 w-fill">
       <Icon />
       <span className="hidden lg:inline">{text}</span>
     </div>

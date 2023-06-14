@@ -57,8 +57,6 @@ const Input = () => {
         setLoading(false)
         setInput("")
         setSelectedFile(null)
-
-
     }
 
     return (
