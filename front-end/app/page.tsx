@@ -6,6 +6,40 @@ import './styles/glass.css';
 import './styles/button.css';
 import './styles/slider.css';
 import './styles/typewriter.css';
+// import '../styles/globals.css';
+import '@rainbow-me/rainbowkit/styles.css';
+import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
+import type { AppProps } from 'next/app';
+import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { arbitrum, goerli, mainnet, optimism, polygon,sepolia, pulsechain } from 'wagmi/chains';
+import { publicProvider } from 'wagmi/providers/public';
+
+const { chains, publicClient, webSocketPublicClient } = configureChains(
+  [
+    mainnet,
+    goerli,
+    sepolia,
+    polygon,
+    optimism,
+    arbitrum,
+    pulsechain,
+    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
+  ],
+  [publicProvider()]
+);
+
+const { connectors } = getDefaultWallets({
+  appName: 'Fan Connect',
+  projectId: 'YOUR_PROJECT_ID',
+  chains,
+});
+
+const wagmiConfig = createConfig({
+  autoConnect: true,
+  connectors,
+  publicClient,
+  webSocketPublicClient,
+});
 
 const slides = () => {
   const images = [];
@@ -17,15 +51,17 @@ const slides = () => {
 
 export default function Home() {
   return (
-    <main>
-      <div className="flex px-5 py-5 ">
-        <div className="relative flex py-12">
-          <div className="glassMorph relative z-10 flex py-24">
-            <p className="z-10 flex">
+    <WagmiConfig config={wagmiConfig}>
+    <RainbowKitProvider chains={chains}>
+        <main>
+          <div className="flex px-5 py-5 ">
+            <div className="relative flex py-12">
+              <div className="glassMorph relative z-10 flex py-24">
+                <p className="z-10 flex">
             // FANCONNECT is a platform for creators to share
-              <br />
-              their content with their community.
-              <br />
+                  <br />
+                  their content with their community.
+                  <br />
               // As a network, promoting interaction between fans and creators.
             </p>
           </div>
