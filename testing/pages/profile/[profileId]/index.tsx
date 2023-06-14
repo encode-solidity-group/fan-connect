@@ -1,28 +1,22 @@
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import SideBar from "../../../components/SideBar";
 import ProfileFeed from "../../../components/ProfileFeed"
+import { useAccount } from 'wagmi';
 
 function UserProfile() {
-  const router = useRouter();
-  const [profileId, setProfileId] = useState(null);
-  
-  useEffect(() => {
-    if (router.isReady) {
-      setProfileId(router.query.profileId);
-    }
-  }, [router.isReady]);
+  const { address } = useAccount();
+  const [userAddress, setUserAddress] = useState<string>();
 
-  if (!router.isReady) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    if (address) {
+      setUserAddress(address);
+    }
+  }, [address])
 
   return (
     <div>
       <SideBar />
-      This is the user profile.
-      {profileId}
-      {profileId && <ProfileFeed profile_id = {profileId}/>}
+      {userAddress && <ProfileFeed profile_id = {userAddress}/>}
     </div>
   )
 }

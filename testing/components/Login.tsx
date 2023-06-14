@@ -1,21 +1,17 @@
-import react from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {useEffect} from 'react';
-import {useAccount } from 'wagmi'
-import { useRouter } from 'next/router';
-
+import { useAccount } from 'wagmi'
 
 export default function Login() {
-  const router = useRouter();
-  const {address } = useAccount();
+  const { address } = useAccount();
 
-  // useEffect(() => {
-  //   if (address) {
-  //     const profileUrl = `/profile/${address}/create`;
-  //     router.replace(profileUrl);
-  //   }
-  // }, [address]);
+  const renderFeed = () => {
+    const images = [];
+    for (let i = 0; i < 30; i++) {
+      images.push(<Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />)
+    }
+    return images;
+  }
 
   return (
     <main>
@@ -23,11 +19,11 @@ export default function Login() {
         <div className="relative flex py-12">
           <div className="glassMorph relative z-10 flex py-24">
             <p className="z-10 flex">
-            // FANCONNECT is a platform for creators to share
+              &#47;&#47; FANCONNECT is a platform for creators to share
               <br />
               their content with their community.
               <br />
-              // As a network, promoting interaction between fans and creators.
+              &#47;&#47; As a network, promoting interaction between fans and creators.
             </p>
           </div>
           <div className="flex justify-center items-center absolute z-1 top-24 right-0   ">
@@ -40,10 +36,10 @@ export default function Login() {
       </div>
       <div className="glassMorph">
         <div className="mx-48 -mt-4 py-20 flex items-center justify-between">
-          <Link href={`/profile/${address}`}>
+          <Link href={`/home`}>
             <button className="enterButton">
               <div className="base">Discover More</div>
-              <div className="onHover">Create Profile</div>
+              <div className="onHover">Login</div>
             </button>
           </Link>
           <div>
@@ -58,36 +54,7 @@ export default function Login() {
       <div className="slider mt-44 glassMorph">
         <div className="slide-track">
           <div className="slide">
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px]  rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
-            <Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />
+            {renderFeed()}
           </div>
         </div>
       </div>

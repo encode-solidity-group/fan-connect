@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../firebase';
-import Input from './Input'
 import { useSession } from 'next-auth/react';
 import { useContractRead,useContractWrite } from 'wagmi';
 import{ethers} from 'ethers'

@@ -16,12 +16,13 @@ import { publicProvider } from 'wagmi/providers/public';
 import SubscriptionService from '../../../SubscriptionJson/SubscriptionService.json';
 
 import useDebounce from '../../useDebounce'
+import { ethers } from 'ethers';
 const APIKEY = "GGGmhjZ76VIhIyzckHe8nMfmUrjPth0C"
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, polygon, optimism, arbitrum, sepolia],
   [
-    alchemyProvider({ apiKey: APIKEY }),
+    // alchemyProvider({ apiKey: APIKEY }),
     publicProvider()
   ]
 );
@@ -42,11 +43,11 @@ const wagmiConfig = createConfig({
 
 function Create() {
   const mounted = useIsMounted();
-  const { address, isConnected } = useAccount();
-  const [monthPrice, setMonthPrice] = useState(0);
-  const [quarterlyPrice, setQuarterlyAmount] = useState(0);
-  const [semiAnnualPrice, setSemiAnnualPrice] = useState(0);
-  const [annualPrice, setAnnualPrice] = useState(0);
+  const { address } = useAccount();
+  const [monthPrice, setMonthPrice] = useState('0');
+  const [quarterlyPrice, setQuarterlyAmount] = useState('0');
+  const [semiAnnualPrice, setSemiAnnualPrice] = useState('0');
+  const [annualPrice, setAnnualPrice] = useState('0');
   const debounceMonthPrice = useDebounce(monthPrice, 500);
   const debounceQuarterPrice = useDebounce(quarterlyPrice, 500);
   const debounceSemiAnnualPrice = useDebounce(semiAnnualPrice, 500);
@@ -79,8 +80,6 @@ function Create() {
 
   const {
     data,
-    isLoading,
-    isSuccess,
   } = useContractRead({
     address: "0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6",
     abi: SubscriptionService.abi,
@@ -89,14 +88,13 @@ function Create() {
   })
   console.log("eheanlf", data );
   const router = useRouter();
-  const { profileId } = router.query;
 
   const {config, error } = usePrepareContractWrite({
     address: "0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6",
     abi: SubscriptionService.abi,
     functionName: "createPage",
-    args: [debounceMonthPrice, debounceQuarterPrice, debounceSemiAnnualPrice, debounceAnnualPrice],
-    enabled: Boolean(debounceMonthPrice && debounceQuarterPrice && debounceSemiAnnualPrice && debounceAnnualPrice),
+    args: [ethers.utils.parseEther(debounceMonthPrice), ethers.utils.parseEther(debounceQuarterPrice), ethers.utils.parseEther(debounceSemiAnnualPrice), ethers.utils.parseEther(debounceAnnualPrice)],
+    enabled: Boolean(ethers.utils.parseEther(debounceMonthPrice) && ethers.utils.parseEther(debounceQuarterPrice) && ethers.utils.parseEther(debounceSemiAnnualPrice) && ethers.utils.parseEther(debounceAnnualPrice)),
   })
 
   console.log("debounceMonthPrice", debounceMonthPrice);
@@ -110,11 +108,11 @@ function Create() {
       <ConnectButton />
       {mounted ? address && <p>Address {address}</p> : null}
       Cost of 30day subscription
-      <input type='number' value={monthPrice} onChange={addMonthlyPrice} className="my-5 mx-5 bg-[#eadc9a] text-black" />
+      <input type='number' value={monthPrice.toString()} onChange={addMonthlyPrice} className="my-5 mx-5 bg-[#eadc9a] text-black" />
       Cost of 90day subscription
-      <input type='number' value={quarterlyPrice} onChange={addQuarterlyPrice} className="my-5 mx-5 bg-[#eadc9a] text-black"/>
-      <input type='number' value={semiAnnualPrice} onChange={addSemiAnnualPrice} className="my-5 mx-5 bg-[#eadc9a] text-black"/>
-      <input type='number' value={annualPrice} onChange={addAnnualPrice} className="my-5 mx-5 bg-[#eadc9a] text-black"/>
+      <input type='number' value={quarterlyPrice.toString()} onChange={addQuarterlyPrice} className="my-5 mx-5 bg-[#eadc9a] text-black"/>
+      <input type='number' value={semiAnnualPrice.toString()} onChange={addSemiAnnualPrice} className="my-5 mx-5 bg-[#eadc9a] text-black"/>
+      <input type='number' value={annualPrice.toString()} onChange={addAnnualPrice} className="my-5 mx-5 bg-[#eadc9a] text-black"/>
       <button disabled={!write} onClick={() => write?.()}>Create Contract</button>
       {error && (
         <div>An error occurred preparing the transaction: {error.message}</div>
