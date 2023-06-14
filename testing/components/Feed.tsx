@@ -52,9 +52,9 @@ const Feed = () => {
 
   return (
     <div className="min-h-screen text-white py-8 mx-auto w-[600px]">
-      <h1 className="bg-black font-medium text-[30px] px-4 py-2">
+      <div className="bg-black font-medium text-[30px] px-4 py-2">
         Home
-      </h1>
+      </div>
       <Input />
       <div className='my-8'>
         {renderFeed()}

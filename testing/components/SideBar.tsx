@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import logo from '../public/logo.png';
 import SideBarLink from './SideBarLink';
 import { AiFillHome, AiOutlineInbox, AiOutlineTeam, AiOutlineUser } from 'react-icons/ai';
 import Link from 'next/link';
@@ -9,12 +10,16 @@ import { useAccount } from 'wagmi';
 const SideBar = () => {
   const { address: userAddress } = useAccount();
 
+  if (!userAddress) {
+    return <></>
+  }
+
   return (
     <div className="hidden sm:flex flex-col items-center fixed lg:items-start lg:w-[340px] h-screen border-r border-red-200">
 
       <div className="flex items-center justify-center w-44 h-44 hoverEffect mx-auto p-4 lg:p-0">
         <Link href={'/'}>
-          <Image src="/logo.png" alt="FanConnectLogo" width={300} height={200} />
+          <Image src={logo} alt="FanConnectLogo"  width={300} height={200} />
         </Link>
       </div>
 
@@ -40,7 +45,7 @@ const SideBar = () => {
           </div>
         </Link>
       </div>
-      <ContractFee />
+      <ContractFee userAddress={userAddress}/>
     </div>
   );
 };

@@ -1,14 +1,17 @@
-import { useAccount, useContractRead, useContractWrite, useWaitForTransaction } from "wagmi";
+import { useContractRead, useContractWrite, useWaitForTransaction } from "wagmi";
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { useState, ChangeEvent } from "react";
 import { AiOutlineExclamationCircle, AiOutlineClose, AiOutlineCheckCircle } from 'react-icons/ai';
 import { ImSpinner9 } from 'react-icons/im';
 
-export default function ContractFee() {
+interface PageProps {
+  userAddress: string | undefined;
+}
+
+export default function ContractFee({userAddress}: PageProps) {
   const [newFee, setNewFee] = useState<number | undefined>();
   const [error, setError] = useState<Boolean>(false);
   const [success, setSuccess] = useState<Boolean>(false);
-  const { address } = useAccount();
 
   const { data: tx, write: changeContractFee } = useContractWrite({
     address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
@@ -53,7 +56,7 @@ export default function ContractFee() {
 
   return (
     <>
-      {owner === address &&
+      {owner && userAddress && owner === userAddress &&
         <div className="mx-auto my-8 text-xl space-y-4 max-w-[175px] lg:max-w-[340px] text-center border-t">
 
           <div className="text-center mt-8 text-[#FE5857] text-2xl lg:text-3xl">

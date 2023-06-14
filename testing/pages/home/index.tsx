@@ -1,19 +1,18 @@
 import React from 'react';
 import SideBar from '../../components/SideBar';
 import Feed from '../../components/Feed';
-import { useContractRead } from 'wagmi';
+import { useAccount, useContractRead } from 'wagmi';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { useSession } from 'next-auth/react';
 
 const UserHome = () => {
-  const { data: session } = useSession();
-  const userAddress = session?.user?.name;
+  const {address} = useAccount();
 
   const { data } = useContractRead({
     address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
     abi: contractJson.abi,
     functionName: 'creatorPageExists',
-    args: [userAddress],
+    args: [address],
   });
 
   return (
