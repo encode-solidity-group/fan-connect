@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/SideBar';
 import Feed from '../../components/Feed';
 import { useAccount, useContractRead } from 'wagmi';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
-import { useSession } from 'next-auth/react';
 
 const UserHome = () => {
   const {address} = useAccount();
+  const [userAddress, setUserAddress] = useState<string>();
+
+  useEffect(() => {
+    if (address) {
+      setUserAddress(address);
+    }
+  }, [address])
 
   const { data } = useContractRead({
     address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
     abi: contractJson.abi,
     functionName: 'creatorPageExists',
-    args: [address],
+    args: [userAddress],
   });
 
   return (
