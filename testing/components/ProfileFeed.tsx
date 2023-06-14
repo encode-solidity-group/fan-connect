@@ -90,7 +90,12 @@ const ProfileFeed = ({profile_id}) => {
       <h1 className="bg-black font-medium text-[30px] px-4 py-2">
         Home
       </h1>
-      <input type="number" value={daysSubscribed} onChange={handleDaysChange} />
+      <select value={daysSubscribed} onChange={handleDaysChange}>
+        <option value="30">30</option>
+        <option value="90">90</option>
+        <option value="180">180</option>
+        <option value="365">365</option>
+        </select>
       <button onClick={subscribeWrite}>Subscribe</button>
       <div className="flex justify-center mb-4">
         <button 
