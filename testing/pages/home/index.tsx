@@ -1,8 +1,8 @@
 import React from 'react';
-import SideBar from '../../../components/SideBar';
-import Feed from '../../../components/Feed';
+import SideBar from '../../components/SideBar';
+import Feed from '../../components/Feed';
 import { useContractRead } from 'wagmi';
-import contractJson from '../../../SubscriptionJson/SubscriptionService.json';
+import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { useSession } from 'next-auth/react';
 
 const UserHome = () => {
