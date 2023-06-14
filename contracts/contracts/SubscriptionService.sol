@@ -85,6 +85,7 @@ contract SubscriptionService is Ownable {
 
     function payForSubscription(address payable creatorAddress, uint256 daysSubscribing) public payable {
         Creator storage creator = creators[creatorAddress];
+        require(creatorAddress != msg.sender, "You can not subscribe to your own page");
         require(creator.price30Days > 0, "Creator not found");
         require(msg.value >= calculatePrice(creatorAddress, daysSubscribing), "Insufficient payment");
         require(isValidSubscriptionPeriod(daysSubscribing), "Invalid subscription period");
