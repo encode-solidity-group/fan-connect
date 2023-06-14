@@ -19,7 +19,7 @@ const Feed = () => {
     args: [userAddress],
   })
 
-  console.log('data: ', userSubscriptions);
+  // console.log('data: ', userSubscriptions);
 
   useEffect(() => {
 
@@ -37,8 +37,6 @@ const Feed = () => {
 
     return () => getSubscriptionsFeed();
   }, []);
-
-  console.log(posts);
 
   const renderFeed = () => {
     return (

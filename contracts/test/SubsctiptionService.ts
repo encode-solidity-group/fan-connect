@@ -42,6 +42,17 @@ describe("SubscriptionService", function () {
       expect(error.message).to.include("Creator has an existing page");
     }
   });
+
+  it("should revert if the creator tries to subscriber to their own page", async () => {
+    try {
+      await contract.connect(accounts[2]).payForSubscription(accounts[2].address, 30)
+      // If the createPage function doesn't revert, fail the test
+      expect.fail("Expected revert");
+    } catch (error: any) {
+      // Check if the error message matches the expected revert reason
+      expect(error.message).to.include("You can not subscribe to your own page");
+    }
+  });
   
   it("should allow the owner to change the contract fee", async () => {
     const contractFeeBefore = await contract.contractFeePercentage();
