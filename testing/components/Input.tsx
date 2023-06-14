@@ -68,7 +68,7 @@ const Input = () => {
                     <img className='h-12 w-12 rounded-full object-contain' src={session?.user?.image} alt="" />
                 </div>
 
-                <div className='w-[90%]'>
+                <div className='w-[90%] border-y py-2'>
                     <textarea
                         className='w-[100%] bg-transparent outline-none text-[20px]'
                         rows={2}

@@ -23,13 +23,10 @@ const Feed = () => {
 
   useEffect(() => {
 
-    const colRef = collection(db, 'posts');
-    const q = query(colRef, orderBy("timestamp", "desc"));
-
     const getSubscriptionsFeed = onSnapshot(
       query(
         collection(db, 'posts'),
-        where('username', 'in', ['0xBB923B99A0067e8ae37533898B849d67B8f3268e']),
+        where('username', 'in', ['0xBB923B99A0067e8ae37533898B849d67B8f3268e', '0x622e92aa1C7D0512d70Cf3155a5C0c76E4e58538']),
         orderBy('timestamp', 'desc')
       ),
       (snapshot) => {
@@ -55,9 +52,9 @@ const Feed = () => {
 
   return (
     <div className="min-h-screen text-white py-8 mx-auto w-[600px]">
-      <div className="bg-black font-medium text-[20px] px-4 py-2">
+      <h1 className="bg-black font-medium text-[30px] px-4 py-2">
         Home
-      </div>
+      </h1>
       <Input />
       <div className='my-8'>
         {renderFeed()}
