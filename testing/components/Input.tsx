@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react'
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { db, storage } from '../firebase'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
+import Image from 'next/image'
 
 
 const Input = () => {
@@ -65,7 +66,7 @@ const Input = () => {
             <div className='grid grid-cols-[48px,1fr] gap-4'>
 
                 <div>
-                    <img className='h-12 w-12 rounded-full object-contain' src={session?.user?.image} alt="" />
+                    <Image className='h-12 w-12 rounded-full object-contain' src={session?.user?.image} width={500} height={500} alt="" />
                 </div>
 
                 <div className='w-[90%] border-y py-2'>

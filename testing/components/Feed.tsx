@@ -2,24 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import Input from './Input'
-import { useSession } from 'next-auth/react';
-import { useContractRead } from 'wagmi';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
+import { useContractRead } from 'wagmi';
 
-const Feed = () => {
-  const { data: session } = useSession();
-  const userAddress = session?.user?.name;
+interface PageProps {
+  userAddress: string | undefined
+}
+
+const Feed = ({userAddress}: PageProps) => {
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
 
-  const { data: userSubscriptions } = useContractRead({
+  const { data: isCreator } = useContractRead({
     address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
     abi: contractJson.abi,
-    functionName: 'getUserSubscriptions',
+    functionName: 'creatorPageExists',
     args: [userAddress],
-  })
-
-  // console.log('data: ', userSubscriptions);
+  });
+  console.log('feed address: ', userAddress);
 
   useEffect(() => {
 
@@ -55,7 +55,7 @@ const Feed = () => {
       <div className="bg-black font-medium text-[30px] px-4 py-2">
         Home
       </div>
-      <Input />
+      {isCreator === true  &&  <Input />}
       <div className='my-8'>
         {renderFeed()}
       </div>
