@@ -35,22 +35,27 @@ export default function DisplayFees() {
 
   const creatorFees = () => {
     if (creatorPrices)
-    return creatorPrices.map((price: any, index: Key) => {
-      const parsedPrice = Number(price) / 10 ** 18;
-      const interval = subscriptionIntervals[Number(index)];
+      return creatorPrices.map((price: any, index: Key) => {
+        const parsedPrice = Number(price) / 10 ** 18;
+        const interval = subscriptionIntervals[Number(index)];
 
-      return (
-        <p key={index}>
-          {interval} day price: {parsedPrice}
-        </p>
-      );
-    });
+        return (
+          <p key={index}>
+            {interval} day price: {parsedPrice}
+          </p>
+        );
+      });
   };
 
   return (
-    <div className="text-center">
-      <p>Subscription Fees for {queryAddress}</p>
-      {creatorFees()}
+    <div className="text-center my-16 space-y-4">
+      <p className='text-xl'>Subscription Fees for:
+        <br/>
+        {queryAddress}
+      </p>
+      <div className='space-y-4'>
+        {creatorFees()}
+      </div>
     </div>
   )
 }
