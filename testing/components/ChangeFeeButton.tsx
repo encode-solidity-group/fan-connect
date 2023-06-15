@@ -4,9 +4,10 @@ import contractJson from '../SubscriptionJson/SubscriptionService.json';
 
 interface PageProps {
   userAddress: string;
+  profile_id: string;
 }
 
-export default function ChangeFeeButton({ userAddress }: PageProps) {
+export default function ChangeFeeButton({ userAddress, profile_id }: PageProps) {
   const router = useRouter();
 
   const { data: iscreator } = useContractRead({
@@ -22,11 +23,15 @@ export default function ChangeFeeButton({ userAddress }: PageProps) {
   }
 
   return (
-    <button
-      className="enterButton"
-      onClick={() => router.push(`/fees/${userAddress}`)} >
-      <div className="base">Change Subscription Fees</div>
-      <div className="onHover">Change Subscription Fees</div>
-    </button>
+    <>
+      {profile_id === userAddress &&
+        <button
+          className="enterButton"
+          onClick={() => router.push(`/fees/${userAddress}`)} >
+          <div className="base">Change Subscription Fees</div>
+          <div className="onHover">Change Subscription Fees</div>
+        </button>
+      }
+    </>
   )
 }
