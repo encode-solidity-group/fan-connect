@@ -24,6 +24,7 @@ export default function DisplayFees() {
     abi: contractJson.abi,
     functionName: 'creators',
     args: [queryAddress],
+    watch: true,
   })
 
   useEffect(() => {
