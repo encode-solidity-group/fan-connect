@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAccount } from 'wagmi'
-
 export default function Login() {
   const { address } = useAccount();
 
@@ -14,7 +13,7 @@ export default function Login() {
   }
 
   return (
-    <main>
+    <div>
       <div className="flex px-5 py-5 ">
         <div className="relative flex py-12">
           <div className="glassMorph relative z-10 flex py-24">
@@ -58,7 +57,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
 
   );
 }

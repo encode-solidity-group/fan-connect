@@ -6,6 +6,8 @@ import SideBar from "../../../components/SideBar";
 import { useRouter } from "next/router";
 import DisplayFees from "../../../components/DisplayFees";
 import RedirectToCreate from "../../../components/RedirectToCreate";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 
 export default function FeeGate() {
   const router = useRouter();
@@ -34,11 +36,14 @@ export default function FeeGate() {
   return (
     <div className='flex justify-between w-screen'>
       <SideBar />
-      <div className='sm:ml-[175px] lg:ml-[340px] w-full'>
+      <div className='sm:ml-[175px] lg:ml-[340px] xl:ml-[0px] w-full'>
+          <div className="flex justify-end py-16 mr-16">
+            <ConnectButton />
+          </div>
         {!isCreator && <RedirectToCreate queryAddress={queryAddress} userAddress={userAddress} />}
         {isCreator === true && <DisplayFees />}
         {isCreator === true && queryAddress === userAddress && <CreatorFee />}
-      </div>
+    </div>
     </div>
   )
 }

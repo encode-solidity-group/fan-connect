@@ -1,81 +1,83 @@
 import React, { useEffect, useState } from 'react';
 import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../firebase';
-import Input from './Input'
-import Link from 'next/link'
+import Input from './Input';
+import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import { useContractRead,useContractWrite,useAccount } from 'wagmi';
-import{ethers} from 'ethers'
+import { useContractRead, useContractWrite, useAccount } from 'wagmi';
+import { ethers } from 'ethers';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 
-const ProfileFeed = ({profile_id}) => {
+const ProfileFeed = ({ profile_id }) => {
   const { address } = useAccount();
-  const [userAddress,setUserAddress] = useState("");
+  const [userAddress, setUserAddress] = useState("");
   // const userAddress = session?.user?.name;
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [isFeedView, setIsFeedView] = useState(true);
 
-  const [daysSubscribed, setDaysSubscribed] = useState(0);
+  const [daysSubscribed, setDaysSubscribed] = useState(30);
   const { data: userSubscriptions } = useContractRead({
-        address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
-        abi: contractJson.abi,
-        functionName: 'getUserSubscriptions',
-        args: [userAddress],
-      })
-    
-  const { data: price} = useContractRead({
-        address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
-        abi: contractJson.abi,
-        functionName: 'calculatePrice',
-        args: [profile_id,daysSubscribed],
-      })
-  
-  const { data: isSubscribed} = useContractRead({
-        address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
-        abi: contractJson.abi,
-        functionName: 'isSubscribed',
-        args: [profile_id,userAddress],
-      })
+    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    abi: contractJson.abi,
+    functionName: 'getUserSubscriptions',
+    args: [userAddress],
+  });
 
-  const { data:subscribe, isLoading:subscribeIsLoading, isSuccess:subscribeIsSuccess, write:subscribeWrite } = useContractWrite({
-        address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
-        abi: contractJson.abi,
-        functionName: 'payForSubscription',
-        args: [profile_id,daysSubscribed],
-        value: price
-      });
-  
-    useEffect(() => {
-      if(address){
-      setUserAddress(address)
-      }
-    }, [address])
-    console.log("userAddress: ",userAddress)
+  const { data: price, refetch:calcPriceRefetch } = useContractRead({
+    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    abi: contractJson.abi,
+    functionName: 'calculatePrice',
+    args: [profile_id, daysSubscribed],
+  });
+
+  const { data: isSubscribed } = useContractRead({
+    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    abi: contractJson.abi,
+    functionName: 'isSubscribed',
+    args: [profile_id, userAddress],
+  });
+
+  const { data: subscribe, isLoading: subscribeIsLoading, isSuccess: subscribeIsSuccess, write: subscribeWrite } = useContractWrite({
+    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    abi: contractJson.abi,
+    functionName: 'payForSubscription',
+    args: [profile_id, daysSubscribed],
+    value: price
+  });
+
+  useEffect(() => {
+    if(address){
+    setUserAddress(address)
+    }
+    if(daysSubscribed != 0){
+      calcPriceRefetch()
+    }
+  }, [address,daysSubscribed])
 
 
 
-    useEffect(() => {
-      if(profile_id){
-        const getSubscriptionsFeed = onSnapshot(
-          query(
-            collection(db, 'posts'),
-            where('username', 'in', [profile_id]),
-            orderBy('timestamp', 'desc')
-          ),
-          (snapshot) => {
-            const documents = snapshot.docs.map((doc) => doc.data());
-            setPosts(documents);
-          }
-        );
-        
-        // If user is not the profile owner, default to Feed view
-        if (userAddress !== profile_id) {
-          setIsFeedView(true);
+  useEffect(() => {
+    if (profile_id) {
+      const getSubscriptionsFeed = onSnapshot(
+        query(
+          collection(db, 'posts'),
+          where('username', 'in', [profile_id]),
+          orderBy('timestamp', 'desc')
+        ),
+        (snapshot) => {
+          const documents = snapshot.docs.map((doc) => doc.data());
+          setPosts(documents);
         }
-        return () => getSubscriptionsFeed();
+      );
+
+      // If user is not the profile owner, default to Feed view
+      if (userAddress !== profile_id) {
+        setIsFeedView(true);
       }
-    }, [profile_id]);
+      return () => getSubscriptionsFeed();
+    }
+  }, [profile_id]);
 
 
 
@@ -86,64 +88,78 @@ const ProfileFeed = ({profile_id}) => {
   const renderFeed = () => {
     if (isSubscribed || userAddress === profile_id) {
       return posts.map((post, index) => (
-        <div key={index} className='p-4 border-y'>
-          <p>time: {new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
+        <div key={index} className='p-4 border border-red-100 my-5 rounded-md'>
+          <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
           <p>author: {post.username}</p>
-          <p>text: {post.text}</p>
+          <div className="mt-2 text-red-400">
+            <p>{post.text}</p>
+
+          </div>
         </div>
       ));
     } else {
       return (
-        <div className='p-4 border-y'>
-          <p> NOT SUBSCRIBED </p>
+        <div className='p-4 border border-red-100 my-5 rounded-md text-xl text-bold text-red-300'>
+          <p> Subscribe Today! </p>
         </div>
       );
     }
-  }
-  
+  };
 
-  console.log(userSubscriptions)
   const handleDaysChange = (e) => {
     setDaysSubscribed(e.target.value);
   };
-  console.log("profile_id: ",profile_id)
 
   const renderSubscriptions = () => {
     //TODO: PRINT OUT LIST OF ALL THE CREATORS YOU ARE SUBSCRIBED TO
     // ONLY IF userAddress = profile_id
     return (userSubscriptions && userSubscriptions.map((subscription, index) => (
       <div key={index} className='p-4 border-y'>
-        
         <Link href={`/profile/${subscription}`}>
-            <p>creator: {subscription}</p>
+          <p>creator: {subscription}</p>
         </Link>
       </div>
     ))
     );
-  }
+  };
 
   return (
-    <div className="min-h-screen text-white py-8 mx-auto w-[600px]">
-      <h1 className="bg-black font-medium text-[30px] px-4 py-2">
-        Home
-      </h1>
-      <select value={daysSubscribed} onChange={handleDaysChange}>
-        <option value="30">30</option>
-        <option value="90">90</option>
-        <option value="180">180</option>
-        <option value="365">365</option>
+    <div className="min-h-screen text-white py-4 mx-auto w-[600px]">
+      <div className="bg-black font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
+        <div>
+          User Profile: {address}
+        </div>
+      </div>
+      {(userAddress !== profile_id)&&
+      <div className="flex justify-center mx-5">
+        <select 
+          value={daysSubscribed} 
+          onChange={handleDaysChange}
+          className="bg-black text-red-200 mx-5 mb-16"
+        >
+          <option value="30">30</option>
+          <option value="90">90</option>
+          <option value="180">180</option>
+          <option value="365">365</option>
         </select>
-      <button onClick={subscribeWrite}>Subscribe</button>
-      <div className="flex justify-center mb-4">
-        <button 
-          className={`mr-2 ${isFeedView ? 'bg-black text-white' : ''}`} 
+        <p className="mr-6">Price: {ethers.utils.formatUnits(price?price:0n)} Eth</p>
+
+        <div className="text-red-400">
+          <button onClick={subscribeWrite}>Subscribe</button>
+        </div>
+
+      </div>
+      }
+      <div className="flex justify-evenly mb-4">
+        <button
+          className={`mr-2 ${isFeedView ? 'bg-black text-[24px] text-red-500' : ''}`}
           onClick={() => setIsFeedView(true)}
         >
           Feed
         </button>
         {userAddress === profile_id && (
-          <button 
-            className={`ml-2 ${!isFeedView ? 'bg-black text-white' : ''}`} 
+          <button
+            className={`ml-2 ${!isFeedView ? 'bg-black text-[24px]  text-red-500' : ''}`}
             onClick={() => setIsFeedView(false)}
           >
             Subscriptions
@@ -154,7 +170,7 @@ const ProfileFeed = ({profile_id}) => {
         {isFeedView ? renderFeed() : ((userAddress === profile_id) && renderSubscriptions())}
       </div>
     </div>
-  )
+  );
 };
 
 export default ProfileFeed; 

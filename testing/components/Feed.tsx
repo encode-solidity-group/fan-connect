@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../firebase';
-import Input from './Input'
+import Input from './Input';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { useContractRead } from 'wagmi';
 
 interface PageProps {
-  userAddress: string | undefined
+  userAddress: string | undefined;
 }
 
-const Feed = ({userAddress}: PageProps) => {
+const Feed = ({ userAddress }: PageProps) => {
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
 
@@ -41,26 +41,31 @@ const Feed = ({userAddress}: PageProps) => {
   const renderFeed = () => {
     return (
       posts && posts.map((post, index) => (
-        <div key={index} className='p-4 border-y'>
-          <p>time: {new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
+        <div key={index} className='p-4 border border-red-100 my-5 rounded-md'>
+          <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
           <p>author: {post.username}</p>
-          <p>text: {post.text}</p>
+          <div className="mt-2 text-red-400">
+            <p className="text-bold">{post.text}</p>
+          </div>
         </div>
       ))
     );
-  }
+  };
 
   return (
-    <div className="min-h-screen text-white py-8 mx-auto w-[600px]">
+
+
+    <div className="min-h-screen text-white py-8 mx-auto w-[600px] -mt-8">
       <div className="bg-black font-medium text-[30px] px-4 py-2">
         Home
       </div>
-      {isCreator === true  &&  <Input />}
+      {isCreator === true && <Input />}
       <div className='my-8'>
         {renderFeed()}
       </div>
     </div>
-  )
+
+  );
 };
 
 export default Feed;

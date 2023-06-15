@@ -5,6 +5,7 @@ import styles from '../styles/Home.module.css';
 import { useSession } from 'next-auth/react';
 import Login  from '../components/Login';
 import { Inter } from 'next/font/google';
+import Header from '../components/Header'
 
 
 const inter = Inter({
@@ -16,7 +17,7 @@ const inter = Inter({
 function Home() {
   return (
     <div className={`${inter.className}`}>
-      <ConnectButton />
+      <Header />
       <Login />
     </div>
   )
