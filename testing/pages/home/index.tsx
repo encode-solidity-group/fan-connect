@@ -13,8 +13,6 @@ const UserHome = () => {
     }
   }, [address])
 
-  console.log('address: ', address);
-  console.log('userAddress: ', userAddress);
   return (
     <div className='flex justify-between w-screen'>
       <SideBar />

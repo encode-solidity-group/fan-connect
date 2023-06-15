@@ -30,6 +30,7 @@ export default function ContractFee({userAddress}: PageProps) {
     hash: tx?.hash,
     onSuccess() {
       setSuccess(true);
+      setNewFee(undefined);
     }
   })
 
