@@ -1,14 +1,25 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAccount } from 'wagmi'
+import slides from './slideimages';
+
 export default function Login() {
   const { address } = useAccount();
+  console.log(slides)
 
   const renderFeed = () => {
     const images = [];
     for (let i = 0; i < 30; i++) {
       images.push(<Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />)
     }
+    return images;
+  }
+
+  const renderFeed2 = () => {
+    const images = [];
+    slides.map((slide) => {
+      images.push(<Image src={slide} alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />)
+    })
     return images;
   }
 
@@ -53,7 +64,7 @@ export default function Login() {
       <div className="slider mt-44 glassMorph">
         <div className="slide-track">
           <div className="slide">
-            {renderFeed()}
+            {renderFeed2()}
           </div>
         </div>
       </div>
