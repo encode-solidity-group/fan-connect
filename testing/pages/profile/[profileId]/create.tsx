@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useConnect, useAccount, useContractRead, usePrepareContractWrite, useContractWrite  } from 'wagmi';
+import { useConnect, useAccount, useContractRead, usePrepareContractWrite, useContractWrite } from 'wagmi';
 import { useIsMounted } from '../../useIsMounted';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useState, useEffect, use } from 'react';
@@ -12,12 +12,19 @@ import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum, sepolia } from 'wagmi/chains';
 import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
+import Tilt from 'react-parallax-tilt';
+import Sidebar from '../../../components/SideBar';
+import Link from 'next/link';
+import { ImArrowRight2, ImSpinner9 } from 'react-icons/im';
+
+
+
 
 import SubscriptionService from '../../../SubscriptionJson/SubscriptionService.json';
 
-import useDebounce from '../../useDebounce'
+import useDebounce from '../../useDebounce';
 import { ethers } from 'ethers';
-const APIKEY = "GGGmhjZ76VIhIyzckHe8nMfmUrjPth0C"
+const APIKEY = "GGGmhjZ76VIhIyzckHe8nMfmUrjPth0C";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [mainnet, polygon, optimism, arbitrum, sepolia],
@@ -38,7 +45,7 @@ const wagmiConfig = createConfig({
   connectors,
   publicClient,
   webSocketPublicClient,
-})
+});
 
 
 function Create() {
@@ -53,7 +60,7 @@ function Create() {
   const debounceSemiAnnualPrice = useDebounce(semiAnnualPrice, 500);
   const debounceAnnualPrice = useDebounce(annualPrice, 500);
 
-  useAccount({ onConnect: () => {}})
+  useAccount({ onConnect: () => { } });
 
   function addMonthlyPrice(e) {
     setMonthPrice(e.target.value);
@@ -85,38 +92,58 @@ function Create() {
     abi: SubscriptionService.abi,
     functionName: "contractFeePercentage",
 
-  })
-  console.log("eheanlf", data );
+  });
   const router = useRouter();
 
-  const {config, error } = usePrepareContractWrite({
+  const { config, error } = usePrepareContractWrite({
     address: "0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6",
     abi: SubscriptionService.abi,
     functionName: "createPage",
     args: [ethers.utils.parseEther(debounceMonthPrice), ethers.utils.parseEther(debounceQuarterPrice), ethers.utils.parseEther(debounceSemiAnnualPrice), ethers.utils.parseEther(debounceAnnualPrice)],
     enabled: Boolean(ethers.utils.parseEther(debounceMonthPrice) && ethers.utils.parseEther(debounceQuarterPrice) && ethers.utils.parseEther(debounceSemiAnnualPrice) && ethers.utils.parseEther(debounceAnnualPrice)),
-  })
+  });
 
   console.log("debounceMonthPrice", debounceMonthPrice);
 
   const { write } = useContractWrite(config);
 
-  // TODO: MAKE SURE BUTTON WORKS
-
   return (
-    <div >
-      <ConnectButton />
-      {mounted ? address && <p>Address {address}</p> : null}
-      Cost of 30day subscription
-      <input type='number' value={monthPrice.toString()} onChange={addMonthlyPrice} className="my-5 mx-5 bg-[#eadc9a] text-black" />
-      Cost of 90day subscription
-      <input type='number' value={quarterlyPrice.toString()} onChange={addQuarterlyPrice} className="my-5 mx-5 bg-[#eadc9a] text-black"/>
-      <input type='number' value={semiAnnualPrice.toString()} onChange={addSemiAnnualPrice} className="my-5 mx-5 bg-[#eadc9a] text-black"/>
-      <input type='number' value={annualPrice.toString()} onChange={addAnnualPrice} className="my-5 mx-5 bg-[#eadc9a] text-black"/>
-      <button disabled={!write} onClick={() => write?.()}>Create Contract</button>
-      {error && (
-        <div>An error occurred preparing the transaction: {error.message}</div>
-      )}
+    <div className='flex justify-between w-screen'>
+      <Sidebar />
+      <div className='sm:ml-[175px] lg:ml-[340px] xl:ml-[0px] w-full'>
+        <div className="flex justify-end py-16 mr-16">
+          <ConnectButton />
+        </div>
+        <div className="flex flex-col justify-center items-center space-y-4 mx-12 text-center mt-16">
+          <div className="mb-12">
+            Create a community page here! Input the prices you'd like your fans to pay for access to your content. Don't worry, you can always change these later <Link href={`/fees/${address}`} className="text-red-400">here.</Link>
+          </div>
+          <div className="text-xl pb-12">
+            User account : {address}
+          </div>
+          <div className="flex justify-between items-center ">
+            <p className="mx-4">30 day subscription fee</p>
+            <ImArrowRight2 size={25} />
+            <input type='number' value={monthPrice.toString()} onChange={addMonthlyPrice} className="text-black p-1 rounded-md w-16 mx-4" />
+          </div>
+          <div className="flex justify-between items-center">
+            <p className="mx-4">90 day subscription fee</p>
+            <ImArrowRight2 size={25} />
+            <input type='number' value={quarterlyPrice.toString()} onChange={addQuarterlyPrice} className="text-black p-1 rounded-md w-16 mx-4 " />
+          </div>
+          <div className="flex justify-between items-center">
+            <p className="mx-2">6 month subscription fee</p>
+            <ImArrowRight2 size={25} />
+            <input type='number' value={semiAnnualPrice.toString()} onChange={addSemiAnnualPrice} className="text-black p-1 rounded-md w-16 mx-4 " />
+          </div>
+          <div className="flex justify-between items-center pb-12">
+            <p className="mx-4">1 year subscription fee</p>
+            <ImArrowRight2 size={25} />
+            <input type='number' value={annualPrice.toString()} onChange={addAnnualPrice} className="text-black p-1 rounded-md w-16 mx-4  " />
+          </div>
+          <button disabled={!write} onClick={() => write?.()} className="enterButton">Create Contract</button>
+        </div>
+      </div>
     </div>
   );
 }
