@@ -73,7 +73,7 @@ const Input = () => {
                     <textarea
                         className='w-[100%] bg-transparent outline-none text-[20px]'
                         rows={2}
-                        placeholder="Titty Tuesday?"
+                        placeholder=" Black background no bugs! Obrigado Matheus!"
                         value={input}
                         onChange={(e) => setInput(e.target.value)} />
 

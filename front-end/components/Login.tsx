@@ -2,21 +2,13 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useAccount } from 'wagmi'
 import slides from './slideimages';
+import { JSX } from 'react';
 
 export default function Login() {
   const { address } = useAccount();
-  console.log(slides)
 
   const renderFeed = () => {
-    const images = [];
-    for (let i = 0; i < 30; i++) {
-      images.push(<Image src="/redImage.png" alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />)
-    }
-    return images;
-  }
-
-  const renderFeed2 = () => {
-    const images = [];
+    const images: JSX.Element[] = [];
     slides.map((slide) => {
       images.push(<Image src={slide} alt="redImage" width={125} height={75} className="mr-[25px] rounded-md" />)
     })
@@ -26,8 +18,8 @@ export default function Login() {
   return (
     <div>
       <div className="flex px-5 py-5 ">
-        <div className="relative flex py-12">
-          <div className="glassMorph relative z-10 flex py-24">
+        <div className="relative flex">
+          <div className="glassMorph relative z-10 flex">
             <p className="z-10 flex">
               &#47;&#47; FANCONNECT is a platform for creators to share
               <br />
@@ -64,7 +56,7 @@ export default function Login() {
       <div className="slider mt-44 glassMorph">
         <div className="slide-track">
           <div className="slide">
-            {renderFeed2()}
+            {renderFeed()}
           </div>
         </div>
       </div>

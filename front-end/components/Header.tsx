@@ -5,7 +5,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function Header() {
   return (
-    <header className="z-20 mt-16">
+    <header className="z-20 mt-4">
       <div className="mx-5 flex">
         <div className="logo basis-2/3 bg-">
           <Link href="/">
