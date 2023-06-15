@@ -44,8 +44,8 @@ const Feed = ({ userAddress }: PageProps) => {
         <div key={index} className='p-4 border-y'>
           <p>time: {new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
 
-          <div>author:
-            <Link href={`/`}>
+          <div>author:{' '}
+            <Link href={`/profile/${post.username}`} className='hover:text-blue-400'>
               {post.username}
             </Link>
           </div>
