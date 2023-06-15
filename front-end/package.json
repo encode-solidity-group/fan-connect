@@ -1,7 +1,7 @@
 {
-  "name": "front-end",
-  "version": "0.1.0",
+  "name": "testing",
   "private": true,
+  "version": "0.1.0",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,22 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "20.2.5",
-    "@types/react": "18.2.9",
-    "@types/react-dom": "18.2.4",
-    "autoprefixer": "10.4.14",
-    "eslint": "8.42.0",
-    "eslint-config-next": "^13.4.4",
+    "@rainbow-me/rainbowkit": "^1.0.1",
+    "@rainbow-me/rainbowkit-siwe-next-auth": "^0.2.0",
+    "@react-icons/all-files": "^4.1.0",
+    "ethers": "^5.7.2",
     "firebase": "^9.22.2",
-    "iron-session": "^6.3.1",
-    "next": "^13.4.4",
-    "postcss": "8.4.24",
+    "next": "^13.4.3",
+    "next-auth": "4.20.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.9.0",
+    "react-parallax-tilt": "^1.7.146",
     "siwe": "^2.1.4",
-    "tailwindcss": "3.3.2",
-    "typescript": "5.1.3",
-    "viem": "^1.0.3",
-    "wagmi": "^1.1.1"
+    "viem": "~0.3.35",
+    "wagmi": "~1.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.12",
+    "@types/react": "^18.2.6",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.15.0",
+    "eslint-config-next": "^13.4.3",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
+    "typescript": "^5.0.4"
   }
 }
