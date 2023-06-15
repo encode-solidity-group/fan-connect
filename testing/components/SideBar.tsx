@@ -31,9 +31,9 @@ const SideBar = () => {
           <SideBarLink text="Home" Icon={AiFillHome} />
         </Link>
 
-        <Link href={'/'}>
+        {/* <Link href={'/'}>
           <SideBarLink text="Messages" Icon={AiOutlineInbox} />
-        </Link>
+        </Link> */}
 
         <Link href={`/profile/${userAddress}/create`}>
           <SideBarLink text="Create Community" Icon={AiOutlineTeam} />
