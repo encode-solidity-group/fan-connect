@@ -6,14 +6,15 @@ import SideBar from "../../../components/SideBar";
 import { useRouter } from "next/router";
 import DisplayFees from "../../../components/DisplayFees";
 import RedirectToCreate from "../../../components/RedirectToCreate";
+import CreatorSubscriptions from "../../../components/CreatorSubscriptions";
 
 export default function FeeGate() {
   const router = useRouter();
   const { creatorAddress } = router.query;
   const { address } = useAccount();
 
-  const [userAddress, setUserAddress] = useState<string>();
-  const [queryAddress, setQueryAddress] = useState<string | string[] | undefined>();
+  const [userAddress, setUserAddress] = useState<string>('');
+  const [queryAddress, setQueryAddress] = useState<string | string[] | undefined>('');
 
   useEffect(() => {
     if (address) {
@@ -37,7 +38,12 @@ export default function FeeGate() {
       <div className='sm:ml-[175px] lg:ml-[340px] w-full'>
         {!isCreator && <RedirectToCreate queryAddress={queryAddress} userAddress={userAddress} />}
         {isCreator === true && <DisplayFees />}
-        {isCreator === true && queryAddress === userAddress && <CreatorFee />}
+        {isCreator === true && queryAddress === userAddress &&
+          <div className="grid grid-cols-2 gap-8 w-4/5 mx-auto">
+            <CreatorFee />
+            <CreatorSubscriptions userAddress={userAddress} />
+          </div>
+        }
       </div>
     </div>
   )
