@@ -13,7 +13,7 @@ const ProfileFeed = ({profile_id}) => {
   const userAddress = session?.user?.name;
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
-  const [isFeedView, setIsFeedView] = useState(true); // new state
+  const [isFeedView, setIsFeedView] = useState(true);
 
   const [daysSubscribed, setDaysSubscribed] = useState(0);
   const { data: userSubscriptions } = useContractRead({
@@ -41,22 +41,27 @@ const ProfileFeed = ({profile_id}) => {
 
 
 
-  useEffect(() => {
-    if(userAddress){
-      const getSubscriptionsFeed = onSnapshot(
-        query(
-          collection(db, 'posts'),
-          where('username', 'in', [profile_id]),
-          orderBy('timestamp', 'desc')
-        ),
-        (snapshot) => {
-          const documents = snapshot.docs.map((doc) => doc.data());
-          setPosts(documents);
+    useEffect(() => {
+      if(profile_id){
+        const getSubscriptionsFeed = onSnapshot(
+          query(
+            collection(db, 'posts'),
+            where('username', 'in', [profile_id]),
+            orderBy('timestamp', 'desc')
+          ),
+          (snapshot) => {
+            const documents = snapshot.docs.map((doc) => doc.data());
+            setPosts(documents);
+          }
+        );
+        
+        // If user is not the profile owner, default to Feed view
+        if (userAddress !== profile_id) {
+          setIsFeedView(true);
         }
-      );
-      return () => getSubscriptionsFeed();
-    }
-  }, [userAddress]);
+        return () => getSubscriptionsFeed();
+      }
+    }, [profile_id]);
 
 
 
@@ -80,7 +85,7 @@ const ProfileFeed = ({profile_id}) => {
   const handleDaysChange = (e) => {
     setDaysSubscribed(e.target.value);
   };
-  console.log(price)
+  console.log("profile_id: ",profile_id)
 
   const renderSubscriptions = () => {
     //TODO: PRINT OUT LIST OF ALL THE CREATORS YOU ARE SUBSCRIBED TO
@@ -115,18 +120,20 @@ const ProfileFeed = ({profile_id}) => {
         >
           Feed
         </button>
-        <button 
-          className={`ml-2 ${!isFeedView ? 'bg-black text-white' : ''}`} 
-          onClick={() => setIsFeedView(false)}
-        >
-          Subscriptions
-        </button>
+        {userAddress === profile_id && (
+          <button 
+            className={`ml-2 ${!isFeedView ? 'bg-black text-white' : ''}`} 
+            onClick={() => setIsFeedView(false)}
+          >
+            Subscriptions
+          </button>
+        )}
       </div>
       <div className='my-8'>
-        {isFeedView ? renderFeed() : renderSubscriptions()}
+        {isFeedView ? renderFeed() : ((userAddress === profile_id) && renderSubscriptions())}
       </div>
     </div>
   )
 };
 
-export default ProfileFeed;
+export default ProfileFeed; 
