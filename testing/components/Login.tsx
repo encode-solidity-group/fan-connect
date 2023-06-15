@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useAccount } from 'wagmi'
-
 export default function Login() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
 
   const renderFeed = () => {
     const images = [];
@@ -14,7 +13,7 @@ export default function Login() {
   }
 
   return (
-    <main>
+    <div>
       <div className="flex px-5 py-5 ">
         <div className="relative flex py-12">
           <div className="glassMorph relative z-10 flex py-24">
@@ -36,7 +35,7 @@ export default function Login() {
       </div>
       <div className="glassMorph">
         <div className="mx-48 -mt-4 py-20 flex items-center justify-between">
-          <Link href={isConnected ? `/home` : '/'}>
+          <Link href={`/home`}>
             <button className="enterButton">
               <div className="base">Discover More</div>
               <div className="onHover">Login</div>
@@ -58,7 +57,7 @@ export default function Login() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
 
   );
 }
