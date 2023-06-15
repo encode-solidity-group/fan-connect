@@ -4,6 +4,7 @@ import { db } from '../firebase';
 import Input from './Input';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { useContractRead } from 'wagmi';
+import Link from 'next/link';
 
 interface PageProps {
   userAddress: string | undefined;
@@ -54,7 +55,12 @@ const Feed = ({ userAddress }: PageProps) => {
       posts && posts.map((post, index) => (
         <div key={index} className='p-4 border border-red-100 my-5 rounded-md'>
           <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
-          <p>author: {post.username}</p>
+          <div className='flex'>
+            author:{' '}
+            <Link href={`/profile/${post.username}`} className='hover:text-red-400'>
+              {post.username}
+            </Link>
+          </div>
           <div className="mt-2 text-red-400">
             <p className="text-bold">{post.text}</p>
           </div>

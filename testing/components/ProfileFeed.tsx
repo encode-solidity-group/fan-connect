@@ -7,6 +7,7 @@ import { useSession } from 'next-auth/react';
 import { useContractRead, useContractWrite, useAccount } from 'wagmi';
 import { ethers } from 'ethers';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
+import ChangeFeeButton from './ChangeFeeButton';
 
 const ProfileFeed = ({ profile_id }) => {
   const { address } = useAccount();
@@ -125,6 +126,9 @@ const ProfileFeed = ({ profile_id }) => {
 
   return (
     <div className="min-h-screen text-white py-4 mx-auto w-[600px]">
+      <div className='text-center mb-4'>
+        <ChangeFeeButton userAddress={userAddress} profile_id={profile_id} />
+      </div>
       <div className="bg-black font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
         <div>
           User Profile: {address}
