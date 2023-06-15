@@ -30,6 +30,13 @@ const ProfileFeed = ({profile_id}) => {
         args: [profile_id,daysSubscribed],
       })
   
+  const { data: isSubscribed} = useContractRead({
+        address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+        abi: contractJson.abi,
+        functionName: 'isSubscribed',
+        args: [profile_id,userAddress],
+      })
+
   const { data:subscribe, isLoading:subscribeIsLoading, isSuccess:subscribeIsSuccess, write:subscribeWrite } = useContractWrite({
         address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
         abi: contractJson.abi,
@@ -70,16 +77,23 @@ const ProfileFeed = ({profile_id}) => {
   //TODO: TOKEN GATE THIS FEED. IF YOU ARE NOT SUBSCRIBED TO THE CREATOR
   // AND YOU ARE NOT THE CREATOR YOU SHOULD NOT RENDER ANYTHING
   const renderFeed = () => {
-    return (
-      posts && posts.map((post, index) => (
+    if (isSubscribed || userAddress === profile_id) {
+      return posts.map((post, index) => (
         <div key={index} className='p-4 border-y'>
           <p>time: {new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
           <p>author: {post.username}</p>
           <p>text: {post.text}</p>
         </div>
-      ))
-    );
+      ));
+    } else {
+      return (
+        <div className='p-4 border-y'>
+          <p> NOT SUBSCRIBED </p>
+        </div>
+      );
+    }
   }
+  
 
   console.log(userSubscriptions)
   const handleDaysChange = (e) => {
