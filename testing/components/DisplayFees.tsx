@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 import { Key, useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
+import { SiEthereum } from "react-icons/si";
+import { ImArrowRight2 } from 'react-icons/im';
 
 export default function DisplayFees() {
   const router = useRouter();
@@ -40,8 +42,8 @@ export default function DisplayFees() {
         const interval = subscriptionIntervals[Number(index)];
 
         return (
-          <p key={index}>
-            {interval} day price: {parsedPrice}
+          <p key={index} className='flex justify-center items-center'>
+            {interval} day price <ImArrowRight2 className='mx-2'/> {parsedPrice} <SiEthereum/>
           </p>
         );
       });
