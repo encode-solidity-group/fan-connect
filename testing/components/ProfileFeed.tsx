@@ -139,7 +139,7 @@ const ProfileFeed = ({ profile_id }) => {
         <select 
           value={daysSubscribed} 
           onChange={handleDaysChange}
-          className="bg-black text-red-200 mx-5 mb-16"
+          className="bg-black text-red-200 mx-5 mb-16 border rounded-md"
         >
           <option value="30">30</option>
           <option value="90">90</option>

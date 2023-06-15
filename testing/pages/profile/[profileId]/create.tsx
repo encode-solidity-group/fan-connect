@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useConnect, useAccount, useContractRead, usePrepareContractWrite, useContractWrite } from 'wagmi';
 import { useIsMounted } from '../../useIsMounted';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { useState, useEffect, use } from 'react';
+import { useState, useEffect } from 'react';
 import '@rainbow-me/rainbowkit/styles.css';
 import {
   getDefaultWallets,
@@ -10,9 +10,7 @@ import {
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
 import { mainnet, polygon, optimism, arbitrum, sepolia } from 'wagmi/chains';
-import { alchemyProvider } from 'wagmi/providers/alchemy';
 import { publicProvider } from 'wagmi/providers/public';
-import Tilt from 'react-parallax-tilt';
 import Sidebar from '../../../components/SideBar';
 import Link from 'next/link';
 import { ImArrowRight2, ImSpinner9 } from 'react-icons/im';
@@ -108,9 +106,9 @@ function Create() {
   const { write } = useContractWrite(config);
 
   return (
-    <div className='flex justify-between w-screen'>
+    <div className='flex justify-between w-screen sm:ml-175[px] lg:ml-340[px]'>
       <Sidebar />
-      <div className='sm:ml-[175px] lg:ml-[340px] xl:ml-[0px] w-full'>
+      <div className='sm:ml-[175px] lg:ml-[340px] w-full'>
         <div className="flex justify-end py-16 mr-16">
           <ConnectButton />
         </div>
@@ -119,7 +117,7 @@ function Create() {
             Create a community page here! Input the prices you'd like your fans to pay for access to your content. Don't worry, you can always change these later <Link href={`/fees/${address}`} className="text-red-400">here.</Link>
           </div>
           <div className="text-xl pb-12">
-            User account : {address}
+            User account : {mounted ? address && <p>Address {address}</p> : null}
           </div>
           <div className="flex justify-between items-center ">
             <p className="mx-4">30 day subscription fee</p>
