@@ -21,12 +21,23 @@ const Feed = ({ userAddress }: PageProps) => {
     args: [userAddress],
   });
 
+  const { data: subscriptions } = useContractRead({
+    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    abi: contractJson.abi,
+    functionName: 'getUserSubscriptions',
+    args: [userAddress],
+  });
+
   useEffect(() => {
+
+    if (isCreator === undefined || subscriptions === undefined || subscriptions === null || (subscriptions as string[]).length < 1) {
+      return;
+    }
 
     const getSubscriptionsFeed = onSnapshot(
       query(
         collection(db, 'posts'),
-        where('username', 'in', ['0xBB923B99A0067e8ae37533898B849d67B8f3268e', '0x622e92aa1C7D0512d70Cf3155a5C0c76E4e58538']),
+        where('username', 'in', subscriptions),
         orderBy('timestamp', 'desc')
       ),
       (snapshot) => {
@@ -36,7 +47,7 @@ const Feed = ({ userAddress }: PageProps) => {
     );
 
     return () => getSubscriptionsFeed();
-  }, []);
+  }, [isCreator, subscriptions]);
 
   const renderFeed = () => {
     return (
