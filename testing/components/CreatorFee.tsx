@@ -35,6 +35,12 @@ export default function CreatorFee() {
     const newPrice180Days = new180dayFee !== undefined ? ethers.utils.parseEther(new180dayFee.toString()) : undefined;
     const newPrice365Days = new365dayFee !== undefined ? ethers.utils.parseEther(new365dayFee.toString()) : undefined;
 
+    if (
+      newPrice30Days === undefined && newPrice90Days === undefined && newPrice180Days === undefined && newPrice365Days === undefined) {
+      setError(true);
+      return;
+    }
+
     const daysSubscribing = [];
     const newFees = [];
 
@@ -157,7 +163,6 @@ export default function CreatorFee() {
       }
 
       {isLoading && <ImSpinner9 className="animate-spin mx-auto" />}
-
 
     </div>
   );
