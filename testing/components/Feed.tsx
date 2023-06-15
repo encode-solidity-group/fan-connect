@@ -4,12 +4,13 @@ import { db } from '../firebase';
 import Input from './Input'
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { useContractRead } from 'wagmi';
+import Link from 'next/link';
 
 interface PageProps {
   userAddress: string | undefined
 }
 
-const Feed = ({userAddress}: PageProps) => {
+const Feed = ({ userAddress }: PageProps) => {
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
 
@@ -19,7 +20,6 @@ const Feed = ({userAddress}: PageProps) => {
     functionName: 'creatorPageExists',
     args: [userAddress],
   });
-  console.log('feed address: ', userAddress);
 
   useEffect(() => {
 
@@ -43,7 +43,13 @@ const Feed = ({userAddress}: PageProps) => {
       posts && posts.map((post, index) => (
         <div key={index} className='p-4 border-y'>
           <p>time: {new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
-          <p>author: {post.username}</p>
+
+          <div>author:
+            <Link href={`/`}>
+              {post.username}
+            </Link>
+          </div>
+
           <p>text: {post.text}</p>
         </div>
       ))
@@ -55,7 +61,7 @@ const Feed = ({userAddress}: PageProps) => {
       <div className="bg-black font-medium text-[30px] px-4 py-2">
         Home
       </div>
-      {isCreator === true  &&  <Input />}
+      {isCreator === true && <Input />}
       <div className='my-8'>
         {renderFeed()}
       </div>
