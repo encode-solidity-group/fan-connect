@@ -16,7 +16,7 @@ const ProfileFeed = ({profile_id}) => {
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [isFeedView, setIsFeedView] = useState(true);
 
-  const [daysSubscribed, setDaysSubscribed] = useState(0);
+  const [daysSubscribed, setDaysSubscribed] = useState(30);
   const { data: userSubscriptions } = useContractRead({
         address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
         abi: contractJson.abi,
@@ -24,7 +24,7 @@ const ProfileFeed = ({profile_id}) => {
         args: [userAddress],
       })
     
-  const { data: price} = useContractRead({
+  const { data: price,refetch:calcPriceRefetch} = useContractRead({
         address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
         abi: contractJson.abi,
         functionName: 'calculatePrice',
@@ -50,9 +50,10 @@ const ProfileFeed = ({profile_id}) => {
       if(address){
       setUserAddress(address)
       }
-    }, [address])
-    console.log("userAddress: ",userAddress)
-
+      if(daysSubscribed != 0){
+        calcPriceRefetch()
+      }
+    }, [address,daysSubscribed])
 
 
     useEffect(() => {
@@ -102,11 +103,10 @@ const ProfileFeed = ({profile_id}) => {
   }
   
 
-  console.log(userSubscriptions)
   const handleDaysChange = (e) => {
     setDaysSubscribed(e.target.value);
   };
-  console.log("profile_id: ",profile_id)
+
 
   const renderSubscriptions = () => {
     //TODO: PRINT OUT LIST OF ALL THE CREATORS YOU ARE SUBSCRIBED TO
@@ -122,19 +122,23 @@ const ProfileFeed = ({profile_id}) => {
     );
   }
 
-  console.log('userAddress: ', userAddress);
   return (
     <div className="min-h-screen text-white py-8 mx-auto w-[600px]">
       <h1 className="bg-black font-medium text-[30px] px-4 py-2">
         Home
       </h1>
-      <select value={daysSubscribed} onChange={handleDaysChange}>
-        <option value="30">30</option>
-        <option value="90">90</option>
-        <option value="180">180</option>
-        <option value="365">365</option>
+      {(userAddress !== profile_id)&&
+      (<div><select value={daysSubscribed} onChange={handleDaysChange} style={{backgroundColor: "black", color: "white"}} >
+        <option value="30">30 Days</option>
+        <option value="90">90 Days</option>
+        <option value="180">180 Days</option>
+        <option value="365">365 Days</option>
         </select>
+        <p>Price: {ethers.utils.formatUnits(price?price:0n)} Eth</p>
       <button onClick={subscribeWrite}>Subscribe</button>
+      </div>)
+      }
+
       <div className="flex justify-center mb-4">
         <button 
           className={`mr-2 ${isFeedView ? 'bg-black text-white' : ''}`} 
