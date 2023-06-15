@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useAccount } from 'wagmi'
 
 export default function Login() {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
 
   const renderFeed = () => {
     const images = [];
@@ -36,7 +36,7 @@ export default function Login() {
       </div>
       <div className="glassMorph">
         <div className="mx-48 -mt-4 py-20 flex items-center justify-between">
-          <Link href={`/home`}>
+          <Link href={isConnected ? `/home` : '/'}>
             <button className="enterButton">
               <div className="base">Discover More</div>
               <div className="onHover">Login</div>

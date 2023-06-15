@@ -115,6 +115,7 @@ const ProfileFeed = ({profile_id}) => {
     );
   }
 
+  console.log('userAddress: ', userAddress);
   return (
     <div className="min-h-screen text-white py-8 mx-auto w-[600px]">
       <h1 className="bg-black font-medium text-[30px] px-4 py-2">
