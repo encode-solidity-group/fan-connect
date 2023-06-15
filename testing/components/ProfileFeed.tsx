@@ -4,13 +4,14 @@ import { db } from '../firebase';
 import Input from './Input'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react';
-import { useContractRead,useContractWrite } from 'wagmi';
+import { useContractRead,useContractWrite,useAccount } from 'wagmi';
 import{ethers} from 'ethers'
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 
 const ProfileFeed = ({profile_id}) => {
-  const { data: session } = useSession();
-  const userAddress = session?.user?.name;
+  const { address } = useAccount();
+  const [userAddress,setUserAddress] = useState("");
+  // const userAddress = session?.user?.name;
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [isFeedView, setIsFeedView] = useState(true);
@@ -45,6 +46,12 @@ const ProfileFeed = ({profile_id}) => {
         value: price
       });
   
+    useEffect(() => {
+      if(address){
+      setUserAddress(address)
+      }
+    }, [address])
+    console.log("userAddress: ",userAddress)
 
 
 
