@@ -8,12 +8,14 @@ import DisplayFees from "../../../components/DisplayFees";
 import RedirectToCreate from "../../../components/RedirectToCreate";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import CreatorSubscriptions from "../../../components/CreatorsSubscriptions";
+import useGetContractAddress from "../../../custom hooks/useGetContractAddress";
 
 
 export default function FeeGate() {
   const router = useRouter();
   const { creatorAddress } = router.query;
   const { address } = useAccount();
+  const {contractAddress} = useGetContractAddress();
 
   const [userAddress, setUserAddress] = useState<string>();
   const [queryAddress, setQueryAddress] = useState<string | string[] | undefined>();
@@ -28,7 +30,7 @@ export default function FeeGate() {
   }, [address, creatorAddress]);
 
   const { data: isCreator } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'creatorPageExists',
     args: [queryAddress],

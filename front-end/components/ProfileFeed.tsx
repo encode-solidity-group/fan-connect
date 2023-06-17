@@ -8,6 +8,7 @@ import { useContractRead, useContractWrite, useAccount } from 'wagmi';
 import { ethers } from 'ethers';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import ChangeFeeButton from './ChangeFeeButton';
+import useGetContractAddress from '../custom hooks/useGetContractAddress';
 
 const ProfileFeed = ({ profile_id }) => {
   const { address } = useAccount();
@@ -16,31 +17,33 @@ const ProfileFeed = ({ profile_id }) => {
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
   const [isFeedView, setIsFeedView] = useState(true);
+  const {contractAddress} = useGetContractAddress();
 
   const [daysSubscribed, setDaysSubscribed] = useState(30);
+
   const { data: userSubscriptions } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'getUserSubscriptions',
     args: [userAddress],
   });
 
   const { data: price, refetch:calcPriceRefetch } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'calculatePrice',
     args: [profile_id, daysSubscribed],
   });
 
   const { data: isSubscribed } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'isSubscribed',
     args: [profile_id, userAddress],
   });
 
   const { data: subscribe, isLoading: subscribeIsLoading, isSuccess: subscribeIsSuccess, write: subscribeWrite } = useContractWrite({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'payForSubscription',
     args: [profile_id, daysSubscribed],

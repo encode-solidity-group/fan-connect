@@ -9,7 +9,7 @@ import {
   RainbowKitProvider,
 } from '@rainbow-me/rainbowkit';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { mainnet, polygon, optimism, arbitrum, sepolia } from 'wagmi/chains';
+import { mainnet, polygon, optimism, arbitrum, sepolia, auroraTestnet } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import Sidebar from '../../../components/SideBar';
 import Link from 'next/link';
@@ -22,10 +22,11 @@ import SubscriptionService from '../../../SubscriptionJson/SubscriptionService.j
 
 import useDebounce from '../../useDebounce';
 import { ethers } from 'ethers';
+import useGetContractAddress from '../../../custom hooks/useGetContractAddress';
 const APIKEY = "GGGmhjZ76VIhIyzckHe8nMfmUrjPth0C";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [mainnet, polygon, optimism, arbitrum, sepolia],
+  [mainnet, polygon, optimism, arbitrum, sepolia, auroraTestnet],
   [
     // alchemyProvider({ apiKey: APIKEY }),
     publicProvider()
@@ -83,10 +84,12 @@ function Create() {
     }
   }, [address]);
 
+  const {contractAddress} = useGetContractAddress();
+
   const {
     data,
   } = useContractRead({
-    address: "0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6",
+    address: contractAddress,
     abi: SubscriptionService.abi,
     functionName: "contractFeePercentage",
 
@@ -94,7 +97,7 @@ function Create() {
   const router = useRouter();
 
   const { config, error } = usePrepareContractWrite({
-    address: "0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6",
+    address: contractAddress,
     abi: SubscriptionService.abi,
     functionName: "createPage",
     args: [ethers.utils.parseEther(debounceMonthPrice), ethers.utils.parseEther(debounceQuarterPrice), ethers.utils.parseEther(debounceSemiAnnualPrice), ethers.utils.parseEther(debounceAnnualPrice)],
@@ -122,22 +125,22 @@ function Create() {
           <div className="flex justify-between items-center ">
             <p className="mx-4">30 day subscription fee</p>
             <ImArrowRight2 size={25} />
-            <input type='number' value={monthPrice.toString()} onChange={addMonthlyPrice} className="text-black p-1 rounded-md w-16 mx-4" />
+            <input type='number' value={monthPrice.toString()} onChange={addMonthlyPrice} className="text-black p-1 rounded-md w-24 mx-4" />
           </div>
           <div className="flex justify-between items-center">
             <p className="mx-4">90 day subscription fee</p>
             <ImArrowRight2 size={25} />
-            <input type='number' value={quarterlyPrice.toString()} onChange={addQuarterlyPrice} className="text-black p-1 rounded-md w-16 mx-4 " />
+            <input type='number' value={quarterlyPrice.toString()} onChange={addQuarterlyPrice} className="text-black p-1 rounded-md w-24 mx-4 " />
           </div>
           <div className="flex justify-between items-center">
             <p className="mx-2">6 month subscription fee</p>
             <ImArrowRight2 size={25} />
-            <input type='number' value={semiAnnualPrice.toString()} onChange={addSemiAnnualPrice} className="text-black p-1 rounded-md w-16 mx-4 " />
+            <input type='number' value={semiAnnualPrice.toString()} onChange={addSemiAnnualPrice} className="text-black p-1 rounded-md w-24 mx-4 " />
           </div>
           <div className="flex justify-between items-center pb-12">
             <p className="mx-4">1 year subscription fee</p>
             <ImArrowRight2 size={25} />
-            <input type='number' value={annualPrice.toString()} onChange={addAnnualPrice} className="text-black p-1 rounded-md w-16 mx-4  " />
+            <input type='number' value={annualPrice.toString()} onChange={addAnnualPrice} className="text-black p-1 rounded-md w-24 mx-4  " />
           </div>
           <button disabled={!write} onClick={() => write?.()} className="enterButton">Create Contract</button>
         </div>

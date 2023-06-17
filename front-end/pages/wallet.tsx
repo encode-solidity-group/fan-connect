@@ -3,18 +3,20 @@ import { useIsMounted } from './useIsMounted';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 import SubscriptionService from '../SubscriptionJson/SubscriptionService.json';
+import useGetContractAddress from '../custom hooks/useGetContractAddress';
 
 
 function Wallet() {
   const mounted = useIsMounted();
   const { address } = useAccount();
+  const {contractAddress} = useGetContractAddress();
 
   const {
     data,
     isLoading,
     isSuccess,
   } = useContractRead({
-    address: "0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6",
+    address: contractAddress,
     abi: SubscriptionService.abi,
     functionName: "contractFeePercentage",
 

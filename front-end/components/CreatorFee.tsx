@@ -4,6 +4,7 @@ import { useContractWrite, useWaitForTransaction } from "wagmi";
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { ImArrowRight2, ImSpinner9 } from 'react-icons/im';
 import { AiOutlineExclamationCircle, AiOutlineClose, AiOutlineCheckCircle } from 'react-icons/ai';
+import useGetContractAddress from "../custom hooks/useGetContractAddress";
 
 export default function CreatorFee() {
   const [new30dayFee, setNew30DayFee] = useState<number | undefined>();
@@ -13,6 +14,8 @@ export default function CreatorFee() {
 
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
+
+  const {contractAddress} = useGetContractAddress();
 
   const handleFeeChange = (event: ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<number | undefined>>) => {
     const value = parseFloat(event.target.value);
@@ -24,7 +27,7 @@ export default function CreatorFee() {
   };
 
   const { write, data: tx } = useContractWrite({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'changeManySubscriptionFee',
   })

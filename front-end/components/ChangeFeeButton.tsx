@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
-import { useContractRead } from "wagmi";
+import { useContractRead, useNetwork } from "wagmi";
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
+import useGetContractAddress from "../custom hooks/useGetContractAddress";
 
 interface PageProps {
   userAddress: string;
@@ -10,8 +11,10 @@ interface PageProps {
 export default function ChangeFeeButton({ userAddress, profile_id }: PageProps) {
   const router = useRouter();
 
+  const { contractAddress } = useGetContractAddress();
+
   const { data: iscreator } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'creatorPageExists',
     args: [userAddress],

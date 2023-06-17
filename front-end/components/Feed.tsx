@@ -5,17 +5,19 @@ import Input from './Input';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { useContractRead } from 'wagmi';
 import Link from 'next/link';
+import useGetContractAddress from '../custom hooks/useGetContractAddress';
 
 interface PageProps {
   userAddress: string | undefined;
 }
 
 const Feed = ({ userAddress }: PageProps) => {
+  const {contractAddress} = useGetContractAddress();
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
 
   const { data: isCreator } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'creatorPageExists',
     args: [userAddress],
@@ -23,7 +25,7 @@ const Feed = ({ userAddress }: PageProps) => {
   console.log('feed address: ', userAddress);
 
   const { data: subscriptions } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'getUserSubscriptions',
     args: [userAddress],

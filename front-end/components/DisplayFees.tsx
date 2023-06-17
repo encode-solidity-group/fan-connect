@@ -3,6 +3,7 @@ import { Key, useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { SiEthereum } from "react-icons/si";
+import useGetContractAddress from '../custom hooks/useGetContractAddress';
 
 export default function DisplayFees() {
   const router = useRouter();
@@ -13,6 +14,8 @@ export default function DisplayFees() {
   const subscriptionIntervals = [30, 90, 180, 365];
   const [creatorPrices, setCreatorPrices] = useState<any>();
 
+  const {contractAddress} = useGetContractAddress();
+
   useEffect(() => {
 
     if (creatorAddress) {
@@ -21,7 +24,7 @@ export default function DisplayFees() {
   }, [creatorAddress]);
 
   const { data: creatorStruct } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'creators',
     args: [queryAddress],

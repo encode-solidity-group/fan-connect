@@ -3,6 +3,7 @@ import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { Key, useEffect, useState } from "react";
 import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
 import Link from "next/link";
+import useGetContractAddress from "../custom hooks/useGetContractAddress";
 
 interface PageProps {
   userAddress: string | undefined;
@@ -13,9 +14,10 @@ export default function CreatorSubscriptions({ userAddress }: PageProps) {
   const [foundActiveSubscribers, setFoundActiveSubscribers] = useState<string[]>([]);
   const [showFoundActiveSubscribers, setShowFoundActiveSubscribers] = useState<Boolean>(false);
   const [showFoundSubscribers, setShowFoundSubscribers] = useState<Boolean>(false);
+  const {contractAddress} = useGetContractAddress();
 
   const { data: subscribers } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'getCreatorSubscribers',
     args: [userAddress],
@@ -23,7 +25,7 @@ export default function CreatorSubscriptions({ userAddress }: PageProps) {
   })
 
   const { data: activeSubs } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'getActiveSubscribers',
     args: [userAddress],

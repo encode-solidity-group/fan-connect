@@ -3,7 +3,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { arbitrum, goerli, mainnet, optimism, polygon, sepolia } from 'wagmi/chains';
+import { arbitrum, goerli, mainnet, optimism, polygon, sepolia, auroraTestnet } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
 import { SessionProvider } from 'next-auth/react';
@@ -22,6 +22,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
     optimism,
     arbitrum,
     sepolia,
+    auroraTestnet,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
   ],
   [publicProvider()]

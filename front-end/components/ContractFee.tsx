@@ -3,6 +3,7 @@ import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { useState, ChangeEvent } from "react";
 import { AiOutlineExclamationCircle, AiOutlineClose, AiOutlineCheckCircle } from 'react-icons/ai';
 import { ImSpinner9 } from 'react-icons/im';
+import useGetContractAddress from "../custom hooks/useGetContractAddress";
 
 interface PageProps {
   userAddress: string | undefined;
@@ -12,15 +13,16 @@ export default function ContractFee({userAddress}: PageProps) {
   const [newFee, setNewFee] = useState<number | undefined>();
   const [error, setError] = useState<Boolean>(false);
   const [success, setSuccess] = useState<Boolean>(false);
+  const {contractAddress} = useGetContractAddress();
 
   const { data: tx, write: changeContractFee } = useContractWrite({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'changeContractFee',
   });
 
   const { data: owner } = useContractRead({
-    address: '0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6',
+    address: contractAddress,
     abi: contractJson.abi,
     functionName: 'owner',
     watch: true
