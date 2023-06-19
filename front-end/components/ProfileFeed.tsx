@@ -9,8 +9,13 @@ import { ethers } from 'ethers';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import ChangeFeeButton from './ChangeFeeButton';
 import useGetContractAddress from '../custom hooks/useGetContractAddress';
+import SubscriptionLength from './SubscriptionLength';
 
-const ProfileFeed = ({ profile_id }) => {
+interface PageProps {
+  profile_id: string;
+}
+
+const ProfileFeed = ({ profile_id }: PageProps) => {
   const { address } = useAccount();
   const [userAddress, setUserAddress] = useState("");
   // const userAddress = session?.user?.name;
@@ -134,7 +139,8 @@ const ProfileFeed = ({ profile_id }) => {
       </div>
       <div className="bg-black font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
         <div>
-          User Profile: {address}
+          User Profile: {profile_id}
+          <SubscriptionLength creator={profile_id} user={userAddress} />
         </div>
       </div>
       {(userAddress !== profile_id)&&
