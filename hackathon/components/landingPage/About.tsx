@@ -24,17 +24,27 @@ export const About = () => {
             </h3>
             <div className="flex gap-x-6 lg:gap-x-10 mb-12 ">
               <div className="flex-1 text-center lg:text-left sm:justify-evenly">
-                <div className="text-[40px] mb-2">
+                <motion.div
+                variants={fadeIn("left", 0.3)}
+                initial="hidden"
+                whileInView={'show'}
+                viewport={{ once: false, amount: 0.8 }}
+                className="text-[40px] mb-2">
                   {inView ? "0%" : null}
-                </div>
+                </motion.div>
                 <div className="text-sm">
                   Fees for your first 50 fans.
                 </div>
               </div>
               <div className="flex-1 text-center lg:text-left sm:justify-evenly">
-                <div className="text-[40px] mb-2">
+                <motion.div 
+                variants={fadeIn("right", 0.3)}
+                initial="hidden"
+                whileInView={'show'}
+                viewport={{ once: false, amount: 0.8 }}
+                className="text-[40px] mb-2">
                   {inView ? "Quick" : null}
-                </div>
+                </motion.div>
                 <div className="text-sm">
                   Instant processing of creator payments.
                 </div>
