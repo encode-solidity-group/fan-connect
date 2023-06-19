@@ -44,7 +44,7 @@ export default function FeeGate() {
           <ConnectButton />
         </div>
         {!isCreator && <RedirectToCreate queryAddress={queryAddress} userAddress={userAddress} />}
-        {isCreator === true && <DisplayFees />}
+        {isCreator === true && <DisplayFees queryAddress={queryAddress} />}
         {isCreator === true && queryAddress === userAddress &&
           <div className="grid grid-cols-2 sm:ml-[175px] lg:ml-[340px]">
             <CreatorFee />

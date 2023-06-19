@@ -4,6 +4,7 @@ import { Key, useEffect, useState } from "react";
 import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
 import Link from "next/link";
 import useGetContractAddress from "../custom hooks/useGetContractAddress";
+import SubscriptionLength from "./SubscriptionLength";
 
 interface PageProps {
   userAddress: string | undefined;
@@ -14,7 +15,7 @@ export default function CreatorSubscriptions({ userAddress }: PageProps) {
   const [foundActiveSubscribers, setFoundActiveSubscribers] = useState<string[]>([]);
   const [showFoundActiveSubscribers, setShowFoundActiveSubscribers] = useState<Boolean>(false);
   const [showFoundSubscribers, setShowFoundSubscribers] = useState<Boolean>(false);
-  const {contractAddress} = useGetContractAddress();
+  const { contractAddress } = useGetContractAddress();
 
   const { data: subscribers } = useContractRead({
     address: contractAddress,
@@ -50,13 +51,10 @@ export default function CreatorSubscriptions({ userAddress }: PageProps) {
         <Link href={`/profile/${subscriber}`} className="hover:text-red-400">
           {subscriber}
         </Link>
+        <SubscriptionLength creator={userAddress} user={subscriber} />
       </div>
     )
   })
-
-  const handleShowSubscribers = () => {
-    setShowFoundActiveSubscribers(!showFoundActiveSubscribers);
-  }
 
   return (
     <div className="space-y-4">

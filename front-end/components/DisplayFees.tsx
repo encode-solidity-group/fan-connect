@@ -5,23 +5,16 @@ import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import { SiEthereum } from "react-icons/si";
 import useGetContractAddress from '../custom hooks/useGetContractAddress';
 
-export default function DisplayFees() {
-  const router = useRouter();
-  const { creatorAddress } = router.query;
+interface PageProps {
+  queryAddress: string | string[] | undefined;
+}
 
-  const [queryAddress, setQueryAddress] = useState<string | string[]>();
+export default function DisplayFees({ queryAddress }: PageProps) {
 
   const subscriptionIntervals = [30, 90, 180, 365];
   const [creatorPrices, setCreatorPrices] = useState<any>();
 
-  const {contractAddress} = useGetContractAddress();
-
-  useEffect(() => {
-
-    if (creatorAddress) {
-      setQueryAddress(creatorAddress);
-    }
-  }, [creatorAddress]);
+  const { contractAddress } = useGetContractAddress();
 
   const { data: creatorStruct } = useContractRead({
     address: contractAddress,
@@ -54,7 +47,7 @@ export default function DisplayFees() {
   return (
     <div className="text-center my-8 space-y-4">
       <p className='text-xl'>Subscription Fees for:
-        <br/>
+        <br />
         {queryAddress}
       </p>
       <div className='space-y-4'>
