@@ -46,11 +46,17 @@ export const Banner = () => {
               initial="hidden"
               whileInView={'show'}
               viewport={{ once: false, amount: 0.8 }}>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nulla vel quo fugit labore! Magnam molestiae laudantium veniam explicabo dolore. 
+              Have complete control over your fans, content and community. Cheaper fees, faster payments, and more anonymity.
             </motion.p>
-            <Link href='/home'>
-              <button className="bg-red-400 text-white px-4 py-2 rounded-lg">Get Started</button>
-            </Link>
+            <div className="py-6">
+
+              <Link href={`/home`}>
+                <button className="enterButton">
+                  <div className="base">Discover More</div>
+                  <div className="onHover">Login</div>
+                </button>
+              </Link>
+            </div>
 
           </div>
           <div className="hidden lg:flex items-center justify-center">
