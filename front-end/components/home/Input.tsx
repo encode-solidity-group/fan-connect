@@ -4,7 +4,7 @@ import { AiOutlineGif, AiOutlineClose } from "react-icons/ai"
 import { useSession } from 'next-auth/react'
 
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore'
-import { db, storage } from '../firebase'
+import { db, storage } from '../../firebase'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 import Image from 'next/image'
 
@@ -84,10 +84,11 @@ const Input = () => {
                                 <AiOutlineClose className='text-white h-5' />
                             </div>
 
-                            <img
+                            <Image
                                 src={selectedFile}
                                 alt=""
-                                className='rounded-2xl max-h-80 object-contain' />
+                                className='rounded-2xl max-h-80 object-contain'
+                            />
 
                         </div>
 
