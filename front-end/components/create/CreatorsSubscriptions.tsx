@@ -1,10 +1,10 @@
 import { useContractRead } from "wagmi";
-import contractJson from '../SubscriptionJson/SubscriptionService.json';
+import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { Key, useEffect, useState } from "react";
 import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
 import Link from "next/link";
-import useGetContractAddress from "../custom hooks/useGetContractAddress";
-import SubscriptionLength from "./SubscriptionLength";
+import useGetContractAddress from "../../custom hooks/useGetContractAddress";
+import SubscriptionLength from "../SubscriptionLength";
 
 interface PageProps {
   userAddress: string | undefined;
@@ -48,7 +48,7 @@ export default function CreatorSubscriptions({ userAddress }: PageProps) {
   const subscriptionList = foundSubscribers.map((subscriber, index: Key) => {
     return (
       <div key={index}>
-        <Link href={`/profile/${subscriber}`} className="hover:text-red-400">
+        <Link href={`/profile/${subscriber}`} className="hover:text-red-400 break-all">
           {subscriber}
         </Link>
         <SubscriptionLength creator={userAddress} user={subscriber} />

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { ImArrowRight2, ImSpinner9 } from "react-icons/im";
 import { useContractWrite, useWaitForTransaction } from "wagmi";
-import useGetContractAddress from "../custom hooks/useGetContractAddress";
-import contractJson from '../SubscriptionJson/SubscriptionService.json';
+import useGetContractAddress from "../../custom hooks/useGetContractAddress";
+import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { ethers } from "ethers";
 import { AiOutlineCheckCircle, AiOutlineClose, AiOutlineExclamationCircle } from "react-icons/ai";
 
@@ -51,6 +51,7 @@ export default function CreatePage() {
   return (
     <div className="flex justify-center my-8">
       <div className="flex flex-col space-y-4">
+        <div className="text-center text-2xl">Set your fees to get started</div>
 
         <div className="flex justify-between items-center">
           <label htmlFor="30dayFee">Set 30 Day Subscription Fee</label>
@@ -133,9 +134,9 @@ export default function CreatePage() {
         }
 
         {isLoading && <ImSpinner9 className="animate-spin mx-auto" />}
-
+        
         <button onClick={() => handleSubmit()} className="enterButton mx-auto">
-          <div>Create Contract</div>
+          <div>Start Creating</div>
         </button>
 
       </div>

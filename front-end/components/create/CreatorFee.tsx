@@ -1,10 +1,10 @@
 import { ChangeEvent, useState } from "react";
 import { ethers } from "ethers";
 import { useContractWrite, useWaitForTransaction } from "wagmi";
-import contractJson from '../SubscriptionJson/SubscriptionService.json';
+import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { ImArrowRight2, ImSpinner9 } from 'react-icons/im';
 import { AiOutlineExclamationCircle, AiOutlineClose, AiOutlineCheckCircle } from 'react-icons/ai';
-import useGetContractAddress from "../custom hooks/useGetContractAddress";
+import useGetContractAddress from "../../custom hooks/useGetContractAddress";
 
 export default function CreatorFee() {
   const [new30dayFee, setNew30DayFee] = useState<number | undefined>();
