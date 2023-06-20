@@ -32,25 +32,26 @@ html, body {
     rgb(var(--background-start-rgb));
 } */
 
-/* body {
-	background: linear-gradient(-45deg, #17273a, #0a253b, #1F2123, #101010);
-	background-size: 400% 400%;
+body {
+	background: linear-gradient(-45deg, #e1ecf8, #c7eafa, #ffffff, #c6f6ff);
+	background-size: 600% 600%;
 	animation: gradient 15s ease infinite;
-	height: 120vh;
-  color: white;
+	height: 160vh;
+  width: full;
+  color: black;
 }
 
 @keyframes gradient {
 	0% {
-		background-position: 0% 50%;
+		background-position: 0% 80%;
 	}
 	50% {
-		background-position: 100% 50%;
+		background-position: 100% 80%;
 	}
 	100% {
-		background-position: 0% 50%;
+		background-position: 0% 80%;
 	}
-} */
+}
 
 
 .background-animated {

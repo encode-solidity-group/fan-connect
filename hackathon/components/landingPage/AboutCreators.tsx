@@ -12,7 +12,7 @@ export const About = () => {
     }
   );
   return (
-    <section className="min-h-[85vh] lg:min-h-75 flex items-center md:px-24 xs:px-0" ref={ref}>
+    <section className="min-h-[85vh] lg:min-h-75 flex items-center md:px-24 xs:px-0 lg:-my-24" ref={ref}>
       <div className="containter mx-auto">
         <div className="flex flex-col gap-y-6 lg:flex-row lg:items-center lg:gap-x-12">
           <div>
@@ -63,7 +63,7 @@ export const About = () => {
             </div>
           </div>
 
-          <div className="flex-1 flex justify-center mix-blend-lighten lg:items-center ">
+          <div className="flex-1 flex justify-center lg:items-center ">
             <Image src="/woman2.jpg" alt="aboutImage" width={400} height={400}
               className="max-w-[400px] lg:max-w-[482px]"
             />
