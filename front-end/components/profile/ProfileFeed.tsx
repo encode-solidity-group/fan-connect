@@ -40,11 +40,9 @@ const ProfileFeed = () => {
     abi: contractJson.abi,
     functionName: 'payForSubscription',
     args: [queryAddress, daysSubscribed],
-    value: foundPrice
   });
 
   useEffect(() => {
-
     if (daysSubscribed != 0) {
       calcPriceRefetch()
     }
@@ -52,7 +50,6 @@ const ProfileFeed = () => {
       setFoundPrice(price as BigNumber);
     }
   }, [calcPriceRefetch, daysSubscribed, price])
-
 
   useEffect(() => {
     if (queryAddress) {
@@ -70,7 +67,6 @@ const ProfileFeed = () => {
       return () => getSubscriptionsFeed();
     }
   }, [queryAddress]);
-
 
   // TOKEN GATE THIS FEED. IF YOU ARE NOT SUBSCRIBED TO THE CREATOR
   // AND YOU ARE NOT THE CREATOR YOU SHOULD NOT RENDER ANYTHING
@@ -124,10 +120,10 @@ const ProfileFeed = () => {
             <option value="365">365 Days</option>
           </select>
 
-          <div className="mr-6 flex items-center">Price: {ethers.utils.formatUnits(price ? price : 0)} <SiEthereum /></div>
+          <div className="mr-6 flex items-center">Price: {ethers.utils.formatUnits(foundPrice)} <SiEthereum /></div>
 
           <div className="text-red-400">
-            <button onClick={() => subscribeWrite()} className='border border-red-400 rounded-md px-2'>Subscribe</button>
+            <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-red-400 rounded-md px-2'>Subscribe</button>
           </div>
 
         </div>

@@ -8,7 +8,6 @@ import { db, storage } from '../../firebase'
 import { getDownloadURL, ref, uploadString } from 'firebase/storage'
 import Image from 'next/image'
 
-
 const Input = () => {
 
     const { data: session } = useSession()
