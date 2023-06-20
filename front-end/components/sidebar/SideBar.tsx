@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Image from 'next/image';
-import logo from '../../public/logo.png';
+import logo from '../../public/blueLogo.png';
 import SideBarLink from './SideBarLink';
 import { AiOutlineHome } from 'react-icons/ai';
 import { RiBankLine, RiUserLine, RiHeartsLine } from "react-icons/ri";
@@ -35,7 +35,7 @@ const SideBar = () => {
 
         <Link href={`/profile/${userAddress}`}>
           <SideBarLink text="Profile" Icon={RiUserLine} />
-          <div className="text-[#d9d9d9] flex items-center justify-center">
+          <div className="flex items-center justify-center">
             <div className="hidden lg:inline leading-5 font-bold">
               {userAddress?.slice(0, 4)}...{userAddress?.slice(38)}
             </div>

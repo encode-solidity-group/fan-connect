@@ -69,8 +69,8 @@ const Feed = () => {
   };
 
   return (
-    <div className="min-h-screen text-white mx-auto w-[600px] my-8">
-      <div className="bg-black font-medium text-[30px] px-4 py-2">
+    <div className="min-h-screen text-black mx-auto w-[600px] my-8">
+      <div className="font-medium text-[30px] px-4 py-2">
         Home
       </div>
       {isCreator === true && <Input />}

@@ -80,7 +80,7 @@ const Input = () => {
 
                         <div className="relative mb-4">
                             <div className='absolute w-8 h-8 bg-[#15181c] hover:[#272c26] bg-opacity-75 rounded-full flex items-center justify-center top-1 left-1 cursor-pointer' onClick={() => setSelectedFile(null)}>
-                                <AiOutlineClose className='text-white h-5' />
+                                <AiOutlineClose className='h-5' />
                             </div>
 
                             <Image
@@ -113,7 +113,7 @@ const Input = () => {
                             </div>
 
                             <button
-                                className="bg-[#df8989] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#df8989] cursor-pointer"
+                                className="bg-[#df8989] rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#df8989] cursor-pointer"
                                 disabled={!input.trim() && !selectedFile}
                                 onClick={sendPost} >
                                 Post

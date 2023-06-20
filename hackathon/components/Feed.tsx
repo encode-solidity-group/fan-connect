@@ -74,8 +74,8 @@ const Feed = ({ userAddress }: PageProps) => {
   return (
 
 
-    <div className="min-h-screen text-white py-8 mx-auto w-[600px] -mt-8">
-      <div className="bg-black font-medium text-[30px] px-4 py-2">
+    <div className="min-h-screen py-8 mx-auto w-[600px] -mt-8">
+      <div className="font-medium text-[30px] px-4 py-2">
         Home
       </div>
       {isCreator === true && <Input />}

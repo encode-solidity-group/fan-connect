@@ -128,11 +128,11 @@ const ProfileFeed = ({ profile_id }) => {
   };
 
   return (
-    <div className="min-h-screen text-white py-4 mx-auto w-[600px]">
+    <div className="min-h-screen py-4 mx-auto w-[600px]">
       <div className='text-center mb-4'>
         <ChangeFeeButton userAddress={userAddress} profile_id={profile_id} />
       </div>
-      <div className="bg-black font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
+      <div className="font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
         <div>
           User Profile: {address}
         </div>
@@ -142,7 +142,7 @@ const ProfileFeed = ({ profile_id }) => {
         <select 
           value={daysSubscribed} 
           onChange={handleDaysChange}
-          className="bg-black text-red-200 mx-5 mb-16 border rounded-md"
+          className="text-red-200 mx-5 mb-16 border rounded-md"
         >
           <option value="30">30</option>
           <option value="90">90</option>
@@ -159,14 +159,14 @@ const ProfileFeed = ({ profile_id }) => {
       }
       <div className="flex justify-evenly mb-4">
         <button
-          className={`mr-2 ${isFeedView ? 'bg-black text-[24px] text-red-500' : ''}`}
+          className={`mr-2 ${isFeedView ? 'text-[24px] text-red-500' : ''}`}
           onClick={() => setIsFeedView(true)}
         >
           Feed
         </button>
         {userAddress === profile_id && (
           <button
-            className={`ml-2 ${!isFeedView ? 'bg-black text-[24px]  text-red-500' : ''}`}
+            className={`ml-2 ${!isFeedView ? 'text-[24px]  text-red-500' : ''}`}
             onClick={() => setIsFeedView(false)}
           >
             Subscriptions

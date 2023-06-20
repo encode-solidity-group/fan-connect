@@ -97,11 +97,11 @@ const ProfileFeed = () => {
   };
 
   return (
-    <div className="min-h-screen text-white py-4 mx-auto w-[600px]">
+    <div className="min-h-screen py-4 mx-auto w-[600px]">
       <div className='text-center mb-4'>
         <ChangeFeeButton />
       </div>
-      <div className="bg-black font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
+      <div className="font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
         <div>
           User Profile: {queryAddress}
           <SubscriptionLength creator={queryAddress} user={userAddress} />
@@ -112,7 +112,7 @@ const ProfileFeed = () => {
           <select
             value={daysSubscribed}
             onChange={(event) => handleDaysChange(event)}
-            className="bg-black text-red-200 mx-5 mb-16 border rounded-md "
+            className="text-red-200 mx-5 mb-16 border rounded-md "
           >
             <option value="30">30 Days</option>
             <option value="90">90 Days</option>
@@ -129,7 +129,7 @@ const ProfileFeed = () => {
         </div>
       }
       <div className="flex justify-evenly mb-4">
-        <div className='mr-2 bg-black text-[24px] text-red-500'>
+        <div className='mr-2 text-[24px] text-red-500'>
           {userAddress === queryAddress ? 'Your Feed' : 'Feed'}
         </div>
       </div>
