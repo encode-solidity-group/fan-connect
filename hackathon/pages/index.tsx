@@ -8,7 +8,8 @@ import { Inter } from 'next/font/google';
 import Header from '../components/landingPage/Header'
 import Nav from '../components/landingPage/Nav'
 import Banner from '../components/landingPage/Banner'
-import About from '../components/landingPage/About'
+import AboutCreators from '../components/landingPage/AboutCreators'
+import AboutUsers from '../components/landingPage/AboutUsers'
 
 const inter = Inter({
   weight: ['400', '700'],
@@ -21,7 +22,9 @@ function Home() {
     <div className={`${inter.className}`}>
       <Header />
       <Banner />
-      <About />
+      <AboutCreators />
+      <AboutUsers />
+
       <Nav />
       {/* <Login /> */}
     </div>
