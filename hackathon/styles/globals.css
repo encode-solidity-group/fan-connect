@@ -32,7 +32,7 @@ html, body {
     rgb(var(--background-start-rgb));
 } */
 
-body {
+/* body {
 	background: linear-gradient(-45deg, #17273a, #0a253b, #1F2123, #101010);
 	background-size: 400% 400%;
 	animation: gradient 15s ease infinite;
@@ -50,4 +50,42 @@ body {
 	100% {
 		background-position: 0% 50%;
 	}
+} */
+
+
+.background-animated {
+  width: 100%;
+  /* position: absolute; */
+  background-color: #7bb7e7;
+  background-size: 1200px;
+  background-image: url('../public/collage.png');
+  /* // uncomment this to see how animation really works */
+  /* background-image: url('https://andreivictor.ro/codepen/infinite-scroll-bg/infinite-scroll-bg-explained.jpg'); */
+  animation: infiniteScrollBg 64s linear infinite;
 }
+
+@keyframes infiniteScrollBg {
+  0% {
+    background-position: 50% 0;
+  }
+  100%{
+    background-position: 50% (404px * 2);
+  }
+}
+
+.background-animated1 {
+  width: 100%;
+  /* position: absolute; */
+  background-size: 795px;
+  background-image: url('../public/collage2.png');
+  animation: infiniteScrollBg 300s linear infinite;
+}
+
+.background-animated2 {
+  width: 100%;
+  /* position: absolute; */
+  background-size: 800px;
+  background-image: url('../public/collage3.png');
+  animation: infiniteScrollBg 300s linear infinite;
+}
+

@@ -21,8 +21,14 @@ function Home() {
   return (
     <div className={`${inter.className}`}>
       <Header />
+      <div className="background-animated py-20 scale-150 mt-24 ">
+      </div>
       <Banner />
+      <div className="background-animated1 py-20 scale-150">
+      </div>
       <AboutCreators />
+      <div className="background-animated2 py-20 scale-150">
+      </div>
       <AboutUsers />
 
       <Nav />
