@@ -7,7 +7,7 @@ const Header = () => {
     <header className="py-8">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <Image src="/logo.png"  alt="logo" width={200} height={200} />
+          <Image src="/blueLogo.png"  alt="logo" width={200} height={200} />
           <ConnectButton />
         </div>
 

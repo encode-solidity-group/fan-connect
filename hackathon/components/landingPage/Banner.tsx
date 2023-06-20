@@ -36,7 +36,7 @@ export const Banner = () => {
                 2000,
               ]}
                 speed={50}
-                className="text-red-400 uppercase font-semibold"
+                className="text-[#6BD0FF] uppercase font-semibold"
                 wrapper='span'
                 repeat={Infinity}
               />
