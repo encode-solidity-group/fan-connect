@@ -1,20 +1,16 @@
-import { useRouter } from 'next/router';
-import { Key, useEffect, useState } from 'react'
+import { Key, useContext, useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi';
-import contractJson from '../SubscriptionJson/SubscriptionService.json';
+import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { SiEthereum } from "react-icons/si";
-import useGetContractAddress from '../custom hooks/useGetContractAddress';
+import useGetContractAddress from '../../custom hooks/useGetContractAddress';
+import { QueryAddressContext } from '../../providers/QueryAddressProvider';
 
-interface PageProps {
-  queryAddress: string | string[] | undefined;
-}
-
-export default function DisplayFees({ queryAddress }: PageProps) {
-
+export default function DisplayFees() {
   const subscriptionIntervals = [30, 90, 180, 365];
   const [creatorPrices, setCreatorPrices] = useState<any>();
 
   const { contractAddress } = useGetContractAddress();
+  const { queryAddress } = useContext(QueryAddressContext);
 
   const { data: creatorStruct } = useContractRead({
     address: contractAddress,
@@ -35,10 +31,10 @@ export default function DisplayFees({ queryAddress }: PageProps) {
       return creatorPrices.map((price: any, index: Key) => {
         const parsedPrice = Number(price) / 10 ** 18;
         const interval = subscriptionIntervals[Number(index)];
-
         return (
-          <div key={index} className='flex items-center justify-center'>
-            {interval} day price: {parsedPrice} <SiEthereum />
+          <div key={index} className='flex flex-col items-center justify-center'>
+            <div className='text-xl'>{interval} Days</div>
+            <div className='flex items-center text-center'>{parsedPrice} <SiEthereum /></div>
           </div>
         );
       });
@@ -51,7 +47,9 @@ export default function DisplayFees({ queryAddress }: PageProps) {
         {queryAddress}
       </p>
       <div className='space-y-4'>
-        {creatorFees()}
+        <div className='flex justify-center gap-8'>
+          {creatorFees()}
+        </div>
       </div>
     </div>
   )

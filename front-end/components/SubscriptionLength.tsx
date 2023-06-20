@@ -3,14 +3,14 @@ import useGetContractAddress from "../custom hooks/useGetContractAddress"
 import contractJson from '../SubscriptionJson/SubscriptionService.json'
 
 interface PageProps {
-  user: string | undefined;
   creator: string | string[] | undefined;
+  user: string | undefined;
 }
 
 export default function SubscriptionLength({ creator, user }: PageProps) {
   const { contractAddress } = useGetContractAddress();
 
-  const {data: isSubscribed} = useContractRead({
+  const { data: isSubscribed } = useContractRead({
     address: contractAddress,
     abi: contractJson.abi,
     functionName: 'isSubscribed',
@@ -26,7 +26,6 @@ export default function SubscriptionLength({ creator, user }: PageProps) {
 
   const date = new Date(Number(timestamp) * 1000);
   const localTime = date.toLocaleString();
-  console.log(localTime);
 
   return (
     <div className="">

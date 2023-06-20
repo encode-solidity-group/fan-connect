@@ -2,7 +2,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
-
 export default function Header() {
   return (
     <header className="z-20 mt-4">
@@ -14,7 +13,7 @@ export default function Header() {
           </Link>
         </div>
         <div className="flex justify-evenly basis-1/3 items-center">
-        <ConnectButton />
+          <ConnectButton />
         </div>
       </div>
     </header>

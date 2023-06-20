@@ -1,11 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useAccount } from 'wagmi'
 import slides from './slideimages';
 import { JSX } from 'react';
 
 export default function Login() {
-  const { address } = useAccount();
 
   const renderFeed = () => {
     const images: JSX.Element[] = [];

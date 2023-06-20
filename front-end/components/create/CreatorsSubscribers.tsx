@@ -1,21 +1,20 @@
 import { useContractRead } from "wagmi";
-import contractJson from '../SubscriptionJson/SubscriptionService.json';
-import { Key, useEffect, useState } from "react";
+import contractJson from '../../SubscriptionJson/SubscriptionService.json';
+import { Key, useContext, useEffect, useState } from "react";
 import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
 import Link from "next/link";
-import useGetContractAddress from "../custom hooks/useGetContractAddress";
-import SubscriptionLength from "./SubscriptionLength";
+import useGetContractAddress from "../../custom hooks/useGetContractAddress";
+import SubscriptionLength from "../SubscriptionLength";
+import { UserAddressContext } from "../../providers/UserAddressProvider";
 
-interface PageProps {
-  userAddress: string | undefined;
-}
-
-export default function CreatorSubscriptions({ userAddress }: PageProps) {
+export default function CreatorSubscribers() {
+  const { userAddress } = useContext(UserAddressContext);
+  const { contractAddress } = useGetContractAddress();
+  
   const [foundSubscribers, setFoundSubscribers] = useState<string[]>([]);
   const [foundActiveSubscribers, setFoundActiveSubscribers] = useState<string[]>([]);
   const [showFoundActiveSubscribers, setShowFoundActiveSubscribers] = useState<Boolean>(false);
   const [showFoundSubscribers, setShowFoundSubscribers] = useState<Boolean>(false);
-  const { contractAddress } = useGetContractAddress();
 
   const { data: subscribers } = useContractRead({
     address: contractAddress,
@@ -48,7 +47,7 @@ export default function CreatorSubscriptions({ userAddress }: PageProps) {
   const subscriptionList = foundSubscribers.map((subscriber, index: Key) => {
     return (
       <div key={index}>
-        <Link href={`/profile/${subscriber}`} className="hover:text-red-400">
+        <Link href={`/profile/${subscriber}`} className="hover:text-red-400 break-all">
           {subscriber}
         </Link>
         <SubscriptionLength creator={userAddress} user={subscriber} />
