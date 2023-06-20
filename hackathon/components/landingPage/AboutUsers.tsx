@@ -12,7 +12,7 @@ export const About = () => {
     }
   );
   return (
-    <section className="min-h-[85vh] lg:min-h-75 flex items-center md:px-24 xs:px-0" ref={ref}>
+    <section className="min-h-[85vh] lg:min-h-65 flex items-center md:px-24 xs:px-0" ref={ref}>
       <div className="containter mx-auto">
         <div className="flex flex-col gap-y-6 lg:flex-row lg:items-center lg:gap-x-12">
           <div>
