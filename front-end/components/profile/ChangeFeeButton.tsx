@@ -2,14 +2,16 @@ import { useRouter } from "next/router"
 import { useContractRead, useNetwork } from "wagmi";
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import useGetContractAddress from "../../custom hooks/useGetContractAddress";
+import { useContext } from "react";
+import { UserAddressContext } from "../../providers/UserAddressProvider";
 
 interface PageProps {
-  userAddress: string;
   profile_id: string;
 }
 
-export default function ChangeFeeButton({ userAddress, profile_id }: PageProps) {
+export default function ChangeFeeButton({ profile_id }: PageProps) {
   const router = useRouter();
+  const {userAddress} = useContext(UserAddressContext);
 
   const { contractAddress } = useGetContractAddress();
 

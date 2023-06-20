@@ -1,6 +1,6 @@
-import { useAccount, useContractRead } from "wagmi";
+import { useContractRead } from "wagmi";
 import CreatorFee from "../../../components/create/CreatorFee";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import contractJson from '../../../SubscriptionJson/SubscriptionService.json';
 import SideBar from "../../../components/sidebar/SideBar";
 import { useRouter } from "next/router";
@@ -10,24 +10,21 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import useGetContractAddress from "../../../custom hooks/useGetContractAddress";
 import Link from "next/link";
 import CreatorSubscribers from "../../../components/create/CreatorsSubscribers";
+import { UserAddressContext } from "../../../providers/UserAddressProvider";
 
 export default function FeeGate() {
   const router = useRouter();
   const { creatorAddress } = router.query;
-  const { address } = useAccount();
   const { contractAddress } = useGetContractAddress();
+  const { userAddress } = useContext(UserAddressContext);
 
-  const [userAddress, setUserAddress] = useState<string>();
   const [queryAddress, setQueryAddress] = useState<string | string[] | undefined>();
 
   useEffect(() => {
-    if (address) {
-      setUserAddress(address);
-    }
     if (creatorAddress) {
       setQueryAddress(creatorAddress);
     }
-  }, [address, creatorAddress]);
+  }, [creatorAddress]);
 
   const { data: isCreator } = useContractRead({
     address: contractAddress,
@@ -45,7 +42,7 @@ export default function FeeGate() {
           <ConnectButton />
         </div>
 
-        {!isCreator && <RedirectToCreate queryAddress={queryAddress} userAddress={userAddress} />}
+        {!isCreator && <RedirectToCreate queryAddress={queryAddress} />}
         {isCreator === true &&
           <div>
             <DisplayFees queryAddress={queryAddress} />
@@ -59,7 +56,7 @@ export default function FeeGate() {
         {isCreator === true && queryAddress === userAddress &&
           <div className="grid grid-cols-2 mx-auto">
             <CreatorFee />
-            <CreatorSubscribers userAddress={userAddress} />
+            <CreatorSubscribers />
           </div>
         }
 

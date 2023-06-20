@@ -7,13 +7,11 @@ import { arbitrum, goerli, mainnet, optimism, polygon, sepolia, auroraTestnet } 
 import { publicProvider } from 'wagmi/providers/public';
 import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
 import { SessionProvider } from 'next-auth/react';
-import type { Session } from 'next-auth';
 import '../styles/glass.css';
 import '../styles/buttons.css';
 import '../styles/slider.css';
 import '../styles/typewriter.css';
-
-
+import UserAddressProvider from '../providers/UserAddressProvider';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -47,7 +45,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SessionProvider refetchInterval={0} session={pageProps.session}>
         <RainbowKitSiweNextAuthProvider>
           <RainbowKitProvider chains={chains}>
-            <Component {...pageProps} />
+            <UserAddressProvider >
+              <Component {...pageProps} />
+            </UserAddressProvider>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>
       </SessionProvider>

@@ -1,19 +1,8 @@
-import React, { useEffect, useState } from 'react';
 import SideBar from '../../components/sidebar/SideBar';
 import Feed from '../../components/home/Feed';
-import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const UserHome = () => {
-  const { address } = useAccount();
-  const [userAddress, setUserAddress] = useState<string>();
-
-  useEffect(() => {
-    if (address) {
-      setUserAddress(address);
-    }
-  }, [address]);
-
   return (
     <div>
       <div className='flex justify-between w-screen'>
@@ -22,7 +11,7 @@ const UserHome = () => {
         <div className="flex justify-end mr-16 mt-4">
           <ConnectButton />
         </div>
-          <Feed userAddress={userAddress} />
+          <Feed />
         </div>
       </div>
     </div>

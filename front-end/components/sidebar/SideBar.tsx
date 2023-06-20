@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import Image from 'next/image';
 import logo from '../../public/logo.png';
 import SideBarLink from './SideBarLink';
@@ -6,24 +6,17 @@ import { AiOutlineHome } from 'react-icons/ai';
 import { RiBankLine, RiUserLine, RiHeartsLine } from "react-icons/ri";
 import Link from 'next/link';
 import ContractFee from './ContractFee';
-import { useAccount } from 'wagmi';
+import { UserAddressContext } from '../../providers/UserAddressProvider';
 
 const SideBar = () => {
-  const {address} = useAccount();
-  const [userAddress, setUserAddress] = useState<string>();
-
-  useEffect(() => {
-    if (address) {
-      setUserAddress(address);
-    }
-  }, [address])
+  const { userAddress } = useContext(UserAddressContext);
 
   return (
     <div className="hidden sm:flex flex-col items-center fixed lg:items-start lg:w-[340px] h-screen border-r border-red-200">
 
       <div className="flex items-center justify-center w-44 h-44 hoverEffect mx-auto p-4 lg:p-0">
         <Link href={'/'}>
-          <Image src={logo} alt="FanConnectLogo"  width={300} height={200} />
+          <Image src={logo} alt="FanConnectLogo" width={300} height={200} />
         </Link>
       </div>
 
@@ -32,7 +25,7 @@ const SideBar = () => {
           <SideBarLink text="Home" Icon={AiOutlineHome} />
         </Link>
 
-        <Link href={'/'}>
+        <Link href={`/subscriptions/${userAddress}`}>
           <SideBarLink text="Subscriptions" Icon={RiHeartsLine} />
         </Link>
 
@@ -49,7 +42,7 @@ const SideBar = () => {
           </div>
         </Link>
       </div>
-      <ContractFee userAddress={userAddress}/>
+      <ContractFee />
     </div>
   );
 };

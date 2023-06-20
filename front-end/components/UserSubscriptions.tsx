@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useContractRead } from 'wagmi';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import Link from 'next/link';
 import useGetContractAddress from '../custom hooks/useGetContractAddress';
+import { UserAddressContext } from '../providers/UserAddressProvider';
 
 export default function UserSubscriptions() {
   const {contractAddress} = useGetContractAddress();
-  
+  const {userAddress} = useContext(UserAddressContext);
+
   const { data: userSubscriptions } = useContractRead({
     address: contractAddress,
     abi: contractJson.abi,

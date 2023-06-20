@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { Key, useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';

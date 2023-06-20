@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { useContractRead, useContractWrite, useAccount } from 'wagmi';
+import { useContractRead, useContractWrite } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import ChangeFeeButton from './ChangeFeeButton';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import SubscriptionLength from './SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
+import { UserAddressContext } from '../../providers/UserAddressProvider';
 
 interface PageProps {
   profile_id: string;
 }
 
 const ProfileFeed = ({ profile_id }: PageProps) => {
-  const { address } = useAccount();
-  const [userAddress, setUserAddress] = useState("");
+  const {userAddress} = useContext(UserAddressContext);
   const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
 
   const [posts, setPosts] = useState<DocumentData[]>([]); 
@@ -46,16 +46,14 @@ const ProfileFeed = ({ profile_id }: PageProps) => {
   });
 
   useEffect(() => {
-    if (address) {
-      setUserAddress(address)
-    }
+
     if (daysSubscribed != 0) {
       calcPriceRefetch()
     }
     if (price) {
       setFoundPrice(price as BigNumber);
     }
-  }, [address, calcPriceRefetch, daysSubscribed, price])
+  }, [ calcPriceRefetch, daysSubscribed, price])
 
 
   useEffect(() => {
@@ -107,12 +105,12 @@ const ProfileFeed = ({ profile_id }: PageProps) => {
   return (
     <div className="min-h-screen text-white py-4 mx-auto w-[600px]">
       <div className='text-center mb-4'>
-        <ChangeFeeButton userAddress={userAddress} profile_id={profile_id} />
+        <ChangeFeeButton profile_id={profile_id} />
       </div>
       <div className="bg-black font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
         <div>
           User Profile: {profile_id}
-          <SubscriptionLength creator={profile_id} user={userAddress} />
+          <SubscriptionLength creator={profile_id} />
         </div>
       </div>
       {(userAddress !== profile_id) &&

@@ -1,15 +1,13 @@
 import { useContractRead, useContractWrite, useWaitForTransaction } from "wagmi";
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
-import { useState, ChangeEvent } from "react";
+import { useState, ChangeEvent, useContext } from "react";
 import { AiOutlineExclamationCircle, AiOutlineClose, AiOutlineCheckCircle } from 'react-icons/ai';
 import { ImSpinner9 } from 'react-icons/im';
 import useGetContractAddress from "../../custom hooks/useGetContractAddress";
+import { UserAddressContext } from "../../providers/UserAddressProvider";
 
-interface PageProps {
-  userAddress: string | undefined;
-}
-
-export default function ContractFee({userAddress}: PageProps) {
+export default function ContractFee() {
+  const {userAddress} = useContext(UserAddressContext);
   const [newFee, setNewFee] = useState<number | undefined>();
   const [error, setError] = useState<Boolean>(false);
   const [success, setSuccess] = useState<Boolean>(false);

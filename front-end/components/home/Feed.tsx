@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import Input from './Input';
@@ -6,13 +6,11 @@ import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { useContractRead } from 'wagmi';
 import Link from 'next/link';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
+import { UserAddressContext } from '../../providers/UserAddressProvider';
 
-interface PageProps {
-  userAddress: string | undefined;
-}
-
-const Feed = ({ userAddress }: PageProps) => {
+const Feed = () => {
   const {contractAddress} = useGetContractAddress();
+  const {userAddress} = useContext(UserAddressContext);
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
 

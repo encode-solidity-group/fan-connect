@@ -1,16 +1,14 @@
 import { useContractRead } from "wagmi";
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
-import { Key, useEffect, useState } from "react";
+import { Key, useContext, useEffect, useState } from "react";
 import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
 import Link from "next/link";
 import useGetContractAddress from "../../custom hooks/useGetContractAddress";
 import SubscriptionLength from "../profile/SubscriptionLength";
+import { UserAddressContext } from "../../providers/UserAddressProvider";
 
-interface PageProps {
-  userAddress: string | undefined;
-}
-
-export default function CreatorSubscribers({ userAddress }: PageProps) {
+export default function CreatorSubscribers() {
+  const {userAddress} = useContext(UserAddressContext);
   const [foundSubscribers, setFoundSubscribers] = useState<string[]>([]);
   const [foundActiveSubscribers, setFoundActiveSubscribers] = useState<string[]>([]);
   const [showFoundActiveSubscribers, setShowFoundActiveSubscribers] = useState<Boolean>(false);

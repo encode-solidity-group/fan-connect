@@ -4,7 +4,6 @@ import SideBar from "../../../components/sidebar/SideBar";
 import ProfileFeed from "../../../components/profile/ProfileFeed";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
-
 function UserProfile() {
   const router = useRouter();
   const [id, setId] = useState<string>("");
@@ -12,7 +11,6 @@ function UserProfile() {
   useEffect(() => {
     setId(router.query.profileId as string);
   }, [router.query]);
-
 
   return (
     <div>
