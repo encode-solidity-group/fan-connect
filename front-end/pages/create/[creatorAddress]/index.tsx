@@ -2,14 +2,14 @@ import { useAccount, useContractRead } from "wagmi";
 import CreatorFee from "../../../components/create/CreatorFee";
 import { useEffect, useState } from "react";
 import contractJson from '../../../SubscriptionJson/SubscriptionService.json';
-import SideBar from "../../../components/SideBar";
+import SideBar from "../../../components/sidebar/SideBar";
 import { useRouter } from "next/router";
 import DisplayFees from "../../../components/create/DisplayFees";
 import RedirectToCreate from "../../../components/create/RedirectToCreate";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import CreatorSubscriptions from "../../../components/create/CreatorsSubscriptions";
 import useGetContractAddress from "../../../custom hooks/useGetContractAddress";
 import Link from "next/link";
+import CreatorSubscribers from "../../../components/create/CreatorsSubscribers";
 
 export default function FeeGate() {
   const router = useRouter();
@@ -59,7 +59,7 @@ export default function FeeGate() {
         {isCreator === true && queryAddress === userAddress &&
           <div className="grid grid-cols-2 mx-auto">
             <CreatorFee />
-            <CreatorSubscriptions userAddress={userAddress} />
+            <CreatorSubscribers userAddress={userAddress} />
           </div>
         }
 

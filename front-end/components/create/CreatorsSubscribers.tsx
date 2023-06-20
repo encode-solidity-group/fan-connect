@@ -4,13 +4,13 @@ import { Key, useEffect, useState } from "react";
 import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
 import Link from "next/link";
 import useGetContractAddress from "../../custom hooks/useGetContractAddress";
-import SubscriptionLength from "../SubscriptionLength";
+import SubscriptionLength from "../profile/SubscriptionLength";
 
 interface PageProps {
   userAddress: string | undefined;
 }
 
-export default function CreatorSubscriptions({ userAddress }: PageProps) {
+export default function CreatorSubscribers({ userAddress }: PageProps) {
   const [foundSubscribers, setFoundSubscribers] = useState<string[]>([]);
   const [foundActiveSubscribers, setFoundActiveSubscribers] = useState<string[]>([]);
   const [showFoundActiveSubscribers, setShowFoundActiveSubscribers] = useState<Boolean>(false);

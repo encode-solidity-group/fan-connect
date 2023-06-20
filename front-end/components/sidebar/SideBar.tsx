@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import logo from '../public/logo.png';
+import logo from '../../public/logo.png';
 import SideBarLink from './SideBarLink';
-import { AiFillHome, AiOutlineInbox, AiOutlineTeam, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineHome } from 'react-icons/ai';
+import { RiBankLine, RiUserLine, RiHeartsLine } from "react-icons/ri";
 import Link from 'next/link';
 import ContractFee from './ContractFee';
 import { useAccount } from 'wagmi';
@@ -28,19 +29,19 @@ const SideBar = () => {
 
       <div className="flex-col mx-auto">
         <Link href={'/home'}>
-          <SideBarLink text="Home" Icon={AiFillHome} />
+          <SideBarLink text="Home" Icon={AiOutlineHome} />
         </Link>
 
-        {/* <Link href={'/'}>
-          <SideBarLink text="Messages" Icon={AiOutlineInbox} />
-        </Link> */}
+        <Link href={'/'}>
+          <SideBarLink text="Subscriptions" Icon={RiHeartsLine} />
+        </Link>
 
-        <Link href={`/profile/${userAddress}/create`}>
-          <SideBarLink text="Create Community" Icon={AiOutlineTeam} />
+        <Link href={`/create/${userAddress}`}>
+          <SideBarLink text="Create Community" Icon={RiBankLine} />
         </Link>
 
         <Link href={`/profile/${userAddress}`}>
-          <SideBarLink text="Profile" Icon={AiOutlineUser} />
+          <SideBarLink text="Profile" Icon={RiUserLine} />
           <div className="text-[#d9d9d9] flex items-center justify-center">
             <div className="hidden lg:inline leading-5 font-bold">
               {userAddress?.slice(0, 4)}...{userAddress?.slice(38)}

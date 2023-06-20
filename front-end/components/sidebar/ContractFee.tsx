@@ -1,9 +1,9 @@
 import { useContractRead, useContractWrite, useWaitForTransaction } from "wagmi";
-import contractJson from '../SubscriptionJson/SubscriptionService.json';
+import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { useState, ChangeEvent } from "react";
 import { AiOutlineExclamationCircle, AiOutlineClose, AiOutlineCheckCircle } from 'react-icons/ai';
 import { ImSpinner9 } from 'react-icons/im';
-import useGetContractAddress from "../custom hooks/useGetContractAddress";
+import useGetContractAddress from "../../custom hooks/useGetContractAddress";
 
 interface PageProps {
   userAddress: string | undefined;

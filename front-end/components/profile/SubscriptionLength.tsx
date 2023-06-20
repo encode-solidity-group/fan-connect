@@ -1,6 +1,6 @@
 import { useContractRead } from "wagmi"
-import useGetContractAddress from "../custom hooks/useGetContractAddress"
-import contractJson from '../SubscriptionJson/SubscriptionService.json'
+import useGetContractAddress from "../../custom hooks/useGetContractAddress"
+import contractJson from '../../SubscriptionJson/SubscriptionService.json'
 
 interface PageProps {
   user: string | undefined;
@@ -26,7 +26,6 @@ export default function SubscriptionLength({ creator, user }: PageProps) {
 
   const date = new Date(Number(timestamp) * 1000);
   const localTime = date.toLocaleString();
-  console.log(localTime);
 
   return (
     <div className="">

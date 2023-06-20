@@ -1,7 +1,7 @@
 import { useRouter } from "next/router"
 import { useContractRead, useNetwork } from "wagmi";
-import contractJson from '../SubscriptionJson/SubscriptionService.json';
-import useGetContractAddress from "../custom hooks/useGetContractAddress";
+import contractJson from '../../SubscriptionJson/SubscriptionService.json';
+import useGetContractAddress from "../../custom hooks/useGetContractAddress";
 
 interface PageProps {
   userAddress: string;
@@ -30,9 +30,9 @@ export default function ChangeFeeButton({ userAddress, profile_id }: PageProps) 
       {profile_id === userAddress &&
         <button
           className="enterButton"
-          onClick={() => router.push(`/fees/${userAddress}`)} >
-          <div className="base">Change Subscription Fees</div>
-          <div className="onHover">Change Subscription Fees</div>
+          onClick={() => router.push(`/create/${userAddress}`)}
+        >
+          Change Subscription Fees
         </button>
       }
     </>

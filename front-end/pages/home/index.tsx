@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import SideBar from '../../components/SideBar';
+import SideBar from '../../components/sidebar/SideBar';
 import Feed from '../../components/home/Feed';
 import { useAccount } from 'wagmi';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
