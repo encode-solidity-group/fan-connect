@@ -64,7 +64,7 @@ export const About = () => {
           </div>
 
           <div className="flex-1 flex justify-center mix-blend-lighten lg:items-center glassMorph">
-            <Image src="/otherpic.jpg" alt="aboutImage" width={400} height={400}
+            <Image src="/male1.jpg" alt="aboutImage" width={400} height={400}
               className="max-w-[400px] lg:max-w-[482px]"
             />
           </div>

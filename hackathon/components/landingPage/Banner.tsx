@@ -60,7 +60,7 @@ export const Banner = () => {
 
           </div>
           <div className="hidden lg:flex items-center justify-center">
-            <Image src='/redImage.png' alt='bannerImage' width={400} height={400}
+            <Image src='/woman1.jpg' alt='bannerImage' width={400} height={400}
               className='max-w-[400px] lg:max-w-[482px]'
             />
           </div>

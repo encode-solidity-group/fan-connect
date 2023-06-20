@@ -48,7 +48,7 @@ export const About = () => {
                 </div>
               </div>
               <div className="flex-1 text-center lg:text-left sm:justify-evenly">
-                <motion.div 
+                <motion.div
                 variants={fadeIn("right", 0.3)}
                 initial="hidden"
                 whileInView={'show'}
@@ -64,7 +64,7 @@ export const About = () => {
           </div>
 
           <div className="flex-1 flex justify-center mix-blend-lighten lg:items-center glassMorph">
-            <Image src="/otherpic.jpg" alt="aboutImage" width={400} height={400}
+            <Image src="/woman2.jpg" alt="aboutImage" width={400} height={400}
               className="max-w-[400px] lg:max-w-[482px]"
             />
           </div>
