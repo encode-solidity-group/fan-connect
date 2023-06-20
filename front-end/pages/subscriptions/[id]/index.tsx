@@ -1,7 +1,8 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import SideBar from "../../../components/sidebar/SideBar";
+import UserSubscriptions from "../../../components/UserSubscriptions";
 
-export default function UserSubscriptions() {
+export default function Subscriptions() {
   return (
     <div>
       <div className='flex justify-between w-screen'>
@@ -10,7 +11,7 @@ export default function UserSubscriptions() {
           <div className="flex justify-end mr-16 mt-4">
             <ConnectButton />
           </div>
-
+          <UserSubscriptions />
         </div>
       </div>
     </div>

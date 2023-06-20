@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react';
 import { useContractRead } from 'wagmi';
 import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import Link from 'next/link';
@@ -9,6 +9,8 @@ export default function UserSubscriptions() {
   const { contractAddress } = useGetContractAddress();
   const { userAddress } = useContext(UserAddressContext);
 
+  const [subscriptionList, setSubscriptionList] = useState<string[]>([]);
+
   const { data: userSubscriptions } = useContractRead({
     address: contractAddress,
     abi: contractJson.abi,
@@ -16,19 +18,32 @@ export default function UserSubscriptions() {
     args: [userAddress],
   });
 
+  useEffect(() => {
+    if (userSubscriptions) {
+      setSubscriptionList(userSubscriptions as string[]);
+    }
+  }, [userSubscriptions]);
+
+  console.log(subscriptionList);
+
   const renderSubscriptions = () => {
-    //TODO: PRINT OUT LIST OF ALL THE CREATORS YOU ARE SUBSCRIBED TO
-    // ONLY IF userAddress = profile_id
-    return (userSubscriptions && userSubscriptions.map((subscription, index) => (
-      <div key={index} className='p-4 border-y'>
-        <Link href={`/profile/${subscription}`}>
-          <p>creator: {subscription}</p>
-        </Link>
-      </div>
-    ))
+    return (
+      subscriptionList &&
+      subscriptionList.map((subscription, index) => (
+        <div key={index} className='p-4 border-y'>
+          creator:{' '}
+          <Link href={`/profile/${subscription}`}>
+            {subscription}
+          </Link>
+        </div>
+      ))
     );
   };
+
   return (
-    <div>UserSubscriptions</div>
+    <div className='min-h-screen my-8 mx-auto w-[600px]'>
+      <div className='text-2xl text-center mb-4'>Your Subscriptions</div> 
+      {renderSubscriptions()}
+    </div>
   )
 }
