@@ -10,7 +10,7 @@ export default function UserSubscriptions() {
           <div className="flex justify-end mr-16 mt-4">
             <ConnectButton />
           </div>
-          
+
         </div>
       </div>
     </div>

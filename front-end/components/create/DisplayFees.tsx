@@ -1,19 +1,16 @@
-import { Key, useEffect, useState } from 'react'
+import { Key, useContext, useEffect, useState } from 'react'
 import { useContractRead } from 'wagmi';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { SiEthereum } from "react-icons/si";
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
+import { QueryAddressContext } from '../../providers/QueryAddressProvider';
 
-interface PageProps {
-  queryAddress: string | string[] | undefined;
-}
-
-export default function DisplayFees({ queryAddress }: PageProps) {
-
+export default function DisplayFees() {
   const subscriptionIntervals = [30, 90, 180, 365];
   const [creatorPrices, setCreatorPrices] = useState<any>();
 
   const { contractAddress } = useGetContractAddress();
+  const { queryAddress } = useContext(QueryAddressContext);
 
   const { data: creatorStruct } = useContractRead({
     address: contractAddress,

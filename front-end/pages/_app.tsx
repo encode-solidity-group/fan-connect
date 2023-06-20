@@ -12,6 +12,7 @@ import '../styles/buttons.css';
 import '../styles/slider.css';
 import '../styles/typewriter.css';
 import UserAddressProvider from '../providers/UserAddressProvider';
+import QueryAddressProvider from '../providers/QueryAddressProvider';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -45,8 +46,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <SessionProvider refetchInterval={0} session={pageProps.session}>
         <RainbowKitSiweNextAuthProvider>
           <RainbowKitProvider chains={chains}>
-            <UserAddressProvider >
-              <Component {...pageProps} />
+            <UserAddressProvider>
+              <QueryAddressProvider>
+                <Component {...pageProps} />
+              </QueryAddressProvider>
             </UserAddressProvider>
           </RainbowKitProvider>
         </RainbowKitSiweNextAuthProvider>

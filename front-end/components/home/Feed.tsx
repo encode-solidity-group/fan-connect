@@ -9,8 +9,8 @@ import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 
 const Feed = () => {
-  const {contractAddress} = useGetContractAddress();
-  const {userAddress} = useContext(UserAddressContext);
+  const { contractAddress } = useGetContractAddress();
+  const { userAddress } = useContext(UserAddressContext);
 
   const [posts, setPosts] = useState<DocumentData[]>([]);
 
@@ -20,7 +20,6 @@ const Feed = () => {
     functionName: 'creatorPageExists',
     args: [userAddress],
   });
-  console.log('feed address: ', userAddress);
 
   const { data: subscriptions } = useContractRead({
     address: contractAddress,

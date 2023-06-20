@@ -6,20 +6,18 @@ import { BigNumber, ethers } from 'ethers';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import ChangeFeeButton from './ChangeFeeButton';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
-import SubscriptionLength from './SubscriptionLength';
+import SubscriptionLength from '../SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
+import { QueryAddressContext } from '../../providers/QueryAddressProvider';
 
-interface PageProps {
-  profile_id: string;
-}
-
-const ProfileFeed = ({ profile_id }: PageProps) => {
-  const {userAddress} = useContext(UserAddressContext);
-  const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
-
-  const [posts, setPosts] = useState<DocumentData[]>([]); 
+const ProfileFeed = () => {
+  const { userAddress } = useContext(UserAddressContext);
+  const { queryAddress } = useContext(QueryAddressContext);
   const { contractAddress } = useGetContractAddress();
+
+  const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
+  const [posts, setPosts] = useState<DocumentData[]>([]);
 
   const [daysSubscribed, setDaysSubscribed] = useState<number>(30);
 
@@ -27,21 +25,21 @@ const ProfileFeed = ({ profile_id }: PageProps) => {
     address: contractAddress,
     abi: contractJson.abi,
     functionName: 'calculatePrice',
-    args: [profile_id, daysSubscribed],
+    args: [queryAddress, daysSubscribed],
   });
 
   const { data: isSubscribed } = useContractRead({
     address: contractAddress,
     abi: contractJson.abi,
     functionName: 'isSubscribed',
-    args: [profile_id, userAddress],
+    args: [queryAddress, userAddress],
   });
 
   const { write: subscribeWrite } = useContractWrite({
     address: contractAddress,
     abi: contractJson.abi,
     functionName: 'payForSubscription',
-    args: [profile_id, daysSubscribed],
+    args: [queryAddress, daysSubscribed],
     value: foundPrice
   });
 
@@ -53,15 +51,15 @@ const ProfileFeed = ({ profile_id }: PageProps) => {
     if (price) {
       setFoundPrice(price as BigNumber);
     }
-  }, [ calcPriceRefetch, daysSubscribed, price])
+  }, [calcPriceRefetch, daysSubscribed, price])
 
 
   useEffect(() => {
-    if (profile_id) {
+    if (queryAddress) {
       const getSubscriptionsFeed = onSnapshot(
         query(
           collection(db, 'posts'),
-          where('username', 'in', [profile_id]),
+          where('username', 'in', [queryAddress]),
           orderBy('timestamp', 'desc')
         ),
         (snapshot) => {
@@ -71,13 +69,13 @@ const ProfileFeed = ({ profile_id }: PageProps) => {
       );
       return () => getSubscriptionsFeed();
     }
-  }, [profile_id]);
+  }, [queryAddress]);
 
 
   // TOKEN GATE THIS FEED. IF YOU ARE NOT SUBSCRIBED TO THE CREATOR
   // AND YOU ARE NOT THE CREATOR YOU SHOULD NOT RENDER ANYTHING
   const renderFeed = () => {
-    if (isSubscribed || userAddress === profile_id) {
+    if (isSubscribed || userAddress === queryAddress) {
       return posts.map((post, index) => (
         <div key={index} className='p-4 border border-red-100 my-5 rounded-md'>
           <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
@@ -101,19 +99,19 @@ const ProfileFeed = ({ profile_id }: PageProps) => {
     const selectedValue = Number(event.target.value);
     setDaysSubscribed(selectedValue);
   };
-  
+
   return (
     <div className="min-h-screen text-white py-4 mx-auto w-[600px]">
       <div className='text-center mb-4'>
-        <ChangeFeeButton profile_id={profile_id} />
+        <ChangeFeeButton />
       </div>
       <div className="bg-black font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
         <div>
-          User Profile: {profile_id}
-          <SubscriptionLength creator={profile_id} />
+          User Profile: {queryAddress}
+          <SubscriptionLength creator={queryAddress} user={userAddress} />
         </div>
       </div>
-      {(userAddress !== profile_id) &&
+      {(userAddress !== queryAddress) &&
         <div className="flex justify-center mx-5 items-start">
           <select
             value={daysSubscribed}
@@ -126,7 +124,7 @@ const ProfileFeed = ({ profile_id }: PageProps) => {
             <option value="365">365 Days</option>
           </select>
 
-          <div className="mr-6 flex items-center">Price: {ethers.utils.formatUnits(price ? price : 0)} <SiEthereum/></div>
+          <div className="mr-6 flex items-center">Price: {ethers.utils.formatUnits(price ? price : 0)} <SiEthereum /></div>
 
           <div className="text-red-400">
             <button onClick={() => subscribeWrite()} className='border border-red-400 rounded-md px-2'>Subscribe</button>
@@ -136,7 +134,7 @@ const ProfileFeed = ({ profile_id }: PageProps) => {
       }
       <div className="flex justify-evenly mb-4">
         <div className='mr-2 bg-black text-[24px] text-red-500'>
-          {userAddress === profile_id ? 'Your Feed' : 'Feed'}
+          {userAddress === queryAddress ? 'Your Feed' : 'Feed'}
         </div>
       </div>
       <div className='my-8'>

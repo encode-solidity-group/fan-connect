@@ -1,18 +1,16 @@
 import { useRouter } from "next/router"
-import { useContractRead, useNetwork } from "wagmi";
+import { useContractRead } from "wagmi";
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import useGetContractAddress from "../../custom hooks/useGetContractAddress";
 import { useContext } from "react";
 import { UserAddressContext } from "../../providers/UserAddressProvider";
+import { QueryAddressContext } from "../../providers/QueryAddressProvider";
 
-interface PageProps {
-  profile_id: string;
-}
-
-export default function ChangeFeeButton({ profile_id }: PageProps) {
+export default function ChangeFeeButton() {
   const router = useRouter();
-  const {userAddress} = useContext(UserAddressContext);
-
+  
+  const { userAddress } = useContext(UserAddressContext);
+  const { queryAddress } = useContext(QueryAddressContext);
   const { contractAddress } = useGetContractAddress();
 
   const { data: iscreator } = useContractRead({
@@ -29,7 +27,7 @@ export default function ChangeFeeButton({ profile_id }: PageProps) {
 
   return (
     <>
-      {profile_id === userAddress &&
+      {queryAddress === userAddress &&
         <button
           className="enterButton"
           onClick={() => router.push(`/create/${userAddress}`)}

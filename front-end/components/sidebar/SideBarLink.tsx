@@ -6,7 +6,7 @@ interface PageProps {
   Icon: IconType;
 }
 
-const SideBarLink = ({text, Icon}: PageProps) => {
+const SideBarLink = ({ text, Icon }: PageProps) => {
   return (
     <div className="text-[#d9d9d9] flex items-center justify-center lg:justify-start text-xl space-x-4 py-4 w-fill">
       <Icon />

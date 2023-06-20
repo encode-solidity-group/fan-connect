@@ -1,9 +1,8 @@
 import { useContractRead } from "wagmi";
 import CreatorFee from "../../../components/create/CreatorFee";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import contractJson from '../../../SubscriptionJson/SubscriptionService.json';
 import SideBar from "../../../components/sidebar/SideBar";
-import { useRouter } from "next/router";
 import DisplayFees from "../../../components/create/DisplayFees";
 import RedirectToCreate from "../../../components/create/RedirectToCreate";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
@@ -11,20 +10,12 @@ import useGetContractAddress from "../../../custom hooks/useGetContractAddress";
 import Link from "next/link";
 import CreatorSubscribers from "../../../components/create/CreatorsSubscribers";
 import { UserAddressContext } from "../../../providers/UserAddressProvider";
+import { QueryAddressContext } from "../../../providers/QueryAddressProvider";
 
 export default function FeeGate() {
-  const router = useRouter();
-  const { creatorAddress } = router.query;
   const { contractAddress } = useGetContractAddress();
   const { userAddress } = useContext(UserAddressContext);
-
-  const [queryAddress, setQueryAddress] = useState<string | string[] | undefined>();
-
-  useEffect(() => {
-    if (creatorAddress) {
-      setQueryAddress(creatorAddress);
-    }
-  }, [creatorAddress]);
+  const { queryAddress } = useContext(QueryAddressContext);
 
   const { data: isCreator } = useContractRead({
     address: contractAddress,
@@ -42,10 +33,10 @@ export default function FeeGate() {
           <ConnectButton />
         </div>
 
-        {!isCreator && <RedirectToCreate queryAddress={queryAddress} />}
+        {!isCreator && <RedirectToCreate />}
         {isCreator === true &&
           <div>
-            <DisplayFees queryAddress={queryAddress} />
+            <DisplayFees />
             {queryAddress !== userAddress &&
               <Link href={`/profile/${queryAddress}`} className="flex justify-center">
                 <button className="enterButton">Subscribe Now</button>

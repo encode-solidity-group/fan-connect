@@ -1,16 +1,11 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import SideBar from "../../../components/sidebar/SideBar";
 import ProfileFeed from "../../../components/profile/ProfileFeed";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { QueryAddressContext } from '../../../providers/QueryAddressProvider';
 
 function UserProfile() {
-  const router = useRouter();
-  const [id, setId] = useState<string>("");
-
-  useEffect(() => {
-    setId(router.query.profileId as string);
-  }, [router.query]);
+  const { queryAddress } = useContext(QueryAddressContext);
 
   return (
     <div>
@@ -20,7 +15,7 @@ function UserProfile() {
           <div className="flex justify-end mt-4 mr-16">
             <ConnectButton />
           </div>
-          {id && <ProfileFeed profile_id={id as string} />}
+          {queryAddress && <ProfileFeed />}
         </div>
       </div>
     </div>

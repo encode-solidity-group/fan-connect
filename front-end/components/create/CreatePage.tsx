@@ -134,7 +134,7 @@ export default function CreatePage() {
         }
 
         {isLoading && <ImSpinner9 className="animate-spin mx-auto" />}
-        
+
         <button onClick={() => handleSubmit()} className="enterButton mx-auto">
           <div>Start Creating</div>
         </button>

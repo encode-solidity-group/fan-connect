@@ -4,16 +4,17 @@ import { Key, useContext, useEffect, useState } from "react";
 import { BsArrowDownCircle, BsArrowUpCircle } from "react-icons/bs";
 import Link from "next/link";
 import useGetContractAddress from "../../custom hooks/useGetContractAddress";
-import SubscriptionLength from "../profile/SubscriptionLength";
+import SubscriptionLength from "../SubscriptionLength";
 import { UserAddressContext } from "../../providers/UserAddressProvider";
 
 export default function CreatorSubscribers() {
-  const {userAddress} = useContext(UserAddressContext);
+  const { userAddress } = useContext(UserAddressContext);
+  const { contractAddress } = useGetContractAddress();
+  
   const [foundSubscribers, setFoundSubscribers] = useState<string[]>([]);
   const [foundActiveSubscribers, setFoundActiveSubscribers] = useState<string[]>([]);
   const [showFoundActiveSubscribers, setShowFoundActiveSubscribers] = useState<Boolean>(false);
   const [showFoundSubscribers, setShowFoundSubscribers] = useState<Boolean>(false);
-  const { contractAddress } = useGetContractAddress();
 
   const { data: subscribers } = useContractRead({
     address: contractAddress,

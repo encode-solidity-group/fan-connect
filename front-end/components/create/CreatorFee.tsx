@@ -15,7 +15,7 @@ export default function CreatorFee() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
 
-  const {contractAddress} = useGetContractAddress();
+  const { contractAddress } = useGetContractAddress();
 
   const handleFeeChange = (event: ChangeEvent<HTMLInputElement>, setter: React.Dispatch<React.SetStateAction<number | undefined>>) => {
     const value = parseFloat(event.target.value);

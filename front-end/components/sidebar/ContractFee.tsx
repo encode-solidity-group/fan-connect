@@ -7,11 +7,12 @@ import useGetContractAddress from "../../custom hooks/useGetContractAddress";
 import { UserAddressContext } from "../../providers/UserAddressProvider";
 
 export default function ContractFee() {
-  const {userAddress} = useContext(UserAddressContext);
+  const { userAddress } = useContext(UserAddressContext);
+  const { contractAddress } = useGetContractAddress();
+
   const [newFee, setNewFee] = useState<number | undefined>();
   const [error, setError] = useState<Boolean>(false);
   const [success, setSuccess] = useState<Boolean>(false);
-  const {contractAddress} = useGetContractAddress();
 
   const { data: tx, write: changeContractFee } = useContractWrite({
     address: contractAddress,

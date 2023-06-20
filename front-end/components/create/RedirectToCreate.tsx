@@ -1,13 +1,12 @@
 import CreatePage from "./CreatePage";
 import { UserAddressContext } from "../../providers/UserAddressProvider";
 import { useContext } from "react";
+import { QueryAddressContext } from "../../providers/QueryAddressProvider";
 
-interface PageProps {
-  queryAddress: string | string[] | undefined;
-}
+export default function RedirectToCreate() {
+  const { userAddress } = useContext(UserAddressContext);
+  const { queryAddress } = useContext(QueryAddressContext);
 
-export default function RedirectToCreate({ queryAddress }: PageProps) {
-  const {userAddress} = useContext(UserAddressContext);
   return (
     <div className="flex flex-col justify-center items-center space-y-4 my-16 text-xl">
       <div className="italic">
