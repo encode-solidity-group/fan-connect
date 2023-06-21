@@ -8,6 +8,11 @@ body {
   margin: 0 auto;
 }
 
+.dark-mode {
+  background-color: #181818;
+  color: white;
+}
+
 /* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(

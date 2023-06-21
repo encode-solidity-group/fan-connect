@@ -1,18 +1,20 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import SideBar from "../../../components/sidebar/SideBar";
 import UserSubscriptions from "../../../components/UserSubscriptions";
+import { useContext } from "react";
+import { DarkModeContext } from "../../../providers/DarkModeProvider";
 
 export default function Subscriptions() {
+  const { darkMode } = useContext(DarkModeContext);
+
   return (
-    <div>
-      <div className='flex justify-between w-screen'>
-        <SideBar />
-        <div className='sm:ml-[175px] lg:ml-[340px] w-full mx-auto'>
-          <div className="flex justify-end mr-16 mt-4">
-            <ConnectButton />
-          </div>
-          <UserSubscriptions />
+    <div className={`flex justify-between w-screen min-h-screen ${darkMode && 'dark-mode'}`}>
+      <SideBar />
+      <div className='sm:ml-[175px] lg:ml-[340px] w-full mx-auto'>
+        <div className="flex justify-end mr-16 mt-4">
+          <ConnectButton />
         </div>
+        <UserSubscriptions />
       </div>
     </div>
   )

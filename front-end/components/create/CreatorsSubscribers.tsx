@@ -47,7 +47,7 @@ export default function CreatorSubscribers() {
   const subscriptionList = foundSubscribers.map((subscriber, index: Key) => {
     return (
       <div key={index}>
-        <Link href={`/profile/${subscriber}`} className="hover:text-red-400 break-all">
+        <Link href={`/profile/${subscriber}`} className="hover:text-[#3FA0EF] break-all">
           {subscriber}
         </Link>
         <SubscriptionLength creator={userAddress} user={subscriber} />

@@ -7,6 +7,7 @@ import { RiBankLine, RiUserLine, RiHeartsLine } from "react-icons/ri";
 import Link from 'next/link';
 import ContractFee from './ContractFee';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
+import DarkModeButton from '../DarkModeButton';
 
 const SideBar = () => {
   const { userAddress } = useContext(UserAddressContext);
@@ -42,6 +43,7 @@ const SideBar = () => {
           </div>
         </Link>
       </div>
+      <DarkModeButton />
       <ContractFee />
     </div>
   );

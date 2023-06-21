@@ -76,7 +76,7 @@ const ProfileFeed = () => {
         <div key={index} className='p-4 border border-red-100 my-5 rounded-md'>
           <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
           <p>author: {post.username}</p>
-          <div className="mt-2 text-red-400">
+          <div className="mt-2">
             <p>{post.text}</p>
 
           </div>
@@ -84,7 +84,7 @@ const ProfileFeed = () => {
       ));
     } else {
       return (
-        <div className='p-4 border border-red-100 my-5 rounded-md text-xl text-bold text-red-300 text-center'>
+        <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
           <p>Subscribe today for more!</p>
         </div>
       );
@@ -112,7 +112,7 @@ const ProfileFeed = () => {
           <select
             value={daysSubscribed}
             onChange={(event) => handleDaysChange(event)}
-            className="text-red-200 mx-5 mb-16 border rounded-md "
+            className="mx-5 mb-16 border rounded-md text-black"
           >
             <option value="30">30 Days</option>
             <option value="90">90 Days</option>
@@ -122,14 +122,14 @@ const ProfileFeed = () => {
 
           <div className="mr-6 flex items-center">Price: {ethers.utils.formatUnits(foundPrice)} <SiEthereum /></div>
 
-          <div className="text-red-400">
-            <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-red-400 rounded-md px-2'>Subscribe</button>
+          <div>
+            <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-[#3FA0EF] rounded-md px-2'>Subscribe</button>
           </div>
 
         </div>
       }
       <div className="flex justify-evenly mb-4">
-        <div className='mr-2 text-[24px] text-red-500'>
+        <div className='mr-2 text-[24px] text-[#3FA0EF]'>
           {userAddress === queryAddress ? 'Your Feed' : 'Feed'}
         </div>
       </div>

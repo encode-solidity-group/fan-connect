@@ -56,11 +56,11 @@ const Feed = () => {
           <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
           <div className='flex'>
             author:{' '}
-            <Link href={`/profile/${post.username}`} className='hover:text-red-400'>
+            <Link href={`/profile/${post.username}`} className='hover:text-[#3FA0EF]'>
               {post.username}
             </Link>
           </div>
-          <div className="mt-2 text-red-400">
+          <div className="mt-2 text-[#3FA0EF]">
             <p className="text-bold">{post.text}</p>
           </div>
         </div>
@@ -69,7 +69,7 @@ const Feed = () => {
   };
 
   return (
-    <div className="min-h-screen text-black mx-auto w-[600px] my-8">
+    <div className="min-h-screen mx-auto w-[600px] my-8">
       <div className="font-medium text-[30px] px-4 py-2">
         Home
       </div>

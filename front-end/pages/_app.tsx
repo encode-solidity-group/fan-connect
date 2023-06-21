@@ -13,6 +13,7 @@ import '../styles/slider.css';
 import '../styles/typewriter.css';
 import UserAddressProvider from '../providers/UserAddressProvider';
 import QueryAddressProvider from '../providers/QueryAddressProvider';
+import DarkModeProvider from '../providers/DarkModeProvider';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [auroraTestnet, sepolia], [publicProvider()]
@@ -39,7 +40,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           <RainbowKitProvider chains={chains}>
             <UserAddressProvider>
               <QueryAddressProvider>
-                <Component {...pageProps} />
+                <DarkModeProvider>
+                  <Component {...pageProps} />
+                </DarkModeProvider>
               </QueryAddressProvider>
             </UserAddressProvider>
           </RainbowKitProvider>

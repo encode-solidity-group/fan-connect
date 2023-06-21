@@ -4,6 +4,8 @@ import Nav from '../components/landingPage/Nav';
 import Banner from '../components/landingPage/Banner';
 import AboutCreators from '../components/landingPage/AboutCreators';
 import AboutUsers from '../components/landingPage/AboutUsers';
+import { useContext } from 'react';
+import { DarkModeContext } from '../providers/DarkModeProvider';
 
 const inter = Inter({
   weight: ['400', '700'],
@@ -12,9 +14,10 @@ const inter = Inter({
 });
 
 function Home() {
+  const { darkMode } = useContext(DarkModeContext);
 
   return (
-    <div className={`${inter.className}`}>
+    <div className={`${inter.className} ${darkMode && 'dark-mode'}`}>
       <Header />
       <div className="background-animated py-20" />
       <Banner />

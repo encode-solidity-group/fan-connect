@@ -83,7 +83,7 @@ export default function CreatorFee() {
           <label htmlFor="new30dayFee">New 30 Day Fee</label>
           <ImArrowRight2 size={25} />
           <input
-            className="text-black p-1 rounded-md w-16"
+            className="text-black p-1 rounded-md w-20 border"
             type="number"
             id="new30dayFee"
             placeholder="(ETH)"
@@ -97,7 +97,7 @@ export default function CreatorFee() {
           <label htmlFor="new90dayFee">New 90 Day Fee</label>
           <ImArrowRight2 size={25} />
           <input
-            className="text-black p-1 rounded-md w-16"
+            className="text-black p-1 rounded-md w-20 border"
             type="number"
             id="new90dayFee"
             placeholder="(ETH)"
@@ -111,7 +111,7 @@ export default function CreatorFee() {
           <label htmlFor="new180dayFee">New 180 Day Fee</label>
           <ImArrowRight2 size={25} />
           <input
-            className="text-black p-1 rounded-md w-16"
+            className="text-black p-1 rounded-md w-20 border"
             type="number"
             id="new180dayFee"
             placeholder="(ETH)"
@@ -125,7 +125,7 @@ export default function CreatorFee() {
           <label htmlFor="new365dayFee">New 365 Day Fee</label>
           <ImArrowRight2 size={25} />
           <input
-            className="text-black p-1 rounded-md w-16"
+            className="text-black p-1 rounded-md w-20 border"
             type="number"
             id="new365dayFee"
             placeholder="(ETH)"

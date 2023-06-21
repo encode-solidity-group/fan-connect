@@ -4,10 +4,12 @@ import contractJson from '../SubscriptionJson/SubscriptionService.json';
 import Link from 'next/link';
 import useGetContractAddress from '../custom hooks/useGetContractAddress';
 import { UserAddressContext } from '../providers/UserAddressProvider';
+import { QueryAddressContext } from '../providers/QueryAddressProvider';
 
 export default function UserSubscriptions() {
   const { contractAddress } = useGetContractAddress();
   const { userAddress } = useContext(UserAddressContext);
+  const { queryAddress } = useContext(QueryAddressContext);
 
   const [subscriptionList, setSubscriptionList] = useState<string[]>([]);
 
@@ -23,8 +25,6 @@ export default function UserSubscriptions() {
       setSubscriptionList(userSubscriptions as string[]);
     }
   }, [userSubscriptions]);
-
-  console.log(subscriptionList);
 
   const renderSubscriptions = () => {
     return (
@@ -42,8 +42,8 @@ export default function UserSubscriptions() {
 
   return (
     <div className='min-h-screen my-8 mx-auto w-[600px]'>
-      <div className='text-2xl text-center mb-4'>Your Subscriptions</div> 
-      {renderSubscriptions()}
+      <div className='text-2xl text-center mb-4'>Your Subscriptions</div>
+      {userAddress === queryAddress && renderSubscriptions()}
     </div>
   )
 }

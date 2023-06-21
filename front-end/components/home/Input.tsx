@@ -113,7 +113,7 @@ const Input = () => {
                             </div>
 
                             <button
-                                className="bg-[#df8989] rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#df8989] cursor-pointer"
+                                className="bg-[#3FA0EF] rounded-full px-4 py-1.5 font-bold shadow-md cursor-pointer"
                                 disabled={!input.trim() && !selectedFile}
                                 onClick={sendPost} >
                                 Post

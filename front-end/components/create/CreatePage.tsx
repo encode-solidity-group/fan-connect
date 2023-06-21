@@ -57,7 +57,7 @@ export default function CreatePage() {
           <label htmlFor="30dayFee">Set 30 Day Subscription Fee</label>
           <ImArrowRight2 size={25} className="mx-2" />
           <input
-            className="text-black p-1 rounded-md w-24"
+            className="text-black p-1 rounded-md w-20 border"
             type="number"
             id="30dayFee"
             placeholder="(ETH)"
@@ -71,7 +71,7 @@ export default function CreatePage() {
           <label htmlFor="90dayFee">Set 90 Day Subscription Fee</label>
           <ImArrowRight2 size={25} className="mx-2" />
           <input
-            className="text-black p-1 rounded-md w-24"
+            className="text-black p-1 rounded-md w-20 border"
             type="number"
             id="90dayFee"
             placeholder="(ETH)"
@@ -85,7 +85,7 @@ export default function CreatePage() {
           <label htmlFor="180dayFee">Set 180 Day Subscription Fee</label>
           <ImArrowRight2 size={25} className="mx-2" />
           <input
-            className="text-black p-1 rounded-md w-24"
+            className="text-black p-1 rounded-md w-20 border"
             type="number"
             id="180dayFee"
             placeholder="(ETH)"
@@ -99,7 +99,7 @@ export default function CreatePage() {
           <label htmlFor="365dayFee">Set 365 Day Subscription Fee</label>
           <ImArrowRight2 size={25} className="mx-2" />
           <input
-            className="text-black p-1 rounded-md w-24"
+            className="text-black p-1 rounded-md w-20 border"
             type="number"
             id="365dayFee"
             placeholder="(ETH)"

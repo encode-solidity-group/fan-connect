@@ -11,11 +11,13 @@ import Link from "next/link";
 import CreatorSubscribers from "../../../components/create/CreatorsSubscribers";
 import { UserAddressContext } from "../../../providers/UserAddressProvider";
 import { QueryAddressContext } from "../../../providers/QueryAddressProvider";
+import { DarkModeContext } from "../../../providers/DarkModeProvider";
 
 export default function FeeGate() {
   const { contractAddress } = useGetContractAddress();
   const { userAddress } = useContext(UserAddressContext);
   const { queryAddress } = useContext(QueryAddressContext);
+  const { darkMode } = useContext(DarkModeContext);
 
   const { data: isCreator } = useContractRead({
     address: contractAddress,
@@ -25,7 +27,7 @@ export default function FeeGate() {
   })
 
   return (
-    <div className='flex justify-between w-screen'>
+    <div className={`flex justify-between w-screen min-h-screen ${darkMode && 'dark-mode'}`}>
       <SideBar />
       <div className='sm:ml-[175px] lg:ml-[340px] w-full'>
 
