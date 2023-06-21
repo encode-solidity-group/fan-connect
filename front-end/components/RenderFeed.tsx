@@ -16,7 +16,7 @@ export const RenderFeed = (posts: DocumentData[]) => {
         <div className='flex justify-between'>
           <div className="flex">
             <Link href={`/profile/${post.username}`}>
-              <Image src={'/../public/male1.jpg'} width={50} height={50} alt="profile photo" className="aspect-square object-cover rounded-full"/>
+              <Image src={'/../public/male1.jpg'} width={50} height={50} alt="profile photo" className="aspect-square object-cover rounded-full" />
             </Link>
             <div className="flex flex-col ml-2">
               <Link href={`/profile/${post.username}`} className="hover:text-[#3FA0EF]">
@@ -31,6 +31,12 @@ export const RenderFeed = (posts: DocumentData[]) => {
       </div>
       {post.image !== undefined &&
         <Image src={post.image} alt={post.text} width={600} height={500} className='aspect-video object-cover' />
+      }
+      {post.video !== undefined &&
+        <video controls controlsList="nodownload">
+          <source src={post.video} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       }
       <div className='p-4 flex justify-between items-center'>
         <div className="flex items-center gap-4">
@@ -49,7 +55,7 @@ export const RenderFeed = (posts: DocumentData[]) => {
         <div className="flex">
           <button onClick={() => setBookmarked(!bookmarked)} className="hover:text-[#6BD0FF]">
             {bookmarked ?
-              <BsBookmarkFill color="#6BD0FF"/>
+              <BsBookmarkFill color="#6BD0FF" />
               :
               <BsBookmark />
             }

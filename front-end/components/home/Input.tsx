@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
-import { BsFilm, BsImage } from "react-icons/bs";
+import { BsCameraVideo, BsFilm, BsImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { useSession } from 'next-auth/react';
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../../firebase';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import Image from 'next/image';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 
@@ -36,18 +36,29 @@ const Input = () => {
     });
 
     if (selectedFile) {
-      const imageRef = ref(storage, `posts/${docRef.id}/${selectedFile.name}`);
-      await uploadBytes(imageRef, selectedFile)
-        .then(async () => {
-          const downloadURL = await getDownloadURL(imageRef);
-          await updateDoc(doc(db, "posts", docRef.id), {
+      const fileRef = ref(storage, `posts/${docRef.id}/${selectedFile.name}`);
+
+      if (selectedFile.type.includes('image')) {
+        // For image uploads
+        await uploadBytes(fileRef, selectedFile).then(async () => {
+          const downloadURL = await getDownloadURL(fileRef);
+          await updateDoc(doc(db, 'posts', docRef.id), {
             image: downloadURL,
           });
         });
+      } else if (selectedFile.type.includes('video')) {
+        // For video uploads
+        await uploadBytesResumable(fileRef, selectedFile).then(async () => {
+          const downloadURL = await getDownloadURL(fileRef);
+          await updateDoc(doc(db, 'posts', docRef.id), {
+            video: downloadURL,
+          });
+        });
+      }
     }
 
     setLoading(false);
-    setInput("");
+    setInput('');
     setSelectedFile(null);
   };
 
@@ -60,10 +71,10 @@ const Input = () => {
             src={session?.user?.image}
             width={500}
             height={500}
-            alt=""
+            alt="profile picture"
           />
         </div>
-        <div className='w-[90%] border-y py-2'>
+        <div className='border-y py-2'>
           <textarea
             className='w-[100%] bg-transparent outline-none text-[20px]'
             rows={2}
@@ -79,13 +90,21 @@ const Input = () => {
               >
                 <AiOutlineClose className='h-5' />
               </div>
-              <Image
-                src={URL.createObjectURL(selectedFile)}
-                alt=""
-                className='rounded-2xl max-h-80 object-contain'
-                width={500}
-                height={500}
-              />
+              {selectedFile.type.includes('image') ? (
+                <Image
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="uploaded media"
+                  className='rounded-2xl max-h-80 object-contain'
+                  width={500}
+                  height={500}
+                />
+              ) : (
+                <video controls controlsList="nodownload" className='rounded-2xl max-h-80 object-contain'>
+                  <source src={URL.createObjectURL(selectedFile)} type="video/mp4" />
+                  width={500}
+                  height={500}
+                </video>
+              )}
             </div>
           )}
           {!loading && (
@@ -100,9 +119,16 @@ const Input = () => {
                   hidden
                   onChange={addImageToPost}
                 />
-                <div className='border-[#1d9bf0] border rounded h-[18px] text-[16px] grid place-items-center'>
-                  <BsFilm />
-                </div>
+
+                <label htmlFor="file">
+                  <BsCameraVideo className='cursor-pointer' />
+                </label>
+                <input
+                  id="file"
+                  type="file"
+                  hidden
+                  onChange={addImageToPost}
+                />
               </div>
               <button
                 className="bg-[#3FA0EF] rounded-full px-4 py-1.5 font-bold shadow-md cursor-pointer"
