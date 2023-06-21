@@ -61,7 +61,10 @@ const ProfileFeed = () => {
           orderBy('timestamp', 'desc')
         ),
         (snapshot) => {
-          const documents = snapshot.docs.map((doc) => doc.data());
+          const documents = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
           setPosts(documents);
         }
       );
@@ -73,7 +76,7 @@ const ProfileFeed = () => {
     const selectedValue = Number(event.target.value);
     setDaysSubscribed(selectedValue);
   };
-console.log(posts);
+
   return (
     <div className="min-h-screen py-4 mx-auto w-[600px]">
       <div className='text-center mb-4'>

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { BsCameraVideo, BsFilm, BsImage } from "react-icons/bs";
+import { BsCameraVideo, BsImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
 import { useSession } from 'next-auth/react';
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
@@ -15,8 +15,8 @@ const Input = () => {
   const [loading, setLoading] = useState(false);
   const { userAddress } = useContext(UserAddressContext);
 
-  const addImageToPost = (e) => {
-    const file = e.target.files[0];
+  const addImageToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
       setSelectedFile(file);
     }

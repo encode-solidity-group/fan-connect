@@ -41,7 +41,10 @@ const Feed = () => {
         orderBy('timestamp', 'desc')
       ),
       (snapshot) => {
-        const documents = snapshot.docs.map((doc) => doc.data());
+        const documents = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setPosts(documents);
       }
     );
