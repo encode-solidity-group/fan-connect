@@ -10,6 +10,7 @@ import SubscriptionLength from '../SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 import { QueryAddressContext } from '../../providers/QueryAddressProvider';
+import Image from 'next/image';
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
@@ -78,7 +79,9 @@ const ProfileFeed = () => {
           <p>author: {post.username}</p>
           <div className="mt-2">
             <p>{post.text}</p>
-
+            {post.image !== undefined &&
+              <Image src={post.image} alt={post.text} width={500} height={500} />
+            }
           </div>
         </div>
       ));

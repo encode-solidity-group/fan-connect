@@ -6,7 +6,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['images.unsplash.com', 'plus.unsplash.com'],
+    domains: ['images.unsplash.com', 'plus.unsplash.com', 'firebasestorage.googleapis.com'],
   },
   experimental: {
     esmExternals: true,
