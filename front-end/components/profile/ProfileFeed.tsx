@@ -10,7 +10,7 @@ import SubscriptionLength from '../SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 import { QueryAddressContext } from '../../providers/QueryAddressProvider';
-import Image from 'next/image';
+import { RenderFeed } from '../RenderFeed';
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
@@ -69,36 +69,11 @@ const ProfileFeed = () => {
     }
   }, [queryAddress]);
 
-  // TOKEN GATE THIS FEED. IF YOU ARE NOT SUBSCRIBED TO THE CREATOR
-  // AND YOU ARE NOT THE CREATOR YOU SHOULD NOT RENDER ANYTHING
-  const renderFeed = () => {
-    if (isSubscribed || userAddress === queryAddress) {
-      return posts.map((post, index) => (
-        <div key={index} className='p-4 border border-red-100 my-5 rounded-md'>
-          <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
-          <p>author: {post.username}</p>
-          <div className="mt-2">
-            <p>{post.text}</p>
-            {post.image !== undefined &&
-              <Image src={post.image} alt={post.text} width={500} height={500} />
-            }
-          </div>
-        </div>
-      ));
-    } else {
-      return (
-        <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
-          <p>Subscribe today for more!</p>
-        </div>
-      );
-    }
-  };
-
   const handleDaysChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = Number(event.target.value);
     setDaysSubscribed(selectedValue);
   };
-
+console.log(posts);
   return (
     <div className="min-h-screen py-4 mx-auto w-[600px]">
       <div className='text-center mb-4'>
@@ -137,7 +112,14 @@ const ProfileFeed = () => {
         </div>
       </div>
       <div className='my-8'>
-        {renderFeed()}
+        {
+          isSubscribed || userAddress === queryAddress ?
+            RenderFeed(posts)
+            :
+            <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
+              <p>Subscribe today for more!</p>
+            </div>
+        }
       </div>
     </div>
   );

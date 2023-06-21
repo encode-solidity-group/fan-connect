@@ -4,9 +4,9 @@ import { db } from '../../firebase';
 import Input from './Input';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { useContractRead } from 'wagmi';
-import Link from 'next/link';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
+import { RenderFeed } from '../RenderFeed';
 
 const Feed = () => {
   const { contractAddress } = useGetContractAddress();
@@ -49,25 +49,6 @@ const Feed = () => {
     return () => getSubscriptionsFeed();
   }, [isCreator, subscriptions]);
 
-  const renderFeed = () => {
-    return (
-      posts && posts.map((post, index) => (
-        <div key={index} className='p-4 border border-red-100 my-5 rounded-md'>
-          <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
-          <div className='flex'>
-            author:{' '}
-            <Link href={`/profile/${post.username}`} className='hover:text-[#3FA0EF]'>
-              {post.username}
-            </Link>
-          </div>
-          <div className="mt-2 text-[#3FA0EF]">
-            <p className="text-bold">{post.text}</p>
-          </div>
-        </div>
-      ))
-    );
-  };
-
   return (
     <div className="min-h-screen mx-auto w-[600px] my-8">
       <div className="font-medium text-[30px] px-4 py-2">
@@ -75,7 +56,7 @@ const Feed = () => {
       </div>
       {isCreator === true && <Input />}
       <div className='my-8'>
-        {renderFeed()}
+        {RenderFeed(posts)}
       </div>
     </div>
 
