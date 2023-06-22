@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
+import { onSnapshot,collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useContractRead, useContractWrite } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
@@ -10,7 +10,11 @@ import SubscriptionLength from '../SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 import { QueryAddressContext } from '../../providers/QueryAddressProvider';
+<<<<<<< HEAD
 import Image from 'next/image';
+=======
+import Username from './Username';
+>>>>>>> profile-pictures
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
@@ -19,6 +23,7 @@ const ProfileFeed = () => {
 
   const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
   const [posts, setPosts] = useState<DocumentData[]>([]);
+  const [username,setUserName] = useState<string>('');
 
   const [daysSubscribed, setDaysSubscribed] = useState<number>(30);
 
@@ -106,7 +111,7 @@ const ProfileFeed = () => {
       </div>
       <div className="font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
         <div>
-          User Profile: {queryAddress}
+          <Username queryAddress = {queryAddress} />
           <SubscriptionLength creator={queryAddress} user={userAddress} />
         </div>
       </div>
