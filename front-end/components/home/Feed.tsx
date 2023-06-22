@@ -4,9 +4,9 @@ import { db } from '../../firebase';
 import Input from './Input';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { useContractRead } from 'wagmi';
-import Link from 'next/link';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
+import { RenderFeed } from '../RenderFeed';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 
@@ -43,32 +43,16 @@ const Feed = () => {
         orderBy('timestamp', 'desc')
       ),
       (snapshot) => {
-        const documents = snapshot.docs.map((doc) => doc.data());
+        const documents = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
         setPosts(documents);
       }
     );
 
     return () => getSubscriptionsFeed();
   }, [isCreator, subscriptions]);
-
-  const renderFeed = () => {
-    return (
-      posts && posts.map((post, index) => (
-        <div key={index} className='p-4 border border-red-100 my-5 rounded-md'>
-          <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
-          <div className='flex'>
-            author:{' '}
-            <Link href={`/profile/${post.username}`} className='hover:text-[#3FA0EF]'>
-              {post.username}
-            </Link>
-          </div>
-          <div className="mt-2 text-[#3FA0EF]">
-            <p className="text-bold">{post.text}</p>
-          </div>
-        </div>
-      ))
-    );
-  };
 
   return (
     <div className="sm:ml-[81px] xl:ml-[75px] items-start justify-center min-h-screen  w-[600px] my-8 border-r border-[#3FA0EF]">
@@ -80,7 +64,7 @@ const Feed = () => {
       </div>
       {isCreator === true && <Input />}
       <div className='my-8'>
-        {renderFeed()}
+        {RenderFeed(posts)}
       </div>
     </div>
 

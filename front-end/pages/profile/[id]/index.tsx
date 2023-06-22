@@ -4,6 +4,7 @@ import ProfileFeed from "../../../components/profile/ProfileFeed";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { QueryAddressContext } from '../../../providers/QueryAddressProvider';
 import { DarkModeContext } from '../../../providers/DarkModeProvider';
+import ProfileHeader from '../../../components/profile/ProfileHeader';
 
 function UserProfile() {
   const { queryAddress } = useContext(QueryAddressContext);
@@ -16,6 +17,7 @@ function UserProfile() {
         <div className="flex justify-end mt-4 mr-16">
           <ConnectButton />
         </div>
+        <ProfileHeader />
         {queryAddress && <ProfileFeed />}
       </div>
     </div>

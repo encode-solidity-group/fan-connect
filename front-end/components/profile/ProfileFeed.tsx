@@ -10,8 +10,8 @@ import SubscriptionLength from '../SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 import { QueryAddressContext } from '../../providers/QueryAddressProvider';
-import Image from 'next/image';
-import Username from './Username';
+import { RenderFeed } from '../RenderFeed';
+import Input from '../home/Input';
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
@@ -23,6 +23,7 @@ const ProfileFeed = () => {
   const [username,setUserName] = useState<string>('');
 
   const [daysSubscribed, setDaysSubscribed] = useState<number>(30);
+  const [showInput, setShowInput] = useState(false);
 
   const { data: price, refetch: calcPriceRefetch } = useContractRead({
     address: contractAddress,
@@ -63,7 +64,10 @@ const ProfileFeed = () => {
           orderBy('timestamp', 'desc')
         ),
         (snapshot) => {
-          const documents = snapshot.docs.map((doc) => doc.data());
+          const documents = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
           setPosts(documents);
         }
       );
@@ -71,46 +75,18 @@ const ProfileFeed = () => {
     }
   }, [queryAddress]);
 
-  // TOKEN GATE THIS FEED. IF YOU ARE NOT SUBSCRIBED TO THE CREATOR
-  // AND YOU ARE NOT THE CREATOR YOU SHOULD NOT RENDER ANYTHING
-  const renderFeed = () => {
-    if (isSubscribed || userAddress === queryAddress) {
-      return posts.map((post, index) => (
-        <div key={index} className='p-4 border border-red-100 my-5 rounded-md'>
-          <p>{new Date(post.timestamp.seconds * 1000).toLocaleString()}</p>
-          <p>author: {post.username}</p>
-          <div className="mt-2">
-            <p>{post.text}</p>
-            {post.image !== undefined &&
-              <Image src={post.image} alt={post.text} width={500} height={500} />
-            }
-          </div>
-        </div>
-      ));
-    } else {
-      return (
-        <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
-          <p>Subscribe today for more!</p>
-        </div>
-      );
-    }
-  };
-
   const handleDaysChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = Number(event.target.value);
     setDaysSubscribed(selectedValue);
   };
 
   return (
-    <div className="min-h-screen py-4 mx-auto w-[600px]">
+    <div className="min-h-screen py-4 mx-auto sm:w-[600px]">
       <div className='text-center mb-4'>
         <ChangeFeeButton />
       </div>
       <div className="font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
-        <div>
-          <Username queryAddress = {queryAddress} />
-          <SubscriptionLength creator={queryAddress} user={userAddress} />
-        </div>
+        <SubscriptionLength creator={queryAddress} user={userAddress} />
       </div>
       {(userAddress !== queryAddress) &&
         <div className="flex justify-center mx-5 items-start">
@@ -133,13 +109,26 @@ const ProfileFeed = () => {
 
         </div>
       }
-      <div className="flex justify-evenly mb-4">
+      <div className="flex justify-between mb-4 items-center">
         <div className='mr-2 text-[24px] text-[#3FA0EF]'>
           {userAddress === queryAddress ? 'Your Feed' : 'Feed'}
         </div>
+        {userAddress === queryAddress &&
+          <button className='enterButton' onClick={() => setShowInput(!showInput)}>
+            {showInput ? 'Hide post' : 'Start a new post'}
+          </button>
+        }
       </div>
+      {showInput && <Input />}
       <div className='my-8'>
-        {renderFeed()}
+        {
+          isSubscribed || userAddress === queryAddress ?
+            RenderFeed(posts)
+            :
+            <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
+              <p>Subscribe today for more!</p>
+            </div>
+        }
       </div>
     </div>
   );

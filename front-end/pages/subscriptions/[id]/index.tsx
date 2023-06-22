@@ -1,6 +1,6 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import SideBar from "../../../components/sidebar/SideBar";
-import UserSubscriptions from "../../../components/UserSubscriptions";
+import UserSubscriptions from "../../../components/subscriptions/UserSubscriptions";
 import { useContext } from "react";
 import { DarkModeContext } from "../../../providers/DarkModeProvider";
 
