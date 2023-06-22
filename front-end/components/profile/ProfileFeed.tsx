@@ -81,7 +81,7 @@ const ProfileFeed = () => {
   };
 
   return (
-    <div className="min-h-screen py-4 mx-auto sm:w-[600px]">
+    <div className="min-h-screen py-4 mx-auto">
       <div className='text-center mb-4'>
         <ChangeFeeButton />
       </div>

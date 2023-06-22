@@ -55,11 +55,11 @@ const Feed = () => {
   }, [isCreator, subscriptions]);
 
   return (
-    <div className="sm:ml-[81px] xl:ml-[75px] items-start justify-center min-h-screen  w-[600px] my-8 border-r border-[#3FA0EF]">
-      <div className="mt-24 flex justify-center">
+    <div className="items-start justify-center min-h-screen my-8">
+      {/* <div className="mt-4 flex justify-center">
         <ConnectButton />
-      </div>
-      <div className="font-medium text-[30px] px-4 py-2 pt-16">
+      </div> */}
+      <div className="font-medium text-[30px] mx-4 my-2 mt-8">
         Home
       </div>
       {isCreator === true && <Input />}

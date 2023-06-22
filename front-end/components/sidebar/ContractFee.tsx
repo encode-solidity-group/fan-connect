@@ -52,7 +52,7 @@ export default function ContractFee() {
   return (
     <>
       {owner && userAddress && owner === userAddress &&
-        <div className="mx-auto my-8 text-xl space-y-4 max-w-[175px] lg:max-w-[340px] text-center border-t">
+        <div className="mx-auto my-8 text-xl space-y-4 max-w-[175px] lg:max-w-[280px] text-center border-t">
 
           <div className="text-center mt-8 text-[#FE5857] text-2xl lg:text-3xl">
             Change Contract Fee
@@ -72,13 +72,13 @@ export default function ContractFee() {
             />
           </div>
 
-          <button className="enterButton max-w-[166px] lg:max-w-[340px]" onClick={() => submitNewFee()} disabled={isLoading}>
+          <button className="enterButton max-w-[166px] lg:max-w-[280px]" onClick={() => submitNewFee()} disabled={isLoading}>
             <div className="base">Set Fee</div>
             <div className="onHover">Set Fee</div>
           </button>
 
           {error &&
-            <div className="flex flex-col justify-between lg:flex-row bg-[#FE5857] justify-center items-center rounded-md max-w-[175px] lg:max-w-[340px] m-2 px-2">
+            <div className="flex flex-col justify-between lg:flex-row bg-[#FE5857] justify-center items-center rounded-md max-w-[175px] lg:max-w-[280px] m-2 px-2">
               <div>
                 <AiOutlineExclamationCircle />
               </div>
@@ -89,7 +89,7 @@ export default function ContractFee() {
             </div>
           }
           {success &&
-            <div className="flex flex-col justify-between lg:flex-row bg-green-700 justify-center items-center rounded-md max-w-[175px] lg:max-w-[340px] m-2 px-2">
+            <div className="flex flex-col justify-between lg:flex-row bg-green-700 justify-center items-center rounded-md max-w-[175px] lg:max-w-[280px] m-2 px-2">
               <div>
                 <AiOutlineCheckCircle />
               </div>

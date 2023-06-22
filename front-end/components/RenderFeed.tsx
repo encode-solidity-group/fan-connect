@@ -31,7 +31,7 @@ export const RenderFeed = (posts: DocumentData[]) => {
       </div>
       {post.image !== undefined &&
         <Link href={post.image} target="_blank" rel="noopener noreferrer">
-          <Image src={post.image} alt={post.text} width={600} height={500} className='aspect-video object-cover' />
+          <Image src={post.image} alt={post.text} width={1600} height={900} className='aspect-video object-cover' />
         </Link>
       }
       {post.video !== undefined &&

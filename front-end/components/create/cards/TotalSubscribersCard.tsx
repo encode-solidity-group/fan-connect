@@ -12,7 +12,7 @@ import CreatorSubscribers from '../CreatorsSubscribers';
 
 const TotalSubsWidget = () => {
   return (
-    <div className="border rounded-xl h-[300px] sm:w-[300px] sm:h-[400px] w-full shadow-md flex justfiy-between p-5 ">
+    <div className="border rounded-xl h-[300px] w-full sm:h-[400px] shadow-md flex justfiy-between p-5 ">
       <div className="flex flex-1 justify-between">
         <div className="flex flex-col h-full justify-between">
           <span className="font-bold text-[14px]">Subscribers</span>
@@ -37,7 +37,7 @@ const CurrentSubFees = () => {
   };
 
   return (
-    <div className="border rounded-xl h-[400px] sm:w-[630px] sm:h-[500px] w-full shadow-md flex p-5 justify-center items-center">
+    <div className="border rounded-xl w-full shadow-md flex p-5 justify-center items-center">
       <div className="flex flex-1 justify-center">
         <div className="h-full flex flex-col my-5">
           <span className="font-bold text-[14px] sm:text-[24px] flex justify-center">Subscription Fees</span>
@@ -52,7 +52,7 @@ const CurrentSubFees = () => {
           </div>
         </div>
       </div>
-      {showModal && <ChangeFeePopUp onClose={handleModalToggle}/>}
+      {showModal && <ChangeFeePopUp onClose={handleModalToggle} />}
     </div>
   );
 };
@@ -65,7 +65,7 @@ type ChangeFeePopUpProps = {
 const ChangeFeePopUp: React.FC<ChangeFeePopUpProps> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 bg-blue-200 bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-      <div className="w-[300px] flex flex-col">
+      <div className="flex flex-col">
         <button className="text-xl place-self-end" onClick={onClose}>
           x
         </button>
@@ -95,14 +95,12 @@ const ChangeFeePopUp: React.FC<ChangeFeePopUpProps> = ({ onClose }) => {
 
 const TotalSubscribersCard = () => {
   return (
-    <div>
-      <>
-        <div className='mt-20 flex flex-wrap gap-7'>
-          <CurrentSubFees />
-          <TotalSubsWidget />
-          <TotalSubsWidget />
-        </div>
-      </>
+    <div className='flex flex-wrap gap-4 sm:gap-8 py-4 sm:py-8'>
+      <CurrentSubFees />
+      <div className='grid min-[900px]:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 w-full gap-4 sm:gap-8'>
+        <TotalSubsWidget />
+        <TotalSubsWidget />
+      </div>
     </div>
   );
 };

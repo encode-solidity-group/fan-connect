@@ -44,10 +44,12 @@ export default function DisplayFees() {
     <div className="text-center my-8 space-y-4">
       <p className='text-xl'>Subscription Fees for:
         <br />
-        {queryAddress}
+        <div className='break-all'>
+          {queryAddress}
+        </div>
       </p>
       <div className='space-y-4'>
-        <div className='flex justify-center gap-8'>
+        <div className='grid grid-cols-2 md:grid-cols-4 gap-8'>
           {creatorFees()}
         </div>
       </div>

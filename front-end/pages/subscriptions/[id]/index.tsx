@@ -3,6 +3,7 @@ import SideBar from "../../../components/sidebar/SideBar";
 import UserSubscriptions from "../../../components/subscriptions/UserSubscriptions";
 import { useContext } from "react";
 import { DarkModeContext } from "../../../providers/DarkModeProvider";
+import SideBarRight from "../../../components/sidebar/RightSideBar";
 
 export default function Subscriptions() {
   const { darkMode } = useContext(DarkModeContext);
@@ -10,12 +11,13 @@ export default function Subscriptions() {
   return (
     <div className={`flex justify-between w-screen min-h-screen ${darkMode && 'dark-mode'}`}>
       <SideBar />
-      <div className='sm:ml-[175px] lg:ml-[340px] w-full mx-auto'>
-        <div className="flex justify-end mr-16 mt-4">
+      <div className='sm:ml-[175px] lg:ml-[280px] w-full mx-auto px-4 sm:px-8'>
+        <div className='mt-4 flex justify-end'>
           <ConnectButton />
         </div>
         <UserSubscriptions />
       </div>
+      <SideBarRight />
     </div>
   )
 }

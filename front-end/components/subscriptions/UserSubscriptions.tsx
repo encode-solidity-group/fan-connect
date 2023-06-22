@@ -47,7 +47,7 @@ export default function UserSubscriptions() {
             alt='profile pic'
             className='aspect-square object-cover rounded-full border-4'
           />
-          <div className='mt-auto'>
+          <div className='mt-auto break-all'>
             {subscription}
             <div>@username</div>
           </div>
@@ -57,7 +57,7 @@ export default function UserSubscriptions() {
   };
 
   return (
-    <div className='min-h-screen my-8 mx-auto w-[600px]'>
+    <div className='min-h-screen my-8 mx-auto'>
       <div className='text-2xl text-center mb-4'>Your Subscriptions</div>
       <div className='space-y-8'>
         {userAddress === queryAddress && renderSubscriptions()}

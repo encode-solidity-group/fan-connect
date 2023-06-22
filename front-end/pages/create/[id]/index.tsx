@@ -14,6 +14,7 @@ import { QueryAddressContext } from "../../../providers/QueryAddressProvider";
 import { DarkModeContext } from "../../../providers/DarkModeProvider";
 import Nav from "../../../components/landingPage/Nav";
 import TotalSubscribersCard from "../../../components/create/cards/TotalSubscribersCard";
+import SideBarRight from "../../../components/sidebar/RightSideBar";
 
 export default function FeeGate() {
   const { contractAddress } = useGetContractAddress();
@@ -31,11 +32,10 @@ export default function FeeGate() {
   return (
     <div className={`flex justify-between w-screen min-h-screen ${darkMode && 'dark-mode'}`}>
       <SideBar />
-      <div className='sm:ml-[175px] lg:ml-[340px] w-full px-5'>
-        <div className="flex justify-center mr-16 mt-4">
+      <div className='sm:ml-[175px] lg:ml-[280px] w-full px-4 sm:px-8'>
+        <div className='mt-4 flex justify-end'>
           <ConnectButton />
         </div>
-
         {/* {!isCreator && <RedirectToCreate />}
         {isCreator === true &&
           <div>
@@ -57,7 +57,8 @@ export default function FeeGate() {
           <TotalSubscribersCard />
         </div>
       </div>
-      <Nav />
+      <SideBarRight />
+      {/* <Nav /> */}
     </div>
   );
 }

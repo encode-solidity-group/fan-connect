@@ -8,9 +8,9 @@ export default function DarkModeButton() {
   return (
     <button>
       {darkMode ?
-        <BsSun onClick={toggleDarkMode} />
+        <BsSun onClick={toggleDarkMode} size={20} />
         :
-        <BsMoonFill onClick={toggleDarkMode} />
+        <BsMoonFill onClick={toggleDarkMode} size={20} />
       }
     </button>
   )
