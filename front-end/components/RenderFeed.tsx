@@ -25,7 +25,7 @@ export const RenderFeed = (posts: DocumentData[]) => {
               <div className="text-sm text-gray-500">@{post.username.slice(0, 4)}...{post.username.slice(38)}</div>
             </div>
           </div>
-          <p>{formatTime(new Date(post.timestamp.seconds * 1000).toLocaleString())}</p>
+          <p className="text-gray-500">{formatTime(new Date(post.timestamp.seconds * 1000).toLocaleString())}</p>
         </div>
         <div>{post.text}</div>
       </div>
