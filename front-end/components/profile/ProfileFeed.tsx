@@ -112,9 +112,11 @@ const ProfileFeed = () => {
         <div className='mr-2 text-[24px] text-[#3FA0EF]'>
           {userAddress === queryAddress ? 'Your Feed' : 'Feed'}
         </div>
-        <button className='enterButton' onClick={() => setShowInput(!showInput)}>
-          {showInput ? 'Hide post' : 'Start a new post'}
-        </button>
+        {userAddress === queryAddress &&
+          <button className='enterButton' onClick={() => setShowInput(!showInput)}>
+            {showInput ? 'Hide post' : 'Start a new post'}
+          </button>
+        }
       </div>
       {showInput && <Input />}
       <div className='my-8'>
