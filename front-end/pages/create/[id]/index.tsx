@@ -12,6 +12,8 @@ import CreatorSubscribers from "../../../components/create/CreatorsSubscribers";
 import { UserAddressContext } from "../../../providers/UserAddressProvider";
 import { QueryAddressContext } from "../../../providers/QueryAddressProvider";
 import { DarkModeContext } from "../../../providers/DarkModeProvider";
+import Nav from "../../../components/landingPage/Nav";
+import TotalSubscribersCard from "../../../components/create/cards/TotalSubscribersCard";
 
 export default function FeeGate() {
   const { contractAddress } = useGetContractAddress();
@@ -24,18 +26,17 @@ export default function FeeGate() {
     abi: contractJson.abi,
     functionName: 'creatorPageExists',
     args: [queryAddress],
-  })
+  });
 
   return (
     <div className={`flex justify-between w-screen min-h-screen ${darkMode && 'dark-mode'}`}>
       <SideBar />
-      <div className='sm:ml-[175px] lg:ml-[340px] w-full'>
-
-        <div className="flex justify-end mr-16 mt-4">
+      <div className='sm:ml-[175px] lg:ml-[340px] w-full px-5'>
+        <div className="flex justify-center mr-16 mt-4">
           <ConnectButton />
         </div>
 
-        {!isCreator && <RedirectToCreate />}
+        {/* {!isCreator && <RedirectToCreate />}
         {isCreator === true &&
           <div>
             <DisplayFees />
@@ -45,15 +46,18 @@ export default function FeeGate() {
               </Link>
             }
           </div>
-        }
-        {isCreator === true && queryAddress === userAddress &&
+        } */}
+        {/* {isCreator === true && queryAddress === userAddress &&
           <div className="grid grid-cols-2 mx-auto">
             <CreatorFee />
             <CreatorSubscribers />
           </div>
-        }
-
+        } */}
+        <div className="flex gap-[20px]">
+          <TotalSubscribersCard />
+        </div>
       </div>
+      <Nav />
     </div>
-  )
+  );
 }

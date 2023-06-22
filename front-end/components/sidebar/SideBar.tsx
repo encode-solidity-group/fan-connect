@@ -13,7 +13,7 @@ const SideBar = () => {
   const { userAddress } = useContext(UserAddressContext);
 
   return (
-    <div className="hidden sm:flex flex-col items-center fixed lg:items-start lg:w-[340px] h-screen border-r border-red-200">
+    <div className="hidden sm:flex flex-col items-center fixed lg:items-start lg:w-[340px] h-screen border-r border-[#3FA0EF]">
 
       <div className="flex items-center justify-center w-44 h-44 hoverEffect mx-auto p-4 lg:p-0">
         <Link href={'/'}>

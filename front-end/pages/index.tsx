@@ -6,6 +6,8 @@ import AboutCreators from '../components/landingPage/AboutCreators';
 import AboutUsers from '../components/landingPage/AboutUsers';
 import { useContext } from 'react';
 import { DarkModeContext } from '../providers/DarkModeProvider';
+import Footer from '../components/landingPage/Footer';
+import MyParticles from '../components/Background';
 
 const inter = Inter({
   weight: ['400', '700'],
@@ -18,8 +20,9 @@ function Home() {
 
   return (
     <div className={`${inter.className} ${darkMode && 'dark-mode'}`}>
+      <MyParticles />
       <Header />
-      <div className="background-animated py-20" />
+      <div className="background-animated py-20 mt-20" />
       <Banner />
       <div className="background-animated1 py-20  " />
       <AboutCreators />
@@ -27,6 +30,9 @@ function Home() {
       <AboutUsers />
       <div className="flex justify-center lg:hidden">
         <Nav />
+      </div>
+      <div>
+        <Footer />
       </div>
     </div>
   );

@@ -3,19 +3,20 @@ import Feed from '../../components/home/Feed';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useContext } from 'react';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
+import RightSideBar from '../../components/sidebar/RightSideBar';
 
 const UserHome = () => {
   const { darkMode } = useContext(DarkModeContext);
 
   return (
-    <div className={`flex justify-between w-screen min-h-screen ${darkMode && 'dark-mode'}`}>
+    <div className={`flex justify-between ${darkMode && 'dark-mode'}`}>
       <SideBar />
-      <div className='sm:ml-[175px] lg:ml-[340px] w-full mx-auto'>
-        <div className="flex justify-end mr-16 mt-4">
-          <ConnectButton />
+      <div className='sm:ml-[175px] lg:ml-[340px] w-full-mt-12 '>
+        <div className="flex mx-auto">
+          <Feed />
         </div>
-        <Feed />
       </div>
+      <RightSideBar />
     </div>
   );
 };

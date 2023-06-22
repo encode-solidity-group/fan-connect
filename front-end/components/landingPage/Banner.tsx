@@ -22,7 +22,7 @@ export const Banner = () => {
   };
 
   return (
-    <section className="min-h-[85vh] lg:min-h-75 flex items-center justify-center lg:my-24">
+    <section className="min-h-[85vh] lg:min-h-75 flex items-center justify-center ">
       <div className="container mx-auto">
         <div className="flex flex-col gap-y-6 lg:flex-row lg:items-center lg:gap-x-12">
           <div className="flex-1 text-center lg:text-left">
@@ -71,7 +71,7 @@ export const Banner = () => {
               </button>
 
               {error &&
-                <div className="flex max-w-[400px] gap-4 bg-red-300 max-lg:mx-auto justify-center items-center rounded-md m-2 w-fit px-2">
+                <div className="flex max-w-[400px] gap-4 max-lg:mx-auto justify-center items-center rounded-md m-2 w-fit px-2">
                   <div>
                     <AiOutlineExclamationCircle />
                   </div>

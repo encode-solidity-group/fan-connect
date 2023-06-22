@@ -7,6 +7,8 @@ import { useContractRead } from 'wagmi';
 import Link from 'next/link';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 
 const Feed = () => {
   const { contractAddress } = useGetContractAddress();
@@ -69,8 +71,11 @@ const Feed = () => {
   };
 
   return (
-    <div className="min-h-screen mx-auto w-[600px] my-8">
-      <div className="font-medium text-[30px] px-4 py-2">
+    <div className="sm:ml-[81px] xl:ml-[75px] items-start justify-center min-h-screen  w-[600px] my-8 border-r border-[#3FA0EF]">
+      <div className="mt-24 flex justify-center">
+        <ConnectButton />
+      </div>
+      <div className="font-medium text-[30px] px-4 py-2 pt-16">
         Home
       </div>
       {isCreator === true && <Input />}
