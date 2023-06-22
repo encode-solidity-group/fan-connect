@@ -1,19 +1,20 @@
 import React, { useContext, useState } from 'react';
 import { BsCameraVideo, BsImage } from "react-icons/bs";
 import { AiOutlineClose } from "react-icons/ai";
-import { useSession } from 'next-auth/react';
 import { addDoc, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import { db, storage } from '../../firebase';
 import { getDownloadURL, ref, uploadBytes, uploadBytesResumable } from 'firebase/storage';
 import Image from 'next/image';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
+import useUserInfo from '../../custom hooks/useUserInfo';
 
 const Input = () => {
-  const { data: session } = useSession();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const { userAddress } = useContext(UserAddressContext);
+
+  const { profilePicture } = useUserInfo(userAddress);
 
   const addImageToPost = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -68,7 +69,7 @@ const Input = () => {
         <div>
           <Image
             className='h-12 w-12 rounded-full object-contain'
-            src={session?.user?.image}
+            src={profilePicture}
             width={500}
             height={500}
             alt="profile picture"

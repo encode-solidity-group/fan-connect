@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { onSnapshot,collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
+import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useContractRead, useContractWrite } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
@@ -20,7 +20,7 @@ const ProfileFeed = () => {
 
   const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
   const [posts, setPosts] = useState<DocumentData[]>([]);
-  const [username,setUserName] = useState<string>('');
+  const [username, setUserName] = useState<string>('');
 
   const [daysSubscribed, setDaysSubscribed] = useState<number>(30);
   const [showInput, setShowInput] = useState(false);
@@ -81,13 +81,8 @@ const ProfileFeed = () => {
   };
 
   return (
-    <div className="min-h-screen py-4 mx-auto">
-      <div className='text-center mb-4'>
-        <ChangeFeeButton />
-      </div>
-      <div className="font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
-        <SubscriptionLength creator={queryAddress} user={userAddress} />
-      </div>
+    <div className="min-h-screen mx-auto">
+      <SubscriptionLength creator={queryAddress} user={userAddress} />
       {(userAddress !== queryAddress) &&
         <div className="flex justify-center mx-5 items-start">
           <select

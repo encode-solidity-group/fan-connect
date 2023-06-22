@@ -1,9 +1,9 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import SideBar from "../../../components/sidebar/SideBar";
-import UserSubscriptions from "../../../components/subscriptions/UserSubscriptions";
+import SideBar from "../../components/sidebar/SideBar";
+import UserSubscriptions from "../../components/subscriptions/UserSubscriptions";
 import { useContext } from "react";
-import { DarkModeContext } from "../../../providers/DarkModeProvider";
-import SideBarRight from "../../../components/sidebar/RightSideBar";
+import { DarkModeContext } from "../../providers/DarkModeProvider";
+import SideBarRight from "../../components/sidebar/RightSideBar";
 
 export default function Subscriptions() {
   const { darkMode } = useContext(DarkModeContext);
