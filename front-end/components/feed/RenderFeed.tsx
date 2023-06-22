@@ -1,13 +1,13 @@
 import { Key, useState, useContext, useEffect } from "react";
-import { formatTime } from "../utils/formatTime";
 import Image from "next/image";
 import { DocumentData, doc, collection, getDoc } from "firebase/firestore";
 import { BsBookmark, BsBookmarkFill, BsHeart, BsHeartFill } from "react-icons/bs";
 import { AiOutlineDollar } from "react-icons/ai";
 import Link from "next/link";
-import { db } from "../firebase";
-import { UserAddressContext } from '../providers/UserAddressProvider';
-import { handleLike, userLikedPost, userBookmarkedPost, handleBookmark } from "../utils/likeBookmark"; // Import functions
+import { db } from "../../firebase";
+import { UserAddressContext } from '../../providers/UserAddressProvider';
+import { handleLike, userLikedPost, userBookmarkedPost, handleBookmark } from "../../utils/likeBookmark"; // Import functions
+import FeedHeader from "./FeedHeader";
 
 export const RenderFeed = (posts: DocumentData[]) => {
   const { userAddress } = useContext(UserAddressContext);
@@ -15,7 +15,7 @@ export const RenderFeed = (posts: DocumentData[]) => {
 
   useEffect(() => {
     const fetchBookmarkedPosts = async () => {
-      if(userAddress){
+      if (userAddress) {
         const userRef = doc(collection(db, 'users'), userAddress);
         const userSnap = await getDoc(userRef);
 
@@ -33,23 +33,7 @@ export const RenderFeed = (posts: DocumentData[]) => {
 
   return posts.map((post, index: Key) => (
     <div key={index} className='border border-gray-500 my-5 rounded-md'>
-      <div className='p-4 space-y-4'>
-        <div className='flex justify-between'>
-          <div className="flex">
-            <Link href={`/profile/${post.username}`}>
-              <Image src={'/../public/male1.jpg'} width={50} height={50} alt="profile photo" className="aspect-square object-cover rounded-full" />
-            </Link>
-            <div className="flex flex-col ml-2">
-              <Link href={`/profile/${post.username}`} className="hover:text-[#3FA0EF]">
-                {post.username.slice(0, 4)}...{post.username.slice(38)}
-              </Link>
-              <div className="text-sm text-gray-500">@{post.username.slice(0, 4)}...{post.username.slice(38)}</div>
-            </div>
-          </div>
-          <p className="text-gray-500">{formatTime(new Date(post.timestamp.seconds * 1000).toLocaleString())}</p>
-        </div>
-        <div>{post.text}</div>
-      </div>
+      <FeedHeader userAddress={post.username} timestamp={post.timestamp.seconds} text={post.text} />
       {post.image !== undefined &&
         <Link href={post.image} target="_blank" rel="noopener noreferrer">
           <Image src={post.image} alt={post.text} width={1600} height={900} className='aspect-video object-cover' />
@@ -66,9 +50,9 @@ export const RenderFeed = (posts: DocumentData[]) => {
           <button onClick={() => handleLike(post, userAddress)} className="hover:text-red-500">
             {userLikedPost(post, userAddress) ?
               <BsHeartFill color="red" />
-               : 
+              :
               <BsHeart />
-             }
+            }
           </button>
           <button className="flex items-center hover:text-[#6BD0FF]">
             <AiOutlineDollar size={20} />
@@ -76,10 +60,10 @@ export const RenderFeed = (posts: DocumentData[]) => {
           </button>
         </div>
         <div className="flex">
-          <button onClick={() => handleBookmark(post, userAddress, setBookmarkedPosts,bookmarkedPosts)} className="hover:text-[#6BD0FF]">
-            {userBookmarkedPost(post.id, bookmarkedPosts) ? 
+          <button onClick={() => handleBookmark(post, userAddress, setBookmarkedPosts, bookmarkedPosts)} className="hover:text-[#6BD0FF]">
+            {userBookmarkedPost(post.id, bookmarkedPosts) ?
               <BsBookmarkFill color="#6BD0FF" />
-              : 
+              :
               <BsBookmark />
             }
           </button>

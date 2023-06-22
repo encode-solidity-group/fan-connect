@@ -10,7 +10,7 @@ import SubscriptionLength from '../SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 import { QueryAddressContext } from '../../providers/QueryAddressProvider';
-import { RenderFeed } from '../RenderFeed';
+import { RenderFeed } from '../feed/RenderFeed';
 import Input from '../home/Input';
 
 const ProfileFeed = () => {
@@ -20,7 +20,6 @@ const ProfileFeed = () => {
 
   const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
   const [posts, setPosts] = useState<DocumentData[]>([]);
-  const [username, setUserName] = useState<string>('');
 
   const [daysSubscribed, setDaysSubscribed] = useState<number>(30);
   const [showInput, setShowInput] = useState(false);

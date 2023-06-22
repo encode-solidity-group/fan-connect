@@ -6,7 +6,7 @@ import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { useContractRead } from 'wagmi';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
-import { RenderFeed } from '../RenderFeed';
+import { RenderFeed } from '../feed/RenderFeed';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 
@@ -56,9 +56,6 @@ const Feed = () => {
 
   return (
     <div className="items-start justify-center min-h-screen my-8">
-      {/* <div className="mt-4 flex justify-center">
-        <ConnectButton />
-      </div> */}
       <div className="font-medium text-[30px] mx-4 my-2 mt-8">
         Home
       </div>

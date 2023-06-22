@@ -23,5 +23,5 @@ export default function useBookmarkedPosts(userAddress: string | undefined) {
     fetchBookmarkedPosts();
   }, [userAddress]);
 
-  return { bookmarkedPosts };
+  return { bookmarkedPosts, setBookmarkedPosts };
 }
