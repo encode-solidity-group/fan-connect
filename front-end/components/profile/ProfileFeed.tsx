@@ -45,6 +45,13 @@ const ProfileFeed = () => {
     args: [queryAddress, daysSubscribed],
   });
 
+  const { data: isCreator } = useContractRead({
+    address: contractAddress,
+    abi: contractJson.abi,
+    functionName: 'creatorPageExists',
+    args: [queryAddress],
+  });
+
   useEffect(() => {
     if (daysSubscribed != 0) {
       calcPriceRefetch()
@@ -104,10 +111,12 @@ const ProfileFeed = () => {
         </div>
       }
       <div className="flex justify-between mb-4 items-center">
-        <div className='mr-2 text-[24px] text-[#3FA0EF]'>
+
+        <div className="font-medium text-[30px] mx-4 ">
           {userAddress === queryAddress ? 'Your Feed' : 'Feed'}
         </div>
-        {userAddress === queryAddress &&
+
+        {userAddress === queryAddress && isCreator === true &&
           <button className='enterButton' onClick={() => setShowInput(!showInput)}>
             {showInput ? 'Hide post' : 'Start a new post'}
           </button>

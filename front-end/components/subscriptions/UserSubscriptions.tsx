@@ -35,7 +35,9 @@ export default function UserSubscriptions() {
 
   return (
     <div className='min-h-screen my-8 mx-auto'>
-      <div className='text-2xl text-center mb-4'>Your Subscriptions</div>
+      <div className="font-medium text-[30px] mx-4 my-2 mt-8">
+        Subscriptions
+      </div>
       <div className='space-y-8'>
         {userAddress && renderSubscriptions()}
       </div>

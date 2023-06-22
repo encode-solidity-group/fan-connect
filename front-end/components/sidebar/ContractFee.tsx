@@ -54,7 +54,7 @@ export default function ContractFee() {
       {owner && userAddress && owner === userAddress &&
         <div className="mx-auto my-8 text-xl space-y-4 max-w-[175px] lg:max-w-[280px] text-center border-t">
 
-          <div className="text-center mt-8 text-[#FE5857] text-2xl lg:text-3xl">
+          <div className="text-center mt-8 text-[#3FA0EF] text-2xl lg:text-3xl">
             Change Contract Fee
           </div>
 
