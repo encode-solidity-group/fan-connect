@@ -26,7 +26,7 @@ const SideBar = () => {
           <SideBarLink text="Home" Icon={AiOutlineHome} />
         </Link>
 
-        <Link href={`/subscriptions/${userAddress}`}>
+        <Link href={`/subscriptions`}>
           <SideBarLink text="Subscriptions" Icon={RiHeartsLine} />
         </Link>
 

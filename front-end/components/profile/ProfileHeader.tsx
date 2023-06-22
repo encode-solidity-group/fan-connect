@@ -6,10 +6,12 @@ import useUserInfo from '../../custom hooks/useUserInfo';
 import { useContractRead } from 'wagmi';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
+import { UserAddressContext } from '../../providers/UserAddressProvider';
 
 export default function ProfileHeader() {
   const { queryAddress } = useContext(QueryAddressContext);
-  const { username, bio, profilePicture, coverPhoto } = useUserInfo(queryAddress)
+  const { userAddress } = useContext(UserAddressContext);
+  const { username, bio, profilePicture, coverPhoto } = useUserInfo(queryAddress);
   const { contractAddress } = useGetContractAddress();
 
   const { data: subscriberCount } = useContractRead({
@@ -21,6 +23,7 @@ export default function ProfileHeader() {
   });
 
   const count = Array.isArray(subscriberCount) ? subscriberCount.length : 0;
+  const defaultUsername = `${username.slice(0, 4)}...${username.slice(38)}`;
 
   return (
     <div className="border-b border-gray-500 pb-4 w-full">
@@ -34,12 +37,14 @@ export default function ProfileHeader() {
             alt='profile pic'
             className='aspect-square object-cover rounded-full border-4'
           />
-          <div className='mt-auto -ml-12 border-2 rounded-full'>
-            <UpdateUsernameModal />
-          </div>
+          { userAddress === queryAddress &&
+            <div className='mt-auto -ml-12 border-2 rounded-full'>
+              <UpdateUsernameModal />
+            </div>
+          }
           <div className="text-white mt-auto ml-4 sm:ml-8">
             <h2 className="text-2xl font-bold">{queryAddress?.slice(0, 4)}...{queryAddress?.slice(38)}</h2>
-            <p className="text-lg text-gray-400">@{username}</p>
+            <p className="text-lg text-gray-400">@{username === queryAddress ? defaultUsername : username}</p>
             <p className="text-lg">Subscribers: {count}</p>
           </div>
         </div>
