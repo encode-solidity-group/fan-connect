@@ -1,78 +1,35 @@
-import { Key, useState,useContext,useEffect } from "react";
+import { Key, useState, useContext, useEffect } from "react";
 import { formatTime } from "../utils/formatTime";
 import Image from "next/image";
-import { DocumentData,doc,updateDoc,arrayUnion,collection,arrayRemove,getDoc } from "firebase/firestore";
+import { DocumentData, doc, collection, getDoc } from "firebase/firestore";
 import { BsBookmark, BsBookmarkFill, BsHeart, BsHeartFill } from "react-icons/bs";
 import { AiOutlineDollar } from "react-icons/ai";
 import Link from "next/link";
-import {db} from "../firebase";
+import { db } from "../firebase";
 import { UserAddressContext } from '../providers/UserAddressProvider';
+import { handleLike, userLikedPost, userBookmarkedPost, handleBookmark } from "../utils/likeBookmark"; // Import functions
 
 export const RenderFeed = (posts: DocumentData[]) => {
-  // const [liked, setliked] = useState(false);
-  // const [bookmarked, setBookmarked] = useState(false);
   const { userAddress } = useContext(UserAddressContext);
   const [bookmarkedPosts, setBookmarkedPosts] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchBookmarkedPosts = async () => {
       if(userAddress){
-      const userRef = doc(collection(db, 'users'), userAddress);
-      const userSnap = await getDoc(userRef);
+        const userRef = doc(collection(db, 'users'), userAddress);
+        const userSnap = await getDoc(userRef);
 
-      if (userSnap.exists()) {
-        const userData = userSnap.data();
-        setBookmarkedPosts(userData?.bookmark || []);
-      } else {
-        console.log('No such document!');
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          setBookmarkedPosts(userData?.bookmark || []);
+        } else {
+          console.log('No such document!');
+        }
       }
-    }
     };
 
     fetchBookmarkedPosts();
   }, [userAddress]);
-
-  
-  const handleLike = async (post:DocumentData) => {
-    const postRef = doc(collection(db, 'posts'), post.id);
-    if(!userLikedPost(post)){
-      await updateDoc(postRef, {
-        liked: arrayUnion(userAddress),
-    }); 
-    }else{
-      //remove like
-      await updateDoc(postRef, {
-        liked: arrayRemove(userAddress),
-      });
-    }
-  }
-
-  const userLikedPost = (post:DocumentData) => {
-    return (post.liked!==undefined ? post.liked.includes(userAddress):false);
-  }
-
-
-
-  const userBookmarkedPost = (postId: string) => {
-    return bookmarkedPosts.includes(postId);
-  };
-
-  const handleBookmark = async (post:DocumentData) => {
-    const userRef = doc(collection(db, 'users'), userAddress);
-    if(!userBookmarkedPost(post.id)){
-      await updateDoc(userRef, {
-        bookmark: arrayUnion(post.id),
-      }); 
-      setBookmarkedPosts((prev) => [...prev, post.id]); // Update local state
-    }else{
-      //remove bookmark
-      await updateDoc(userRef, {
-        bookmark: arrayRemove(post.id),
-      });
-      setBookmarkedPosts((prev) => prev.filter((id) => id !== post.id)); // Update local state
-    }
-}
-
 
   return posts.map((post, index: Key) => (
     <div key={index} className='border border-gray-500 my-5 rounded-md'>
@@ -106,8 +63,8 @@ export const RenderFeed = (posts: DocumentData[]) => {
       }
       <div className='p-4 flex justify-between items-center'>
         <div className="flex items-center gap-4">
-          <button onClick={() => handleLike(post)} className="hover:text-red-500">
-            {userLikedPost(post) ?
+          <button onClick={() => handleLike(post, userAddress)} className="hover:text-red-500">
+            {userLikedPost(post, userAddress) ?
               <BsHeartFill color="red" />
                : 
               <BsHeart />
@@ -119,8 +76,8 @@ export const RenderFeed = (posts: DocumentData[]) => {
           </button>
         </div>
         <div className="flex">
-          <button onClick={() => handleBookmark(post)} className="hover:text-[#6BD0FF]">
-            {userBookmarkedPost(post.id) ? 
+          <button onClick={() => handleBookmark(post, userAddress, setBookmarkedPosts,bookmarkedPosts)} className="hover:text-[#6BD0FF]">
+            {userBookmarkedPost(post.id, bookmarkedPosts) ? 
               <BsBookmarkFill color="#6BD0FF" />
               : 
               <BsBookmark />
@@ -130,5 +87,4 @@ export const RenderFeed = (posts: DocumentData[]) => {
       </div>
     </div>
   ));
-
 };
