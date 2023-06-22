@@ -7,6 +7,7 @@ import UpdateUsernameModal from './UpdateUsernameModal';
 const Username = ({queryAddress}) => {
   const { userAddress } = useContext(UserAddressContext);
   const [username, setUserName] = useState<string>('');
+  const [bio, setBio] = useState<string>('');
   const [profilePicture, setProfilePicture] = useState<string>(''); // add state for profile picture
   const [coverPhoto, setCoverPhoto] = useState<string>(''); // add state for profile picture
 
@@ -23,6 +24,11 @@ const Username = ({queryAddress}) => {
             } else {
               setUserName(queryAddress)
             }
+            if(userData.bio != undefined){
+                setBio(userData.bio); 
+              } else {
+                setBio('')
+              }
 
             if(userData.profile_picture != undefined) { // set profile picture if it exists
               setProfilePicture(userData.profile_picture);
@@ -38,6 +44,7 @@ const Username = ({queryAddress}) => {
           }
         } else {
           setUserName(queryAddress);
+          setBio('');
           setProfilePicture('https://firebasestorage.googleapis.com/v0/b/only-blocks.appspot.com/o/images%2Fdefault_pfp.jpeg?alt=media&token=d63ac8a8-49e1-41b0-841f-7c71e2ed69bf'); // set to default picture or leave blank if document doesn't exist
           setCoverPhoto('https://firebasestorage.googleapis.com/v0/b/only-blocks.appspot.com/o/images%2Fdefault_cover.jpeg?alt=media&token=9fb8922f-6418-44b8-9492-4070737a51e3'); // set to default picture or leave blank if it doesn't exist
         }
@@ -53,6 +60,7 @@ const Username = ({queryAddress}) => {
       <img src={coverPhoto} alt="Cover" /> {/* display the profile picture */}
       <div> Username: {username}</div>
       <img src={profilePicture} alt="Profile" /> {/* display the profile picture */}
+      <div> Bio: {bio}</div>
       {(userAddress === queryAddress) && <UpdateUsernameModal queryAddress={queryAddress} />}
     </div>
   );

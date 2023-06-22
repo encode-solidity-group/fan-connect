@@ -6,6 +6,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 const UpdateUsernameModal = ({queryAddress}) => {
   const [show, setShow] = useState(false);
   const [username, setUsername] = useState('');
+  const [bio, setBio] = useState('');
   const [progress, setProgress] = useState(0);
   const [coverProgress, setCoverProgress] = useState(0);
 
@@ -47,14 +48,14 @@ const UpdateUsernameModal = ({queryAddress}) => {
 
 
   const handleCoverFileChange = (e) => {
-    setFile(e.target.files[0]);
+    setCoverFile(e.target.files[0]);
   };
 
   const handleCoverUpload = async () => {
-    if (!file) return;
+    if (!coverFile) return;
 
-    const storageRef = ref(storage, `images/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+    const storageRef = ref(storage, `images/${coverFile.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, coverFile);
 
     uploadTask.on('state_changed', 
       (snapshot) => {
@@ -86,6 +87,16 @@ const UpdateUsernameModal = ({queryAddress}) => {
     setUsername(e.target.value);
   };
 
+  const handleBioSave = async () => {
+    const userRef = doc(collection(db, 'users'), queryAddress);
+    await setDoc(userRef, { bio }, { merge: true });
+    handleClose();
+  };
+
+  const handleBioChange = (e) => {
+    setBio(e.target.value);
+  };
+
   return (
     <div>
       <button onClick={handleShow} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -115,6 +126,21 @@ const UpdateUsernameModal = ({queryAddress}) => {
               
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                 <button onClick={handleSave} type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+                  Save
+                </button>
+              </div>
+
+              <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                    Update Bio
+                  </h3>
+                  <input onChange={handleBioChange} type="text" className="mt-3 w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="username" name="username" required autoFocus/>
+                </div>
+              </div> 
+              
+              <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <button onClick={handleBioSave} type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                   Save
                 </button>
               </div>
