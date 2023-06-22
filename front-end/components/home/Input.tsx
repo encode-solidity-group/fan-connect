@@ -74,7 +74,7 @@ const Input = () => {
             alt="profile picture"
           />
         </div>
-        <div className='border-y py-2'>
+        <div className='border-y border-gray-500 py-2'>
           <textarea
             className='w-[100%] bg-transparent outline-none text-[20px]'
             rows={2}

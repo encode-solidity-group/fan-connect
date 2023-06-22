@@ -11,6 +11,7 @@ import { SiEthereum } from 'react-icons/si';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 import { QueryAddressContext } from '../../providers/QueryAddressProvider';
 import { RenderFeed } from '../RenderFeed';
+import Input from '../home/Input';
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
@@ -21,6 +22,7 @@ const ProfileFeed = () => {
   const [posts, setPosts] = useState<DocumentData[]>([]);
 
   const [daysSubscribed, setDaysSubscribed] = useState<number>(30);
+  const [showInput, setShowInput] = useState(false);
 
   const { data: price, refetch: calcPriceRefetch } = useContractRead({
     address: contractAddress,
@@ -106,11 +108,15 @@ const ProfileFeed = () => {
 
         </div>
       }
-      <div className="flex justify-evenly mb-4">
+      <div className="flex justify-between mb-4 items-center">
         <div className='mr-2 text-[24px] text-[#3FA0EF]'>
           {userAddress === queryAddress ? 'Your Feed' : 'Feed'}
         </div>
+        <button className='enterButton' onClick={() => setShowInput(!showInput)}>
+          {showInput ? 'Hide post' : 'Start a new post'}
+        </button>
       </div>
+      {showInput && <Input />}
       <div className='my-8'>
         {
           isSubscribed || userAddress === queryAddress ?
