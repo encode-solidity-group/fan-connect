@@ -10,11 +10,8 @@ import SubscriptionLength from '../SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 import { QueryAddressContext } from '../../providers/QueryAddressProvider';
-<<<<<<< HEAD
 import Image from 'next/image';
-=======
 import Username from './Username';
->>>>>>> profile-pictures
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
