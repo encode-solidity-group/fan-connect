@@ -6,6 +6,7 @@ import { QueryAddressContext } from '../../../providers/QueryAddressProvider';
 import { DarkModeContext } from '../../../providers/DarkModeProvider';
 import ProfileHeader from '../../../components/profile/ProfileHeader';
 import SideBarRight from '../../../components/sidebar/RightSideBar';
+import UpdateUsernameModal from '../../../components/profile/UpdateUsernameModal';
 
 function UserProfile() {
   const { queryAddress } = useContext(QueryAddressContext);
