@@ -21,7 +21,6 @@ const TotalSubsWidget = () => {
         </div>
 
         <div className="flex flex-col justify-between">
-          {/* <span className="text-[28px] font-light ">122213</span> */}
           <AiOutlineTeam className="text-[24px] p-[5px] bg-blue-200 rounded-2xl self-end" />
         </div>
       </div>
@@ -64,13 +63,17 @@ type ChangeFeePopUpProps = {
 
 const ChangeFeePopUp: React.FC<ChangeFeePopUpProps> = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 bg-blue-200 bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-      <div className="flex flex-col">
-        <button className="text-xl place-self-end" onClick={onClose}>
-          x
-        </button>
-        <div className="p-2 rounded">
-          <CreatorFee />
+    <div className="fixed inset-0 bg-blue-200 bg-opacity-25 backdrop-blur-sm flex justify-center items-center ">
+      <div className="flex flex-col border-[2px] border-blue-800 rounded-xl bg-white">
+        <div className="sm:m-24 m-20 ">
+          <div className="flex justify-end">
+            <button className="text-lg place-self-end  border-black" onClick={onClose}>
+              x
+            </button>
+          </div>
+          <div className="p-2 rounded">
+            <CreatorFee />
+          </div>
         </div>
       </div>
     </div>

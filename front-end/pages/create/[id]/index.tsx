@@ -58,7 +58,7 @@ export default function FeeGate() {
         </div>
       </div>
       <SideBarRight />
-      {/* <Nav /> */}
+      <Nav/>
     </div>
   );
 }

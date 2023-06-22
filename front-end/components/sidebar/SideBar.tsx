@@ -31,7 +31,7 @@ const SideBar = () => {
         </Link>
 
         <Link href={`/create/${userAddress}`}>
-          <SideBarLink text="Create Community" Icon={RiBankLine} />
+          <SideBarLink text="Manage Community" Icon={RiBankLine} />
         </Link>
 
         <Link href={`/profile/${userAddress}`}>
