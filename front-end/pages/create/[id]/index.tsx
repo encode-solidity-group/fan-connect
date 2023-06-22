@@ -53,12 +53,15 @@ export default function FeeGate() {
             <CreatorSubscribers />
           </div>
         } */}
-        <div className="flex gap-[20px]">
-          <TotalSubscribersCard />
-        </div>
+        {!isCreator && <RedirectToCreate />}
+        {isCreator === true &&
+          <div className="flex gap-[20px]">
+            <TotalSubscribersCard />
+          </div>
+        }
       </div>
       <SideBarRight />
-      <Nav/>
+      <Nav />
     </div>
   );
 }
