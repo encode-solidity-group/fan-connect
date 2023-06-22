@@ -1,48 +1,46 @@
 import { useEffect, useState } from "react";
-import { doc, collection, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 
-const useUserInfo = (userAddress: string | string[] | undefined) => {
-  const [username, setUserName] = useState<string>("");
-  const [bio, setBio] = useState<string>("");
-  const [profilePicture, setProfilePicture] = useState<string>("");
-  const [coverPhoto, setCoverPhoto] = useState<string>("");
+const useUserInfo = (userAddress: string | undefined) => {
+  const [username, setUserName] = useState("");
+  const [bio, setBio] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [coverPhoto, setCoverPhoto] = useState("");
 
   useEffect(() => {
     if (userAddress) {
-      const userDoc = doc(collection(db, "users"), userAddress);
+      const userDoc = doc(db, "users", userAddress);
 
       const unsubscribe = onSnapshot(userDoc, (docSnap) => {
         if (docSnap.exists()) {
           const userData = docSnap.data();
           if (userData) {
-            if (userData.username != undefined) {
+            if (userData.username !== undefined) {
               setUserName(userData.username);
             } else {
               setUserName(userAddress);
             }
-            if (userData.bio != undefined) {
+            if (userData.bio !== undefined) {
               setBio(userData.bio);
             } else {
               setBio("");
             }
 
-            if (userData.profile_picture != undefined) {
-              // set profile picture if it exists
+            if (userData.profile_picture !== undefined) {
               setProfilePicture(userData.profile_picture);
             } else {
               setProfilePicture(
                 "https://firebasestorage.googleapis.com/v0/b/only-blocks.appspot.com/o/images%2Fdefault_pfp.jpeg?alt=media&token=d63ac8a8-49e1-41b0-841f-7c71e2ed69bf"
-              ); // set to default picture or leave blank if it doesn't exist
+              );
             }
 
-            if (userData.cover_photo != undefined) {
-              // set profile picture if it exists
+            if (userData.cover_photo !== undefined) {
               setCoverPhoto(userData.cover_photo);
             } else {
               setCoverPhoto(
                 "https://firebasestorage.googleapis.com/v0/b/only-blocks.appspot.com/o/images%2Fdefault_cover.jpeg?alt=media&token=9fb8922f-6418-44b8-9492-4070737a51e3"
-              ); // set to default picture or leave blank if it doesn't exist
+              );
             }
           }
         } else {
@@ -50,10 +48,10 @@ const useUserInfo = (userAddress: string | string[] | undefined) => {
           setBio("");
           setProfilePicture(
             "https://firebasestorage.googleapis.com/v0/b/only-blocks.appspot.com/o/images%2Fdefault_pfp.jpeg?alt=media&token=d63ac8a8-49e1-41b0-841f-7c71e2ed69bf"
-          ); // set to default picture or leave blank if document doesn't exist
+          );
           setCoverPhoto(
             "https://firebasestorage.googleapis.com/v0/b/only-blocks.appspot.com/o/images%2Fdefault_cover.jpeg?alt=media&token=9fb8922f-6418-44b8-9492-4070737a51e3"
-          ); // set to default picture or leave blank if it doesn't exist
+          );
         }
       });
 

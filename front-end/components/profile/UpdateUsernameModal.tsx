@@ -1,10 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import { collection, doc, setDoc } from "firebase/firestore";
 import { db, storage } from '../../firebase'; // make sure you have initialized storage in your firebase.js file
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 import Image from 'next/image';
-import { AiOutlineClose, AiOutlineEdit } from 'react-icons/ai';
+import { AiOutlineClose } from 'react-icons/ai';
 import { FiEdit } from "react-icons/fi";
 
 const UpdateUsernameModal = () => {
@@ -21,8 +21,11 @@ const UpdateUsernameModal = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const handleFileChange = (e: { target: { files: React.SetStateAction<File | null>[]; }; }) => {
-    setFile(e.target.files[0]);
+  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFile(file);
+    }
   };
 
   const handleUpload = async () => {
@@ -52,8 +55,11 @@ const UpdateUsernameModal = () => {
   };
 
 
-  const handleCoverFileChange = (e: { target: { files: React.SetStateAction<File | null>[]; }; }) => {
-    setCoverFile(e.target.files[0]);
+  const handleCoverFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setCoverFile(file);
+    }
   };
 
   const handleCoverUpload = async () => {
@@ -105,7 +111,7 @@ const UpdateUsernameModal = () => {
   return (
     <div>
       <button onClick={handleShow} className="bg-[#3FA0EF] hover:bg-sky-600 rounded-full text-white font-bold py-2 px-2 rounded">
-        <FiEdit size={24}/>
+        <FiEdit size={24} />
       </button>
 
       {show && (

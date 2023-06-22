@@ -11,9 +11,10 @@ import { DarkModeContext } from '../../providers/DarkModeProvider';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 export default function ProfileHeader() {
-  const { queryAddress } = useContext(QueryAddressContext);
   const { userAddress } = useContext(UserAddressContext);
-  const { username, bio, profilePicture, coverPhoto } = useUserInfo(queryAddress);
+  const { queryAddress } = useContext(QueryAddressContext);
+  const address = Array.isArray(queryAddress) ? queryAddress[0] : queryAddress;
+  const { username, bio, profilePicture, coverPhoto } = useUserInfo(address);
   const { contractAddress } = useGetContractAddress();
   const { darkMode } = useContext(DarkModeContext);
 
