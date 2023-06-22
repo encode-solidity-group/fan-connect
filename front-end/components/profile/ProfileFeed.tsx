@@ -78,15 +78,12 @@ const ProfileFeed = () => {
   };
 
   return (
-    <div className="min-h-screen py-4 mx-auto w-[600px]">
+    <div className="min-h-screen py-4 mx-auto sm:w-[600px]">
       <div className='text-center mb-4'>
         <ChangeFeeButton />
       </div>
       <div className="font-medium text-[16px] px-4 py-2 flex justify-center mb-5">
-        <div>
-          User Profile: {queryAddress}
-          <SubscriptionLength creator={queryAddress} user={userAddress} />
-        </div>
+        <SubscriptionLength creator={queryAddress} user={userAddress} />
       </div>
       {(userAddress !== queryAddress) &&
         <div className="flex justify-center mx-5 items-start">

@@ -7,8 +7,8 @@ import { AiOutlineDollar } from "react-icons/ai";
 import Link from "next/link";
 
 export const RenderFeed = (posts: DocumentData[]) => {
-  const [liked, setliked] = useState(false);
-  const [bookmarked, setBookmarked] = useState(false);
+  // const [liked, setliked] = useState(false);
+  // const [bookmarked, setBookmarked] = useState(false);
 
   return posts.map((post, index: Key) => (
     <div key={index} className='border border-gray-500 my-5 rounded-md'>
@@ -42,12 +42,12 @@ export const RenderFeed = (posts: DocumentData[]) => {
       }
       <div className='p-4 flex justify-between items-center'>
         <div className="flex items-center gap-4">
-          <button onClick={() => setliked(!liked)} className="hover:text-red-500">
-            {liked ?
+          <button onClick={() => {}} className="hover:text-red-500">
+            {/* {liked ? */}
               <BsHeartFill color="red" />
-              :
+              {/* : */}
               <BsHeart />
-            }
+            {/* } */}
           </button>
           <button className="flex items-center hover:text-[#6BD0FF]">
             <AiOutlineDollar size={20} />
@@ -55,12 +55,12 @@ export const RenderFeed = (posts: DocumentData[]) => {
           </button>
         </div>
         <div className="flex">
-          <button onClick={() => setBookmarked(!bookmarked)} className="hover:text-[#6BD0FF]">
-            {bookmarked ?
+          <button onClick={() => {}} className="hover:text-[#6BD0FF]">
+            {/* {bookmarked ? */}
               <BsBookmarkFill color="#6BD0FF" />
-              :
+              {/* : */}
               <BsBookmark />
-            }
+            {/* } */}
           </button>
         </div>
       </div>
