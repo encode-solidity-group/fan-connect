@@ -8,13 +8,13 @@ export default function RedirectToCreate() {
   const { queryAddress } = useContext(QueryAddressContext);
 
   return (
-    <div className="flex flex-col justify-center items-center space-y-4 my-16 text-xl">
-      <div className="italic">
-        *User {queryAddress} is not a creator*
+    <div className="flex flex-col justify-center items-center space-y-4 my-16 text-xl p-4">
+      <div className="italic text-center break-all">
+        {queryAddress}<br />is not a creator
       </div>
       {queryAddress === userAddress &&
         <>
-          <div className="text-2xl">Become a creator today for free!</div>
+          <div className="text-2xl text-center">Become a creator today for free!</div>
           <CreatePage />
         </>
       }
