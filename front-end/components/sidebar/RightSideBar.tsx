@@ -1,5 +1,3 @@
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-import Link from 'next/link';
 import React, { useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
 
@@ -30,7 +28,7 @@ export const SideBarRight = () => {
       >
         <FiSearch />
         <input
-          className='bg-transparent w-[100%] outline-none'
+          className='bg-transparent w-[100%] outline-none text-black'
           type="text"
           placeholder='Search Fan-Connect'
           value={searchValue}

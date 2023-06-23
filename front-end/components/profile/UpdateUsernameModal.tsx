@@ -156,7 +156,7 @@ const UpdateUsernameModal = () => {
                 </div>
               </div>
 
-              <div className="w-full px-4 py-3 sm:px-6 sm:flex sm:flex-row sm:justify-end items-center">
+              <div className="w-full px-4 sm:px-6 sm:flex sm:flex-row sm:justify-end items-center">
                 <div className='ml-6'>{savedUsername ? <FiCheckCircle size={25} className='text-green-500' /> : ''}</div>
                 <button onClick={handleUsernameSave} type="button" className="bg-sky-600 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 hover:bg-sky-700 text-base font-medium text-white focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                   Save
@@ -172,7 +172,7 @@ const UpdateUsernameModal = () => {
                 </div>
               </div>
 
-              <div className="w-full px-4 py-3 sm:px-6 sm:flex sm:flex-row sm:justify-end items-center">
+              <div className="w-full px-4 sm:px-6 sm:flex sm:flex-row sm:justify-end items-center">
                 <div className='ml-6'>{savedBio ? <FiCheckCircle size={25} className='text-green-500' /> : ''}</div>
                 <button onClick={handleBioSave} type="button" className="bg-sky-600 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 hover:bg-sky-700 text-base font-medium text-white focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
                   Save

@@ -24,13 +24,20 @@ export default function SubscriptionLength({ creator, user }: PageProps) {
     args: [creator, user],
   })
 
+  const { data: isCreator } = useContractRead({
+    address: contractAddress,
+    abi: contractJson.abi,
+    functionName: 'creatorPageExists',
+    args: [creator],
+  });
+
   const date = new Date(Number(timestamp) * 1000);
   const localTime = date.toLocaleString();
 
   return (
     <div className="text-center">
-      {isSubscribed === true && creator !== user && <div>Subscribed until: {localTime}</div>}
-      {!isSubscribed && creator !== user && <div>You are not subscribed</div>}
+      {isSubscribed === true && creator !== user && isCreator === true && <div>Subscribed until: {localTime}</div>}
+      {!isSubscribed && creator !== user && isCreator === true &&  <div>You are not subscribed</div>}
     </div>
   )
 }

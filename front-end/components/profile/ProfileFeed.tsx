@@ -89,7 +89,7 @@ const ProfileFeed = () => {
   return (
     <div className="min-h-screen mx-auto">
       <SubscriptionLength creator={queryAddress} user={userAddress} />
-      {(userAddress !== queryAddress) &&
+      {(userAddress !== queryAddress) && isCreator=== true && 
         <div className="flex justify-center mx-5 items-start">
           <select
             value={daysSubscribed}
@@ -128,9 +128,11 @@ const ProfileFeed = () => {
           isSubscribed || userAddress === queryAddress ?
             RenderFeed(posts)
             :
-            <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
-              <p>Subscribe today for more!</p>
-            </div>
+            (isCreator=== true && 
+              <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
+                <p>Subscribe today for more!</p>
+              </div>
+            )
         }
       </div>
     </div>
