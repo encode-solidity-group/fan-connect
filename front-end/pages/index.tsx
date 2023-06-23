@@ -8,6 +8,8 @@ import { useContext } from 'react';
 import { DarkModeContext } from '../providers/DarkModeProvider';
 import Footer from '../components/landingPage/Footer';
 import MyParticles from '../components/Background';
+import MyParticlesBlack from '../components/BackgroundBlack';
+
 
 const inter = Inter({
   weight: ['400', '700'],
@@ -19,8 +21,8 @@ function Home() {
   const { darkMode } = useContext(DarkModeContext);
 
   return (
-    <div className={`${inter.className} ${darkMode && 'dark-mode'}`}>
-      <MyParticles />
+    <div className={darkMode ? `${inter.className} dark-modeHome` : inter.className}>
+      {darkMode ? <MyParticlesBlack /> : (darkMode ? <MyParticlesBlack /> : <MyParticles />)}
       <Header />
       <div className="background-animated py-20 mt-20" />
       <Banner />

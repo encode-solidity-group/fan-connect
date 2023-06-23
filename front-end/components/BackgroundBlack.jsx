@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import Particles from "react-tsparticles";
 import { loadFull } from "tsparticles";
 
-function MyParticles() {
+function MyParticlesBlack() {
 
   const particlesInit = useCallback(async engine => {
     // console.log(engine);
@@ -30,7 +30,7 @@ const particlesLoaded = useCallback(async container => {
           },
           "particles": {
               "number": {
-                  "value": 125
+                  "value": 250
               },
               "color": {
                   "value": "#6BD0FF"
@@ -42,7 +42,7 @@ const particlesLoaded = useCallback(async container => {
                   }
               },
               "opacity": {
-                  "value": 1.5,
+                  "value": 0.8,
                   "random": false,
                   "anim": {
                       "enable": false,
@@ -131,7 +131,7 @@ const particlesLoaded = useCallback(async container => {
           },
           "retina_detect": true,
           "background": {
-              "color": "#FFFFFF",
+              "color": "#000",
               "image": "",
               "position": "50% 50%",
               "repeat": "no-repeat",
@@ -143,4 +143,4 @@ const particlesLoaded = useCallback(async container => {
   )
 }
 
-export default MyParticles;
+export default MyParticlesBlack;

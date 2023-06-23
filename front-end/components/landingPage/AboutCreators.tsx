@@ -23,7 +23,7 @@ export const About = () => {
               initial="hidden"
               whileInView={'show'}
               viewport={{ once: false, amount: 0.8 }}
-              className="text-[55px] leading-[0.8] lg:text-[100px] mb-6 text-[#6BD0FF]">
+              className="text-[55px] leading-[0.8] lg:text-[100px] mb-6 text-[#4396bd]">
               <span>CREATORS</span>
             </motion.h1>
             <h2 className="mb-6">
@@ -39,7 +39,7 @@ export const About = () => {
                 initial="hidden"
                 whileInView={'show'}
                 viewport={{ once: false, amount: 0.8 }}
-                className="text-[40px] mb-2 text-[#3FA0EF]">
+                className="text-[40px] mb-2 text-[#4396bd]">
                   {inView ? "0%" : null}
                 </motion.div>
                 <div className="text-sm">
@@ -52,7 +52,7 @@ export const About = () => {
                 initial="hidden"
                 whileInView={'show'}
                 viewport={{ once: false, amount: 0.8 }}
-                className="text-[40px] mb-2 text-[#3FA0EF]">
+                className="text-[40px] mb-2 text-[#4396bd]">
                   {inView ? "Quick" : null}
                 </motion.div>
                 <div className="text-sm">
