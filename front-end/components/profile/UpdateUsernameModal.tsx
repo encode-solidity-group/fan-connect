@@ -152,7 +152,7 @@ const UpdateUsernameModal = () => {
                   <h3 className="text-lg leading-6 font-medium " id="modal-title">
                     Update Username
                   </h3>
-                  <input onChange={handleUsernameChange} type="text" value={username} className="mt-3 w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="username" name="username" required autoFocus />
+                  <input onChange={handleUsernameChange} type="text" value={username} className="mt-3 w-full px-2 py-2 text-gray-700 border-2 border-gray-300 rounded" id="username" name="username" required autoFocus />
                 </div>
               </div>
 
@@ -168,7 +168,7 @@ const UpdateUsernameModal = () => {
                   <h3 className="text-lg leading-6 font-medium " id="modal-title">
                     Update Bio
                   </h3>
-                  <textarea onChange={handleBioChange} value={bio} className="mt-3 w-full px-2 py-2 text-gray-700 bg-gray-200 rounded" id="username" name="username" required autoFocus />
+                  <textarea onChange={handleBioChange} value={bio} className="mt-3 w-full px-2 py-2 text-gray-700 border-2 border-gray-300 rounded" id="username" name="username" required autoFocus />
                 </div>
               </div>
 

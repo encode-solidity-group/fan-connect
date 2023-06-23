@@ -57,7 +57,7 @@ export default function CreatePage() {
           <label htmlFor="30dayFee">Set 30 Day Subscription Fee</label>
           <ImArrowRight2 size={25} className="mx-2" />
           <input
-            className="text-black p-1 rounded-md w-20 border"
+            className="text-black p-1 rounded-md w-20 border border-gray-500 border-gray-500"
             type="number"
             id="30dayFee"
             placeholder="(ETH)"
@@ -71,7 +71,7 @@ export default function CreatePage() {
           <label htmlFor="90dayFee">Set 90 Day Subscription Fee</label>
           <ImArrowRight2 size={25} className="mx-2" />
           <input
-            className="text-black p-1 rounded-md w-20 border"
+            className="text-black p-1 rounded-md w-20 border border-gray-500"
             type="number"
             id="90dayFee"
             placeholder="(ETH)"
@@ -85,7 +85,7 @@ export default function CreatePage() {
           <label htmlFor="180dayFee">Set 180 Day Subscription Fee</label>
           <ImArrowRight2 size={25} className="mx-2" />
           <input
-            className="text-black p-1 rounded-md w-20 border"
+            className="text-black p-1 rounded-md w-20 border border-gray-500"
             type="number"
             id="180dayFee"
             placeholder="(ETH)"
@@ -99,7 +99,7 @@ export default function CreatePage() {
           <label htmlFor="365dayFee">Set 365 Day Subscription Fee</label>
           <ImArrowRight2 size={25} className="mx-2" />
           <input
-            className="text-black p-1 rounded-md w-20 border"
+            className="text-black p-1 rounded-md w-20 border border-gray-500"
             type="number"
             id="365dayFee"
             placeholder="(ETH)"
@@ -110,7 +110,7 @@ export default function CreatePage() {
         </div>
 
         {success &&
-          <div className="flex flex-col justify-between lg:flex-row bg-green-700 justify-center items-center rounded-md m-2 px-2">
+          <div className="flex flex-col justify-between lg:flex-row bg-green-400 text-black justify-center items-center rounded-md m-2 px-2">
             <div>
               <AiOutlineCheckCircle />
             </div>
@@ -122,7 +122,7 @@ export default function CreatePage() {
         }
 
         {error &&
-          <div className="flex flex-col justify-between lg:flex-row bg-[#FE5857] justify-center items-center rounded-md m-2 px-2">
+          <div className="flex flex-col justify-between lg:flex-row bg-red-300 text-black justify-center items-center rounded-md m-2 px-2">
             <div>
               <AiOutlineExclamationCircle />
             </div>

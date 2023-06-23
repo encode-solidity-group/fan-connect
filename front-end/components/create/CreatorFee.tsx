@@ -154,7 +154,7 @@ export default function CreatorFee() {
       }
 
       {error &&
-        <div className="flex flex-col justify-between lg:flex-row bg-red-300 text-black justify-center items-center rounded-md m-2 px-2">
+        <div className="flex flex-col justify-between lg:flex-row bg-red-400 text-black justify-center items-center rounded-md m-2 px-2">
           <div>
             <AiOutlineExclamationCircle />
           </div>

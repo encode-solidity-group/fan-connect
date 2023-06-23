@@ -1,19 +1,20 @@
-import React, { useState,useContext } from 'react';
-import { QueryAddressContext } from '../../providers/QueryAddressProvider';
-import {useSendTransaction} from 'wagmi'
-import {ethers} from 'ethers'
+import React, { useState, useContext } from 'react';
+import { useSendTransaction } from 'wagmi'
+import { ethers } from 'ethers'
+import { DarkModeContext } from '../../providers/DarkModeProvider';
 
 interface TipPopupProps {
-    handleClose: () => void;
-    recAddr: string; 
-  }
+  handleClose: () => void;
+  recAddr: string;
+}
 
-const TipPopup: React.FC<TipPopupProps> = ({ handleClose,recAddr }) => {
+const TipPopup: React.FC<TipPopupProps> = ({ handleClose, recAddr }) => {
+  const { darkMode } = useContext(DarkModeContext);
   const [tipValue, setTipValue] = useState('0');
-  const { queryAddress } = useContext(QueryAddressContext);
-  const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
+
+  const { sendTransaction } = useSendTransaction({
     to: recAddr,
-    value: ethers.utils.parseEther((tipValue!="" ? tipValue : "0")).toBigInt(),
+    value: ethers.utils.parseEther((tipValue != "" ? tipValue : "0")).toBigInt(),
   })
 
   const handleTipSubmit = (e: React.FormEvent) => {
@@ -26,12 +27,16 @@ const TipPopup: React.FC<TipPopupProps> = ({ handleClose,recAddr }) => {
   }
 
   return (
-    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-50 z-10">
-      <form onSubmit={handleTipSubmit} className="bg-white p-6 rounded shadow-lg flex flex-col items-center relative">
-        <button onClick={handleClose} className="absolute right-3 top-3 text-lg font-bold text-black">X</button>
-        <label htmlFor="tipValue" className="mb-2 text-lg">Enter tip value:</label>
+    <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-75 z-10`}>
+      <form onSubmit={handleTipSubmit} className={`p-6 rounded shadow-lg flex flex-col items-center relative ${darkMode ? 'bg-[#282828]' : 'bg-white'}`}>
+        <button onClick={handleClose} className="absolute top-0 right-0 mt-4 mr-4">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-500 hover:text-gray-700">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+        <label htmlFor="tipValue" className={`mb-2 text-lg ${darkMode ? 'text-white' : 'text-black'}`}>Enter tip value:</label>
         <input type="number" id="tipValue" name="tipValue" className="border-2 border-gray-300 p-2 rounded mb-4" value={tipValue} onChange={(e) => setTipValue(e.target.value)} required />
-        <button type="submit" className="p-2 bg-blue-500 text-white rounded">Submit Tip</button>
+        <button type="submit" className="bg-sky-600 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 hover:bg-sky-700 text-base font-medium text-white focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">Submit Tip</button>
       </form>
     </div>
   )
