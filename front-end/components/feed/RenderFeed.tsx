@@ -6,7 +6,6 @@ import FeedHeader from "./FeedHeader";
 import FeedFooter from "./FeedFooter";
 
 export const RenderFeed = (posts: DocumentData[]) => {
-console.log(posts);
   return posts.map((post, index: Key) => (
     <div key={index} className='border border-gray-500 my-5 rounded-md'>
       <FeedHeader userAddress={post.username} timestamp={post.timestamp.seconds} text={post.text} />

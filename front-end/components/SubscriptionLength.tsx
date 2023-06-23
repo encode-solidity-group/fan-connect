@@ -37,7 +37,7 @@ export default function SubscriptionLength({ creator, user }: PageProps) {
   return (
     <div className="text-center">
       {isSubscribed === true && creator !== user && isCreator === true && <div>Subscribed until: {localTime}</div>}
-      {!isSubscribed && creator !== user && isCreator === true &&  <div>You are not subscribed</div>}
+      {!isSubscribed && creator !== user && isCreator === true && <div>You are not subscribed</div>}
     </div>
   )
 }

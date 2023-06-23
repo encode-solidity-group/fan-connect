@@ -8,7 +8,7 @@ import { QueryAddressContext } from "../../providers/QueryAddressProvider";
 
 export default function ChangeFeeButton() {
   const router = useRouter();
-  
+
   const { userAddress } = useContext(UserAddressContext);
   const { queryAddress } = useContext(QueryAddressContext);
   const { contractAddress } = useGetContractAddress();

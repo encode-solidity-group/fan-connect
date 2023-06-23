@@ -4,7 +4,6 @@ import { db } from '../../firebase';
 import { useContractRead, useContractWrite } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
-import ChangeFeeButton from './ChangeFeeButton';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import SubscriptionLength from '../SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
@@ -89,7 +88,7 @@ const ProfileFeed = () => {
   return (
     <div className="min-h-screen mx-auto">
       <SubscriptionLength creator={queryAddress} user={userAddress} />
-      {(userAddress !== queryAddress) && isCreator=== true && 
+      {(userAddress !== queryAddress) && isCreator === true &&
         <div className="flex justify-center mx-5 items-start">
           <select
             value={daysSubscribed}
@@ -128,7 +127,7 @@ const ProfileFeed = () => {
           isSubscribed || userAddress === queryAddress ?
             RenderFeed(posts)
             :
-            (isCreator=== true && 
+            (isCreator === true &&
               <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
                 <p>Subscribe today for more!</p>
               </div>
