@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { AiOutlineDollar } from 'react-icons/ai'
 import { BsBookmark, BsBookmarkFill, BsHeart, BsHeartFill } from 'react-icons/bs'
 import { handleLike, userLikedPost, handleBookmark, userBookmarkedPost } from '../../utils/likeBookmark'
 import useBookmarkedPosts from '../../custom hooks/useBookmarkedPosts';
 import { DocumentData } from 'firebase/firestore';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
+import TipPopup from './TipPopup';
 
 interface PageProps {
   post: DocumentData;
@@ -13,6 +14,7 @@ interface PageProps {
 export default function FeedFooter({ post }: PageProps) {
   const { userAddress } = useContext(UserAddressContext);
   const { bookmarkedPosts, setBookmarkedPosts } = useBookmarkedPosts(userAddress);
+  const [showTipPopup, setShowTipPopup] = useState(false);
 
   return (
     <div className='p-4 flex justify-between items-center'>
@@ -24,10 +26,11 @@ export default function FeedFooter({ post }: PageProps) {
             <BsHeart />
           }
         </button>
-        <button className="flex items-center hover:text-[#6BD0FF]">
+        <button className="flex items-center hover:text-[#6BD0FF]" onClick={() => setShowTipPopup(true)}>
           <AiOutlineDollar size={20} />
           <p className="ml-2">Send Tip</p>
         </button>
+        {showTipPopup && <TipPopup handleClose={() => setShowTipPopup(false)} recAddr = {post.username} />}
       </div>
       <div className="flex">
         <button onClick={() => handleBookmark(post, userAddress, setBookmarkedPosts, bookmarkedPosts)} className="hover:text-[#6BD0FF]">
