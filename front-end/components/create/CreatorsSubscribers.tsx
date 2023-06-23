@@ -10,7 +10,7 @@ import { UserAddressContext } from "../../providers/UserAddressProvider";
 export default function CreatorSubscribers() {
   const { userAddress } = useContext(UserAddressContext);
   const { contractAddress } = useGetContractAddress();
-  
+
   const [foundSubscribers, setFoundSubscribers] = useState<string[]>([]);
   const [foundActiveSubscribers, setFoundActiveSubscribers] = useState<string[]>([]);
   const [showFoundActiveSubscribers, setShowFoundActiveSubscribers] = useState<Boolean>(false);

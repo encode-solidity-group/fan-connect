@@ -3,7 +3,7 @@ import Image from 'next/image';
 import logo from '../../public/blueLogo.png';
 import SideBarLink from './SideBarLink';
 import { AiOutlineHome } from 'react-icons/ai';
-import { RiBankLine, RiUserLine, RiHeartsLine } from "react-icons/ri";
+import { RiBankLine, RiUserLine, RiHeartsLine, RiBookmark3Line } from "react-icons/ri";
 import Link from 'next/link';
 import ContractFee from './ContractFee';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
@@ -28,6 +28,10 @@ const SideBar = () => {
 
         <Link href={`/subscriptions`}>
           <SideBarLink text="Subscriptions" Icon={RiHeartsLine} />
+        </Link>
+
+        <Link href={`/bookmarks`}>
+          <SideBarLink text="Bookmarks" Icon={RiBookmark3Line} />
         </Link>
 
         <Link href={`/create/${userAddress}`}>

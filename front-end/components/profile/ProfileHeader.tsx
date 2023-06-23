@@ -26,6 +26,13 @@ export default function ProfileHeader() {
     watch: true
   });
 
+  const { data: isCreator } = useContractRead({
+    address: contractAddress,
+    abi: contractJson.abi,
+    functionName: 'creatorPageExists',
+    args: [queryAddress],
+  });
+
   const count = Array.isArray(subscriberCount) ? subscriberCount.length : 0;
   const defaultUsername = `${username.slice(0, 4)}...${username.slice(38)}`;
 
@@ -52,7 +59,7 @@ export default function ProfileHeader() {
           <div className="mt-auto ml-4 sm:ml-8">
             <h2 className="text-2xl font-bold">{queryAddress?.slice(0, 4)}...{queryAddress?.slice(38)}</h2>
             <p className="text-lg text-gray-400">@{username === queryAddress ? defaultUsername : username}</p>
-            <p className="text-lg">Subscribers: {count}</p>
+            {isCreator === true && <p className="text-lg">Subscribers: {count}</p>}
           </div>
         </div>
         <div className='mt-4 sm:mt-8'>

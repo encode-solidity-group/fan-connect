@@ -7,8 +7,6 @@ import { useContractRead } from 'wagmi';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import { UserAddressContext } from '../../providers/UserAddressProvider';
 import { RenderFeed } from '../feed/RenderFeed';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
-
 
 const Feed = () => {
   const { contractAddress } = useGetContractAddress();

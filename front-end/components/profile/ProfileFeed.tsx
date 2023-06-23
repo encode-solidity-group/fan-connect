@@ -4,7 +4,6 @@ import { db } from '../../firebase';
 import { useContractRead, useContractWrite } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
-import ChangeFeeButton from './ChangeFeeButton';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
 import SubscriptionLength from '../SubscriptionLength';
 import { SiEthereum } from 'react-icons/si';
@@ -45,6 +44,13 @@ const ProfileFeed = () => {
     args: [queryAddress, daysSubscribed],
   });
 
+  const { data: isCreator } = useContractRead({
+    address: contractAddress,
+    abi: contractJson.abi,
+    functionName: 'creatorPageExists',
+    args: [queryAddress],
+  });
+
   useEffect(() => {
     if (daysSubscribed != 0) {
       calcPriceRefetch()
@@ -82,7 +88,7 @@ const ProfileFeed = () => {
   return (
     <div className="min-h-screen mx-auto">
       <SubscriptionLength creator={queryAddress} user={userAddress} />
-      {(userAddress !== queryAddress) &&
+      {(userAddress !== queryAddress) && isCreator === true &&
         <div className="flex justify-center mx-5 items-start">
           <select
             value={daysSubscribed}
@@ -104,10 +110,12 @@ const ProfileFeed = () => {
         </div>
       }
       <div className="flex justify-between mb-4 items-center">
-        <div className='mr-2 text-[24px] text-[#3FA0EF]'>
+
+        <div className="font-medium text-[30px] mx-4 ">
           {userAddress === queryAddress ? 'Your Feed' : 'Feed'}
         </div>
-        {userAddress === queryAddress &&
+
+        {userAddress === queryAddress && isCreator === true &&
           <button className='enterButton' onClick={() => setShowInput(!showInput)}>
             {showInput ? 'Hide post' : 'Start a new post'}
           </button>
@@ -119,9 +127,11 @@ const ProfileFeed = () => {
           isSubscribed || userAddress === queryAddress ?
             RenderFeed(posts)
             :
-            <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
-              <p>Subscribe today for more!</p>
-            </div>
+            (isCreator === true &&
+              <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
+                <p>Subscribe today for more!</p>
+              </div>
+            )
         }
       </div>
     </div>
