@@ -9,6 +9,9 @@ import { DarkModeContext } from '../providers/DarkModeProvider';
 import Footer from '../components/landingPage/Footer';
 import MyParticles from '../components/Background';
 import MyParticlesBlack from '../components/BackgroundBlack';
+import { useContractRead, useContractWrite, useAccount } from 'wagmi';
+import { useEffect, useState } from 'react';
+
 
 
 const inter = Inter({
@@ -17,7 +20,17 @@ const inter = Inter({
   variable: "--font-inter"
 });
 
+
 function Home() {
+  const { address } = useAccount();
+  // const [userAddress, setUserAddress] = useState("")
+
+  // useEffect(() => {
+  //   if(address){
+  //   setUserAddress(address)
+  //   }
+  // }, [address])
+
   const { darkMode } = useContext(DarkModeContext);
 
   return (
@@ -30,6 +43,7 @@ function Home() {
       <AboutCreators />
       <div className="background-animated2 py-20 " />
       <AboutUsers />
+      {/* {{userAddress }} */}
       <div className="flex justify-center lg:hidden">
         <Nav />
       </div>
