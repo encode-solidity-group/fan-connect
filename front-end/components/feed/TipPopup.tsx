@@ -4,15 +4,16 @@ import {useSendTransaction} from 'wagmi'
 import {ethers} from 'ethers'
 
 interface TipPopupProps {
-  handleClose: () => void;
-}
+    handleClose: () => void;
+    recAddr: string; 
+  }
 
 const TipPopup: React.FC<TipPopupProps> = ({ handleClose,recAddr }) => {
   const [tipValue, setTipValue] = useState('0');
   const { queryAddress } = useContext(QueryAddressContext);
   const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
     to: recAddr,
-    value: ethers.utils.parseEther(tipValue),
+    value: ethers.utils.parseEther(tipValue).toBigInt(),
   })
 
   const handleTipSubmit = (e: React.FormEvent) => {

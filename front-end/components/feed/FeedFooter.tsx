@@ -19,6 +19,7 @@ export default function FeedFooter({ post }: PageProps) {
   return (
     <div className='p-4 flex justify-between items-center'>
       <div className="flex items-center gap-4">
+        {userAddress && 
         <button onClick={() => handleLike(post, userAddress)} className="hover:text-red-500">
           {userLikedPost(post, userAddress) ?
             <BsHeartFill color="red" />
@@ -26,6 +27,7 @@ export default function FeedFooter({ post }: PageProps) {
             <BsHeart />
           }
         </button>
+      }
         <button className="flex items-center hover:text-[#6BD0FF]" onClick={() => setShowTipPopup(true)}>
           <AiOutlineDollar size={20} />
           <p className="ml-2">Send Tip</p>
@@ -33,6 +35,7 @@ export default function FeedFooter({ post }: PageProps) {
         {showTipPopup && <TipPopup handleClose={() => setShowTipPopup(false)} recAddr = {post.username} />}
       </div>
       <div className="flex">
+        {userAddress && 
         <button onClick={() => handleBookmark(post, userAddress, setBookmarkedPosts, bookmarkedPosts)} className="hover:text-[#6BD0FF]">
           {userBookmarkedPost(post.id, bookmarkedPosts) ?
             <BsBookmarkFill color="#6BD0FF" />
@@ -40,6 +43,7 @@ export default function FeedFooter({ post }: PageProps) {
             <BsBookmark />
           }
         </button>
+        }
       </div>
     </div>
   )
