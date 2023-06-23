@@ -3,7 +3,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { sepolia, auroraTestnet } from 'wagmi/chains';
+import { sepolia, auroraTestnet, aurora } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { RainbowKitSiweNextAuthProvider } from '@rainbow-me/rainbowkit-siwe-next-auth';
 import { SessionProvider } from 'next-auth/react';
@@ -16,7 +16,7 @@ import QueryAddressProvider from '../providers/QueryAddressProvider';
 import DarkModeProvider from '../providers/DarkModeProvider';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
-  [auroraTestnet, sepolia], [publicProvider()]
+  [aurora, auroraTestnet, sepolia], [publicProvider()]
 );
 
 const { connectors } = getDefaultWallets({

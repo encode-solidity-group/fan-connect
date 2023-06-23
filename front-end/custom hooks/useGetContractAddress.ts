@@ -12,6 +12,9 @@ export default function useGetContractAddress() {
     if (chain?.id === 11155111) {
       setContractAddress("0x2645E09ea0dab2B90C0AbC69c2cAF205b4c152f6");
     }
+    if (chain?.id === 1313161554) {
+      setContractAddress("0x41154096EC43fBd3072580536683e10e6F573120");
+    }
   }, [chain]);
 
   return { contractAddress };
