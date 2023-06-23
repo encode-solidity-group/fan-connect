@@ -83,7 +83,7 @@ export default function CreatorFee() {
           <label htmlFor="new30dayFee">New 30 Day Fee</label>
           <ImArrowRight2 size={25} />
           <input
-            className="text-black p-1 rounded-md w-20 border"
+            className="text-black p-1 rounded-md w-20 border border-gray-500"
             type="number"
             id="new30dayFee"
             placeholder="(ETH)"
@@ -97,7 +97,7 @@ export default function CreatorFee() {
           <label htmlFor="new90dayFee">New 90 Day Fee</label>
           <ImArrowRight2 size={25} />
           <input
-            className="text-black p-1 rounded-md w-20 border"
+            className="text-black p-1 rounded-md w-20 border border-gray-500"
             type="number"
             id="new90dayFee"
             placeholder="(ETH)"
@@ -111,7 +111,7 @@ export default function CreatorFee() {
           <label htmlFor="new180dayFee">New 180 Day Fee</label>
           <ImArrowRight2 size={25} />
           <input
-            className="text-black p-1 rounded-md w-20 border"
+            className="text-black p-1 rounded-md w-20 border border-gray-500"
             type="number"
             id="new180dayFee"
             placeholder="(ETH)"
@@ -125,7 +125,7 @@ export default function CreatorFee() {
           <label htmlFor="new365dayFee">New 365 Day Fee</label>
           <ImArrowRight2 size={25} />
           <input
-            className="text-black p-1 rounded-md w-20 border"
+            className="text-black p-1 rounded-md w-20 border border-gray-500"
             type="number"
             id="new365dayFee"
             placeholder="(ETH)"
@@ -142,7 +142,7 @@ export default function CreatorFee() {
       </div>
 
       {success &&
-        <div className="flex flex-col justify-between lg:flex-row bg-green-700 justify-center items-center rounded-md m-2 px-2">
+        <div className="flex flex-col justify-between lg:flex-row bg-green-400 text-black justify-center items-center rounded-md m-2 px-2">
           <div>
             <AiOutlineCheckCircle />
           </div>
@@ -154,7 +154,7 @@ export default function CreatorFee() {
       }
 
       {error &&
-        <div className="flex flex-col justify-between lg:flex-row bg-[#FE5857] justify-center items-center rounded-md m-2 px-2">
+        <div className="flex flex-col justify-between lg:flex-row bg-red-300 text-black justify-center items-center rounded-md m-2 px-2">
           <div>
             <AiOutlineExclamationCircle />
           </div>

@@ -11,11 +11,13 @@ import { UserAddressContext } from '../../providers/UserAddressProvider';
 import { QueryAddressContext } from '../../providers/QueryAddressProvider';
 import { RenderFeed } from '../feed/RenderFeed';
 import Input from '../home/Input';
+import { DarkModeContext } from '../../providers/DarkModeProvider';
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
   const { queryAddress } = useContext(QueryAddressContext);
   const { contractAddress } = useGetContractAddress();
+  const { darkMode } = useContext(DarkModeContext);
 
   const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
   const [posts, setPosts] = useState<DocumentData[]>([]);
@@ -87,7 +89,9 @@ const ProfileFeed = () => {
 
   return (
     <div className="min-h-screen mx-auto">
-      <SubscriptionLength creator={queryAddress} user={userAddress} />
+      <div className='text-center'>
+        <SubscriptionLength creator={queryAddress} user={userAddress} />
+      </div>
       {(userAddress !== queryAddress) && isCreator === true &&
         <div className="flex justify-center mx-5 items-start">
           <select
@@ -128,7 +132,7 @@ const ProfileFeed = () => {
             RenderFeed(posts)
             :
             (isCreator === true &&
-              <div className='p-4 border my-5 rounded-md text-xl text-bold text-center'>
+              <div className={`p-4 border ${darkMode ? 'border-gray-800' : 'border-gray-200'} text-gray-500 shadow-md shadow-gray-500 my-5 rounded-md text-xl text-bold text-center`}>
                 <p>Subscribe today for more!</p>
               </div>
             )

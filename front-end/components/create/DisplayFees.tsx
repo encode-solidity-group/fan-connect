@@ -41,7 +41,7 @@ export default function DisplayFees() {
   };
 
   return (
-    <div className="text-center my-8 space-y-4">
+    <div className="text-center space-y-4">
       <p className='text-xl'>Subscription Fees for:
         <br />
         <div className='break-all'>

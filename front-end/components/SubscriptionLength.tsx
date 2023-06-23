@@ -35,7 +35,7 @@ export default function SubscriptionLength({ creator, user }: PageProps) {
   const localTime = date.toLocaleString();
 
   return (
-    <div className="text-center">
+    <div>
       {isSubscribed === true && creator !== user && isCreator === true && <div>Subscribed until: {localTime}</div>}
       {!isSubscribed && creator !== user && isCreator === true && <div>You are not subscribed</div>}
     </div>

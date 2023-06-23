@@ -15,6 +15,7 @@ import { DarkModeContext } from "../../../providers/DarkModeProvider";
 import Nav from "../../../components/landingPage/Nav";
 import TotalSubscribersCard from "../../../components/create/cards/TotalSubscribersCard";
 import SideBarRight from "../../../components/sidebar/RightSideBar";
+import ChangeFeeButton from "../../../components/create/ChangeFeeButton";
 
 export default function FeeGate() {
   const { contractAddress } = useGetContractAddress();
@@ -36,29 +37,32 @@ export default function FeeGate() {
         <div className='mt-4 flex justify-end'>
           <ConnectButton />
         </div>
-        {/* {!isCreator && <RedirectToCreate />}
+        {!isCreator && <RedirectToCreate />}
         {isCreator === true &&
-          <div>
+          <div
+            className={`p-8 my-4 sm:my-8 rounded-xl w-full max-w-[900px] mx-auto shadow-md shadow-gray-300 border ${darkMode ? 'border-gray-800' : 'border-gray-200'}`}>
             <DisplayFees />
             {queryAddress !== userAddress &&
-              <Link href={`/profile/${queryAddress}`} className="flex justify-center">
+              <Link href={`/profile/${queryAddress}`} className="flex justify-center mt-8">
                 <button className="enterButton">Subscribe Now</button>
               </Link>
             }
+            <div className="flex justify-center">
+              <ChangeFeeButton />
+            </div>
           </div>
-        } */}
-        {/* {isCreator === true && queryAddress === userAddress &&
-          <div className="grid grid-cols-2 mx-auto">
-            <CreatorFee />
+        }
+        {isCreator === true && queryAddress === userAddress &&
+          <div className={`p-8 mb-4 sm:mb-8 mx-auto max-w-[900px] shadow-md shadow-gray-300 border rounded-xl ${darkMode ? 'border-gray-800' : 'border-gray-200'}`}>
             <CreatorSubscribers />
           </div>
-        } */}
-        {!isCreator && <RedirectToCreate />}
+        }
+        {/* {!isCreator && <RedirectToCreate />}
         {isCreator === true &&
           <div className="flex gap-[20px]">
             <TotalSubscribersCard />
           </div>
-        }
+        } */}
       </div>
       <SideBarRight />
       <Nav />

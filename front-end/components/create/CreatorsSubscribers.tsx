@@ -6,6 +6,7 @@ import Link from "next/link";
 import useGetContractAddress from "../../custom hooks/useGetContractAddress";
 import SubscriptionLength from "../SubscriptionLength";
 import { UserAddressContext } from "../../providers/UserAddressProvider";
+import Subscription from "../subscriptions/Subscription";
 
 export default function CreatorSubscribers() {
   const { userAddress } = useContext(UserAddressContext);
@@ -46,12 +47,7 @@ export default function CreatorSubscribers() {
 
   const subscriptionList = foundSubscribers.map((subscriber, index: Key) => {
     return (
-      <div key={index}>
-        <Link href={`/profile/${subscriber}`} className="hover:text-[#3FA0EF] break-all">
-          {subscriber}
-        </Link>
-        <SubscriptionLength creator={userAddress} user={subscriber} />
-      </div>
+      <Subscription address={subscriber} key={index} creator={userAddress}/>
     )
   })
 
