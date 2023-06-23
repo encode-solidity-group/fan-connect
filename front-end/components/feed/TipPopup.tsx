@@ -13,7 +13,7 @@ const TipPopup: React.FC<TipPopupProps> = ({ handleClose,recAddr }) => {
   const { queryAddress } = useContext(QueryAddressContext);
   const { data, isLoading, isSuccess, sendTransaction } = useSendTransaction({
     to: recAddr,
-    value: ethers.utils.parseEther(tipValue).toBigInt(),
+    value: ethers.utils.parseEther((tipValue!="" ? tipValue : "0")).toBigInt(),
   })
 
   const handleTipSubmit = (e: React.FormEvent) => {
