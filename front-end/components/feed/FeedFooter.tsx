@@ -15,28 +15,38 @@ export default function FeedFooter({ post }: PageProps) {
   const { bookmarkedPosts, setBookmarkedPosts } = useBookmarkedPosts(userAddress);
 
   return (
-    <div className='p-4 flex justify-between items-center'>
-      <div className="flex items-center gap-4">
-        <button onClick={() => handleLike(post, userAddress)} className="hover:text-red-500">
-          {userLikedPost(post, userAddress) ?
-            <BsHeartFill color="red" />
-            :
-            <BsHeart />
-          }
-        </button>
-        <button className="flex items-center hover:text-[#6BD0FF]">
-          <AiOutlineDollar size={20} />
-          <p className="ml-2">Send Tip</p>
-        </button>
+    <div className='p-4'>
+      <div className='flex justify-between items-center text-gray-500'>
+        <div className="flex items-center gap-4">
+          <button onClick={() => handleLike(post, userAddress)} className="hover:text-red-500">
+            {userLikedPost(post, userAddress) ?
+              <BsHeartFill color="red" />
+              :
+              <BsHeart />
+            }
+          </button>
+          <button className="flex items-center hover:text-[#6BD0FF]">
+            <AiOutlineDollar size={20} />
+            <p className="ml-2">Send Tip</p>
+          </button>
+        </div>
+        <div className="flex">
+          <button onClick={() => handleBookmark(post, userAddress, setBookmarkedPosts, bookmarkedPosts)} className="hover:text-[#6BD0FF]">
+            {userBookmarkedPost(post.id, bookmarkedPosts) ?
+              <BsBookmarkFill color="#6BD0FF" />
+              :
+              <BsBookmark />
+            }
+          </button>
+        </div>
       </div>
-      <div className="flex">
-        <button onClick={() => handleBookmark(post, userAddress, setBookmarkedPosts, bookmarkedPosts)} className="hover:text-[#6BD0FF]">
-          {userBookmarkedPost(post.id, bookmarkedPosts) ?
-            <BsBookmarkFill color="#6BD0FF" />
-            :
-            <BsBookmark />
-          }
-        </button>
+      <div className='text-sm'>
+        {post.liked?.length === 1 &&
+          <p>{post.liked?.length} like</p>
+        }
+        {post.liked?.length > 1 &&
+          <p>{post.liked?.length} likes</p>
+        }
       </div>
     </div>
   )
