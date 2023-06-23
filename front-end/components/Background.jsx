@@ -33,7 +33,7 @@ const particlesLoaded = useCallback(async container => {
                   "value": 125
               },
               "color": {
-                  "value": "#6BD0FF"
+                  "value": "#336699"
               },
               "shape": {
                   "type": "circle",
@@ -74,7 +74,7 @@ const particlesLoaded = useCallback(async container => {
               "line_linked": {
                   "enable": false,
                   "distance": 600,
-                  "color": "#6BD0FF",
+                  "color": "#336699",
                   "opacity": 0.4,
                   "width": 2
               },
@@ -108,7 +108,7 @@ const particlesLoaded = useCallback(async container => {
                   "grab": {
                       "distance": 300,
                       "line_linked": {
-                          "opacity": 0.35
+                          "opacity": 0.2
                       }
                   },
                   "bubble": {
