@@ -18,6 +18,12 @@ body {
   color: white;
 }
 
+.dark-modeNav {
+  background-color: #181818;
+  color: white;
+  opacity: 0.95;
+}
+
 /* body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
