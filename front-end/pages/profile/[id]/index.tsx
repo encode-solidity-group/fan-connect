@@ -5,6 +5,7 @@ import { QueryAddressContext } from '../../../providers/QueryAddressProvider';
 import { DarkModeContext } from '../../../providers/DarkModeProvider';
 import ProfileHeader from '../../../components/profile/ProfileHeader';
 import SideBarRight from '../../../components/sidebar/RightSideBar';
+import Nav from '../../../components/landingPage/Nav';
 
 function UserProfile() {
   const { queryAddress } = useContext(QueryAddressContext);
@@ -20,6 +21,7 @@ function UserProfile() {
         </div>
       </div>
       <SideBarRight />
+      <Nav />
     </div>
   );
 }

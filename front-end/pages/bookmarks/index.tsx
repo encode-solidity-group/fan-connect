@@ -4,6 +4,7 @@ import SideBarRight from '../../components/sidebar/RightSideBar'
 import SideBar from '../../components/sidebar/SideBar'
 import { DarkModeContext } from '../../providers/DarkModeProvider'
 import Bookmark from '../../components/bookmarks/Bookmark'
+import Nav from '../../components/landingPage/Nav';
 
 export default function Bookmarks() {
   const { darkMode } = useContext(DarkModeContext);
@@ -18,6 +19,7 @@ export default function Bookmarks() {
         <Bookmark />
       </div>
       <SideBarRight />
+      <Nav />
     </div>
   )
 }

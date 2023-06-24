@@ -4,6 +4,7 @@ import UserSubscriptions from "../../components/subscriptions/UserSubscriptions"
 import { useContext } from "react";
 import { DarkModeContext } from "../../providers/DarkModeProvider";
 import SideBarRight from "../../components/sidebar/RightSideBar";
+import Nav from "../../components/landingPage/Nav";
 
 export default function Subscriptions() {
   const { darkMode } = useContext(DarkModeContext);
@@ -18,6 +19,7 @@ export default function Subscriptions() {
         <UserSubscriptions />
       </div>
       <SideBarRight />
+      <Nav />
     </div>
   )
 }

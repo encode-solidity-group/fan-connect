@@ -63,7 +63,7 @@ export const About = () => {
           </div>
 
           <div className="flex-1 flex justify-center lg:items-center ">
-            <Image src="/woman2.jpg" alt="aboutImage" width={400} height={400}
+            <Image src="/woman-creator.jpg" alt="aboutImage" width={400} height={400}
               className="max-w-[400px] lg:max-w-[482px] h-[400px] object-cover"
             />
           </div>

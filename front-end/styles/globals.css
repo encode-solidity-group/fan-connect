@@ -53,8 +53,8 @@ body {
   width: 100%;
   /* position: absolute; */
   background-color: #7bb7e7;
-  background-size: 1200px;
-  background-image: url("../public/collage.png");
+  background-size: 1240px;
+  background-image: url("../public/banner11.png");
   animation: infiniteScrollBg 64s linear infinite;
 }
 
@@ -70,15 +70,15 @@ body {
 .background-animated1 {
   width: 100%;
   /* position: absolute; */
-  background-size: 795px;
-  background-image: url("../public/collage2.png");
-  animation: infiniteScrollBg 300s linear infinite;
+  background-size: 1240px;
+  background-image: url("../public/banner22.png");
+  animation: infiniteScrollBg 64s linear infinite;
 }
 
 .background-animated2 {
   width: 100%;
   /* position: absolute; */
-  background-size: 800px;
-  background-image: url("../public/collage3.png");
-  animation: infiniteScrollBg 300s linear infinite;
+  background-size: 1240px;
+  background-image: url("../public/banner33.png");
+  animation: infiniteScrollBg 64s linear infinite;
 }

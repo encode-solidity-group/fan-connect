@@ -4,6 +4,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { useContext } from 'react';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
 import RightSideBar from '../../components/sidebar/RightSideBar';
+import Nav from '../../components/landingPage/Nav';
 
 const UserHome = () => {
   const { darkMode } = useContext(DarkModeContext);
@@ -20,6 +21,7 @@ const UserHome = () => {
         </div>
       </div>
       <RightSideBar />
+      <Nav />
     </div>
   );
 };
