@@ -37,6 +37,7 @@ const ProfileFeed = () => {
     abi: contractJson.abi,
     functionName: 'isSubscribed',
     args: [queryAddress, userAddress],
+    watch: true,
   });
 
   const { write: subscribeWrite } = useContractWrite({
@@ -51,6 +52,7 @@ const ProfileFeed = () => {
     abi: contractJson.abi,
     functionName: 'creatorPageExists',
     args: [queryAddress],
+    watch: true
   });
 
   useEffect(() => {

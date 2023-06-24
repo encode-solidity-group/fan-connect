@@ -22,6 +22,7 @@ export default function SubscriptionLength({ creator, user }: PageProps) {
     abi: contractJson.abi,
     functionName: 'subscriptionEnd',
     args: [creator, user],
+    watch: true
   })
 
   const { data: isCreator } = useContractRead({
