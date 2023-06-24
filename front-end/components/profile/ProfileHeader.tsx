@@ -36,6 +36,11 @@ export default function ProfileHeader() {
   const count = Array.isArray(subscriberCount) ? subscriberCount.length : 0;
   const defaultUsername = `${username.slice(0, 4)}...${username.slice(38)}`;
 
+  if (typeof userAddress === 'undefined') {
+    return null; // Return null to hide the component
+  }
+
+
   return (
     <div className="border-b border-gray-500 pb-4 w-full">
       <div className='-mb-10 flex justify-end mr-8'>

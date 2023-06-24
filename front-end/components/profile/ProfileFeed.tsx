@@ -89,6 +89,11 @@ const ProfileFeed = () => {
     setDaysSubscribed(selectedValue);
   };
 
+  if (typeof userAddress === 'undefined') {
+    return null; // Return null to hide the component
+  }
+
+
   return (
     <div className="min-h-screen mx-auto">
       <div className='text-center'>
