@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AiFillHome, AiOutlineTeam, AiOutlineUser } from 'react-icons/ai';
+import { AiFillHome, AiOutlineTeam, AiOutlineUser, AiOutlineHome } from 'react-icons/ai';
 import { useContext } from 'react';
 import { RiBankLine, RiHeartsLine, RiBookmark3Line } from "react-icons/ri";
 import { UserAddressContext } from "../../providers/UserAddressProvider";
@@ -41,7 +41,7 @@ export default function Nav() {
       <div className="container mx-auto ">
         <div className="w-full h-[96px] backdrop-blur-md max-w-[480px] mx-auto flex justify-between text-2xl  items-center">
           <Link className="cursor-pointer w-[60px] h-[60px] flex items-center justify-center" href={'/home'}>
-            <AiFillHome />
+            <AiOutlineHome />
           </Link>
           <Link className="cursor-pointer w-[60px] h-[60px] flex items-center justify-center" href={`/subscriptions`}>
             <RiHeartsLine />
