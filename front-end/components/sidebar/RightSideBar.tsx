@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
+import { UserAddressContext } from '../../providers/UserAddressProvider';
+import Subscription from '../subscriptions/Subscription';
 
 export const SideBarRight = () => {
+  const { userAddress } = useContext(UserAddressContext);
+
   const [searchValue, setSearchValue] = useState('');
+  const [searchComponent, setSearchComponent] = useState<ReactElement<any, any>>();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue('');
     setSearchValue(event.target.value);
   };
 
   const handleSearch = () => {
-    if (searchValue.trim() !== '') {
-      window.location.href = `/profile/${searchValue}`;
+    if (searchValue.trim() !== '' && userAddress !== undefined) {
+      setSearchComponent(<Subscription address={searchValue} />)
     }
   };
 
@@ -37,6 +43,9 @@ export const SideBarRight = () => {
           onKeyPress={handleKeyPress}
         />
       </div>
+      {searchComponent &&
+        <div className='my-8'>{searchComponent}</div>
+      }
     </div>
   );
 };
