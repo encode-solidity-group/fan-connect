@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 interface PageProps {
   address: string;
-  onDelete?: () => void;
+  onDelete?: () => (removeAddress: string) => void;
 }
 
 export default function RightSidebarProfile({ address, onDelete }: PageProps) {
