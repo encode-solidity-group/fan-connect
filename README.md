@@ -22,6 +22,21 @@ The frontend provides a rich set of features:
 
 All posts are stored securely in Firebase, providing a robust and scalable database solution.
 
+## Technologies Used
+
+- **React:** JavaScript library for building user interfaces.
+- **Firebase:** Backend-as-a-Service platform for authentication and database storage.
+- **Firestore:** Cloud-hosted NoSQL database for storing user and post data.
+- **ethers:** JavaScript library for interacting with the Ethereum blockchain.
+- **Wagmi:** Ethereum smart contract library for contract interactions.
+- **React Icons:** Library of icons for React components.
+- **React Toastify:** Library for displaying toast notifications.
+- **Hardhat:** A development environment for Ethereum that helps with contract compilation, testing, and deployment.
+- **Alchemy:** An infrastructure provider for Ethereum that offers APIs for accessing blockchain data.
+- **Wagmi Hooks:** A library for interacting with Ethereum smart contracts using React hooks.
+- **NextJs:** A React framework for production-grade applications that offers server-side rendering and static site generation.
+- **Tailwind CSS:** A utility-first CSS framework for rapidly building custom user interfaces.
+
 ## Getting Started
 
 1. Clone this repository to your local machine.
