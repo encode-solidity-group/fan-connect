@@ -6,17 +6,20 @@ import Link from 'next/link';
 
 interface PageProps {
   address: string;
+  handleClose?: () => void;
 }
 
-export default function RightSidebarProfile({ address }: PageProps) {
+export default function RightSidebarProfile({ address, handleClose  }: PageProps) {
   const { username, profilePicture, coverPhoto } = useUserInfo(address);
   const defaultUsername = `${username.slice(0, 4)}...${username.slice(38)}`;
 
   const { darkMode } = useContext(DarkModeContext);
 
-  const handleClose = () => {
-    // Handle the close button click here
-    console.log('Close button clicked');
+  const handleCloseClick = () => {
+    if (handleClose) {
+      handleClose();
+      console.log('Close button clicked');
+    }
   };
 
   return (
@@ -28,7 +31,7 @@ export default function RightSidebarProfile({ address }: PageProps) {
           <div className='text-gray-300'>@{username === address ? defaultUsername : username}</div>
         </div>
       </Link>
-      <button onClick={handleClose} className="absolute top-0 right-0 mt-4 mr-4 rounded-full bg-gray-800">
+      <button onClick={handleCloseClick} className="absolute top-0 right-0 mt-4 mr-4 rounded-full bg-gray-800">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 ">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
         </svg>
