@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { AiFillHome, AiOutlineTeam, AiOutlineUser, AiOutlineHome } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineHome } from 'react-icons/ai';
 import { useContext } from 'react';
 import { RiBankLine, RiHeartsLine, RiBookmark3Line } from "react-icons/ri";
 import { UserAddressContext } from "../../providers/UserAddressProvider";
@@ -7,17 +7,10 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import { DarkModeContext } from "../../providers/DarkModeProvider";
 import DarkModeButton from '../DarkModeButton';
 
-
-
-
-
-
 export default function Nav() {
 
   const { userAddress } = useContext(UserAddressContext);
   const { darkMode } = useContext(DarkModeContext);
-
-
 
   if (typeof userAddress === 'undefined') {
     return (

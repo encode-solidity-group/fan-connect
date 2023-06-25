@@ -24,25 +24,6 @@ body {
   opacity: 0.95;
 }
 
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
-
-/* body {
-  background: linear-gradient(-45deg, #e1ecf8, #c7eafa, #ffffff, #c6f6ff);
-  background-size: 600% 600%;
-  animation: gradient 15s ease infinite;
-  height: 160vh;
-  width: full;
-  color: black;
-} */
-
 @keyframes gradient {
   0% {
     background-position: 0% 80%;

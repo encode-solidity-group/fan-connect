@@ -13,14 +13,13 @@ import { RenderFeed } from '../feed/RenderFeed';
 import Input from '../home/Input';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
 import { toast } from 'react-toastify';
+import { ImSpinner9 } from 'react-icons/im';
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
   const { queryAddress } = useContext(QueryAddressContext);
   const { contractAddress } = useGetContractAddress();
   const { darkMode } = useContext(DarkModeContext);
-  const [success, setSuccess] = useState(false);
-
 
   const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
   const [posts, setPosts] = useState<DocumentData[]>([]);
@@ -58,7 +57,6 @@ const ProfileFeed = () => {
     watch: true
   });
 
-
   useEffect(() => {
     if (daysSubscribed != 0) {
       calcPriceRefetch()
@@ -95,15 +93,12 @@ const ProfileFeed = () => {
 
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: tx?.hash,
-    // onSuccess() {
-    //   setSuccess(true);
-    // }
   });
 
-  //Loading and Succes for Toasts.
+  //Loading and Success for Toasts.
   useEffect(() => {
     if (isLoading) {
-      toast.info('Please wait, processing subscription', {
+      toast.info('Subscribing! Please wait a moment.', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -118,7 +113,7 @@ const ProfileFeed = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success('Subscribed!', {
+      toast.success(`Subscribed for ${daysSubscribed} days!`, {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -129,13 +124,11 @@ const ProfileFeed = () => {
         theme: "light",
       });
     }
-  }, [isSuccess]);
-
+  }, [daysSubscribed, isSuccess]);
 
   if (typeof userAddress === 'undefined') {
     return null; // Return null to hide the component
   }
-
 
   return (
     <div className="min-h-screen mx-auto">
@@ -144,6 +137,7 @@ const ProfileFeed = () => {
       </div>
       {(userAddress !== queryAddress) && isCreator === true &&
         <div className="flex flex-col items-center sm:flex-row justify-center mx-5">
+
           <div className='flex items-center'>
             <select
               value={daysSubscribed}
@@ -158,10 +152,12 @@ const ProfileFeed = () => {
             <div className="mr-6 flex items-center">Price: {ethers.utils.formatUnits(foundPrice)} <SiEthereum /></div>
           </div>
 
-          <div>
-            <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-[#3FA0EF] rounded-md px-2'>Subscribe</button>
+          <div className='flex'>
+            <div>
+              <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-[#3FA0EF] hover:bg-[#3FA0EF] rounded-md px-2'>Subscribe</button>
+            </div>
+            {isLoading && <ImSpinner9 className='animate-spin ml-2 mt-1' />}
           </div>
-
         </div>
       }
       <div className="flex justify-between mb-4 items-center">

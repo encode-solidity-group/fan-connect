@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { UserAddressContext } from '../../providers/UserAddressProvider'
 import useBookmarkedPosts from '../../custom hooks/useBookmarkedPosts';
-import { collection, query, where, getDocs, DocumentData,onSnapshot } from 'firebase/firestore';
+import { collection, query, where, DocumentData,onSnapshot } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { RenderFeed } from '../feed/RenderFeed';
 

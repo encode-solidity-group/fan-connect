@@ -46,19 +46,6 @@ export const About = () => {
                   * Rewards to be decided. Snapshot for rewards taken from moment of contract inception.
                 </div>
               </div>
-              {/* <div className="flex-1 text-center lg:text-left sm:justify-evenly">
-                <motion.div
-                variants={fadeIn("right", 0.3)}
-                initial="hidden"
-                whileInView={'show'}
-                viewport={{ once: false, amount: 0.8 }}
-                className="text-[40px] mb-2">
-                  {inView ? "" : null}
-                </motion.div>
-                <div className="text-sm">
-                  Instant processing of creator payments.
-                </div>
-              </div> */}
             </div>
           </div>
 
