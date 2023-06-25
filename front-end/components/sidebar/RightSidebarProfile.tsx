@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import useUserInfo from '../../custom hooks/useUserInfo';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
 import Link from 'next/link';
 
@@ -14,10 +14,15 @@ export default function RightSidebarProfile({ address }: PageProps) {
 
   const { darkMode } = useContext(DarkModeContext);
 
+  const [isCardVisible, setIsCardVisible] = useState(true); // new state
+
   const handleClose = () => {
     // Handle the close button click here
     console.log('Close button clicked');
+    setIsCardVisible(false); // hide card
   };
+
+  if (!isCardVisible) return null; // do not render if card is not visible
 
   return (
     <div className={`relative opacity-80 hover:opacity-100 p-4 hover:border hover:shadow-md hover:shadow-gray-300 ease-in-out duration-100 ${darkMode ? 'border-gray-500' : 'border-gray-300'} flex flex-col items-center rounded-lg gap-4 text-white`} style={{ backgroundImage: `linear-gradient(to bottom, transparent 10%, rgba(0, 0, 0, 1) 100%), url(${coverPhoto})`, backgroundSize: 'cover', backgroundPosition: 'center bottom' }}>
