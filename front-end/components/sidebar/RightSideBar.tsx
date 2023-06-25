@@ -28,7 +28,7 @@ export const SideBarRight = () => {
       }
 
       const newSearchComponent = (
-        <RightSidebarProfile address={searchValue} />
+        <RightSidebarProfile address={searchValue} removeComponent={removeComponent}/>
       );
 
       // Add the new component at the beginning of the array
