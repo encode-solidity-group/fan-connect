@@ -15,6 +15,8 @@ import UserAddressProvider from '../providers/UserAddressProvider';
 import QueryAddressProvider from '../providers/QueryAddressProvider';
 import DarkModeProvider from '../providers/DarkModeProvider';
 import SearchProvider from '../providers/SearchProvider';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [aurora, auroraTestnet, sepolia], [publicProvider()]
@@ -44,6 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 <DarkModeProvider>
                   <SearchProvider>
                     <Component {...pageProps} />
+                    <ToastContainer />
                   </SearchProvider>
                 </DarkModeProvider>
               </QueryAddressProvider>
