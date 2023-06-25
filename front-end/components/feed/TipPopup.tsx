@@ -12,7 +12,6 @@ interface TipPopupProps {
 const TipPopup: React.FC<TipPopupProps> = ({ handleClose, recAddr }) => {
   const { darkMode } = useContext(DarkModeContext);
   const [tipValue, setTipValue] = useState('0');
-  const [loading, setLoading] = useState(false);
 
   const { sendTransaction, data } = useSendTransaction({
     to: recAddr,
@@ -23,10 +22,9 @@ const TipPopup: React.FC<TipPopupProps> = ({ handleClose, recAddr }) => {
     hash: data?.hash,
   });
 
-  const handleTipSubmit = async (e: React.FormEvent) => {
+  const handleTipSubmit =  (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    await sendTransaction();
+    sendTransaction();
   };
 
   useEffect(() => {
@@ -58,8 +56,6 @@ const TipPopup: React.FC<TipPopupProps> = ({ handleClose, recAddr }) => {
       });
     }
   }, [isSuccess]);
-
-
 
   return (
     <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-75 z-10`}>

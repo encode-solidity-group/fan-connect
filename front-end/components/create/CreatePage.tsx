@@ -4,7 +4,7 @@ import { useContractWrite, useWaitForTransaction } from "wagmi";
 import useGetContractAddress from "../../custom hooks/useGetContractAddress";
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { ethers } from "ethers";
-import { AiOutlineCheckCircle, AiOutlineClose, AiOutlineExclamationCircle } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineExclamationCircle } from "react-icons/ai";
 import { toast } from "react-toastify";
 
 interface SubscriptionFees {
@@ -17,8 +17,6 @@ interface SubscriptionFees {
 export default function CreatePage() {
   const [subscriptionFees, setSubscriptionFees] = useState<SubscriptionFees>({});
   const [error, setError] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const { contractAddress } = useGetContractAddress();
 
@@ -36,31 +34,20 @@ export default function CreatePage() {
 
   const { isLoading, isSuccess } = useWaitForTransaction({
     hash: tx?.hash,
-    onSuccess() {
-      setSuccess(true);
-    }
   });
 
-  // const handleSubmit = () => {
-  //   if (!subscriptionFees['30'] || !subscriptionFees['90'] || !subscriptionFees['180'] || !subscriptionFees['365']) {
-  //     setError(true);
-  //     return
-  //   }
-  //   setError(false);
-  //   createPage();
-  // }
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!subscriptionFees['30'] || !subscriptionFees['90'] || !subscriptionFees['180'] || !subscriptionFees['365']) {
       setError(true);
-      return;
+      return
     }
     setError(false);
     createPage();
-  };
+  }
 
   useEffect(() => {
     if (isLoading) {
-      toast.info('Building your community.', {
+      toast.info('Building your community! Please wait a moment.', {
         position: "top-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -149,17 +136,9 @@ export default function CreatePage() {
           />
         </div>
 
-        {/* {success &&
-          <div className="flex flex-col justify-between lg:flex-row bg-green-400 text-black justify-center items-center rounded-md m-2 px-2">
-            <div>
-              <AiOutlineCheckCircle />
-            </div>
-            &nbsp;You are now a creator!
-            <button className="text-sm align-top lg:mb-4" onClick={() => setSuccess(false)}>
-              <AiOutlineClose />
-            </button>
-          </div>
-        } */}
+        <button onClick={() => handleSubmit()} className="enterButton mx-auto">
+          <div>Start Creating</div>
+        </button>
 
         {error &&
           <div className="flex flex-col justify-between lg:flex-row bg-red-300 text-black justify-center items-center rounded-md m-2 px-2">
@@ -173,15 +152,7 @@ export default function CreatePage() {
           </div>
         }
 
-        {/* {isLoading && <ImSpinner9 className="animate-spin mx-auto" />} */}
-        <div className="flex justify-center items-center">
-
-          {isLoading ? 'Submitting...' : isSuccess ? 'Community Created!' : 'Start Creating!'}
-        </div>
-
-        <button onClick={() => handleSubmit()} className="enterButton mx-auto">
-          <div>Start Creating</div>
-        </button>
+        {isLoading && <ImSpinner9 className="animate-spin mx-auto" />}
 
       </div>
     </div>

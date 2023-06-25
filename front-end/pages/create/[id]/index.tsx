@@ -13,7 +13,6 @@ import { UserAddressContext } from "../../../providers/UserAddressProvider";
 import { QueryAddressContext } from "../../../providers/QueryAddressProvider";
 import { DarkModeContext } from "../../../providers/DarkModeProvider";
 import Nav from "../../../components/landingPage/Nav";
-import TotalSubscribersCard from "../../../components/create/cards/TotalSubscribersCard";
 import SideBarRight from "../../../components/sidebar/RightSideBar";
 import ChangeFeeButton from "../../../components/create/ChangeFeeButton";
 
@@ -57,12 +56,6 @@ export default function FeeGate() {
             <CreatorSubscribers />
           </div>
         }
-        {/* {!isCreator && <RedirectToCreate />}
-        {isCreator === true &&
-          <div className="flex gap-[20px]">
-            <TotalSubscribersCard />
-          </div>
-        } */}
       </div>
       <SideBarRight />
       <Nav />

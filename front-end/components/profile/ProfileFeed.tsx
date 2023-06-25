@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { useContractRead, useContractWrite } from 'wagmi';
+import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
@@ -12,6 +12,8 @@ import { QueryAddressContext } from '../../providers/QueryAddressProvider';
 import { RenderFeed } from '../feed/RenderFeed';
 import Input from '../home/Input';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
+import { toast } from 'react-toastify';
+import { ImSpinner9 } from 'react-icons/im';
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
@@ -40,7 +42,7 @@ const ProfileFeed = () => {
     watch: true,
   });
 
-  const { write: subscribeWrite } = useContractWrite({
+  const { write: subscribeWrite, data: tx } = useContractWrite({
     address: contractAddress,
     abi: contractJson.abi,
     functionName: 'payForSubscription',
@@ -54,6 +56,41 @@ const ProfileFeed = () => {
     args: [queryAddress],
     watch: true
   });
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: tx?.hash
+  })
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.info('Subscribing! Please wait a moment.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(`Subscribed for ${daysSubscribed} days!`, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [daysSubscribed, isSuccess]);
+
 
   useEffect(() => {
     if (daysSubscribed != 0) {
@@ -100,22 +137,27 @@ const ProfileFeed = () => {
         <SubscriptionLength creator={queryAddress} user={userAddress} />
       </div>
       {(userAddress !== queryAddress) && isCreator === true &&
-        <div className="flex justify-center mx-5 items-start">
-          <select
-            value={daysSubscribed}
-            onChange={(event) => handleDaysChange(event)}
-            className="mx-5 mb-16 border rounded-md text-black"
-          >
-            <option value="30">30 Days</option>
-            <option value="90">90 Days</option>
-            <option value="180">180 Days</option>
-            <option value="365">365 Days</option>
-          </select>
+        <div className="flex flex-col items-center sm:flex-row justify-center mx-5">
+          
+          <div className='flex items-center'>
+            <select
+              value={daysSubscribed}
+              onChange={(event) => handleDaysChange(event)}
+              className="m-5 border rounded-md text-black border-gray-500"
+            >
+              <option value="30">30 Days</option>
+              <option value="90">90 Days</option>
+              <option value="180">180 Days</option>
+              <option value="365">365 Days</option>
+            </select>
+            <div className="mr-6 flex items-center">Price: {ethers.utils.formatUnits(foundPrice)} <SiEthereum /></div>
+          </div>
 
-          <div className="mr-6 flex items-center">Price: {ethers.utils.formatUnits(foundPrice)} <SiEthereum /></div>
-
-          <div>
-            <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-[#3FA0EF] rounded-md px-2'>Subscribe</button>
+          <div className='flex'>
+            <div>
+              <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-[#3FA0EF] hover:bg-[#3FA0EF] rounded-md px-2'>Subscribe</button>
+            </div>
+            {isLoading && <ImSpinner9 className='animate-spin ml-2 mt-1' />}
           </div>
 
         </div>
