@@ -6,10 +6,10 @@ import Link from 'next/link';
 
 interface PageProps {
   address: string;
-  onDelete?: () => (removeAddress: string) => void;
+  removeComponent?: () => (removeAddress: string) => void;
 }
 
-export default function RightSidebarProfile({ address, onDelete }: PageProps) {
+export default function RightSidebarProfile({ address, removeComponent }: PageProps) {
   const { username, profilePicture, coverPhoto } = useUserInfo(address);
   const defaultUsername = `${username.slice(0, 4)}...${username.slice(38)}`;
 
@@ -23,8 +23,8 @@ export default function RightSidebarProfile({ address, onDelete }: PageProps) {
   // };
 
   const handleProfileClose = () => {
-    if (onDelete) {
-      onDelete();
+    if (removeComponent) {
+      removeComponent();
     }
   };
 

@@ -52,7 +52,7 @@ export const SideBarRight = () => {
       </div>
       {searchComponents.map((component, index) => (
         <div key={index} className='my-8'>
-          {React.cloneElement(component, { onDelete: () => handleClose(index) })}
+          {React.cloneElement(component, { removeComponent: () => handleClose(index) })}
         </div>
       ))}
     </div>
