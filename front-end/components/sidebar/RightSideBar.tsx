@@ -27,9 +27,16 @@ export const SideBarRight = () => {
     }
   };
 
-  const handleClose = () => {
-    setSearchComponents([]);
+  // const handleClose = (index: number) => {
+  //   setSearchComponents((prevComponents) =>
+  //     prevComponents.filter((_, i) => i !== index)
+  //   );
+  // };
+
+  const handleClose = (index: number) => {
+    setSearchComponents((prevComponents) => prevComponents.filter((_, i) => i !== index));
   };
+
 
   return (
     <div className='hidden lg:block w-[450px] border-l border-gray-500 px-8'>
@@ -48,7 +55,7 @@ export const SideBarRight = () => {
       </div>
       {searchComponents.map((component, index) => (
         <div key={index} className='my-8'>
-          {React.cloneElement(component, { handleClose: handleClose })}
+          {React.cloneElement(component, { onDelete: () => handleClose(index) })}
         </div>
       ))}
     </div>
