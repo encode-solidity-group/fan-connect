@@ -6,17 +6,17 @@ import Link from 'next/link';
 
 interface PageProps {
   address: string;
+  removeComponent: (removeAddress: string) => void;
 }
 
-export default function RightSidebarProfile({ address }: PageProps) {
+export default function RightSidebarProfile({ address, removeComponent }: PageProps) {
   const { username, profilePicture, coverPhoto } = useUserInfo(address);
   const defaultUsername = `${username.slice(0, 4)}...${username.slice(38)}`;
 
   const { darkMode } = useContext(DarkModeContext);
 
   const handleClose = () => {
-    // Handle the close button click here
-    console.log('Close button clicked');
+    removeComponent(address);
   };
 
   return (
