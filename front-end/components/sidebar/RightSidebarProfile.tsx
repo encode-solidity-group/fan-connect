@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/image';
 import useUserInfo from '../../custom hooks/useUserInfo';
 import { useContext } from 'react';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
@@ -6,17 +6,26 @@ import Link from 'next/link';
 
 interface PageProps {
   address: string;
-  removeComponent: (removeAddress: string) => void;
+  onDelete?: () => void;
 }
 
-export default function RightSidebarProfile({ address, removeComponent }: PageProps) {
+export default function RightSidebarProfile({ address, onDelete }: PageProps) {
   const { username, profilePicture, coverPhoto } = useUserInfo(address);
   const defaultUsername = `${username.slice(0, 4)}...${username.slice(38)}`;
 
   const { darkMode } = useContext(DarkModeContext);
 
-  const handleClose = () => {
-    removeComponent(address);
+  // const handleCloseClick = () => {
+  //   if (handleClose) {
+  //     handleClose();
+  //     console.log('Close button clicked');
+  //   }
+  // };
+
+  const handleProfileClose = () => {
+    if (onDelete) {
+      onDelete();
+    }
   };
 
   return (
@@ -28,11 +37,11 @@ export default function RightSidebarProfile({ address, removeComponent }: PagePr
           <div className='text-gray-300'>@{username === address ? defaultUsername : username}</div>
         </div>
       </Link>
-      <button onClick={handleClose} className="absolute top-0 right-0 mt-4 mr-4 rounded-full bg-gray-800">
+      <button onClick={handleProfileClose} className="absolute top-0 right-0 mt-4 mr-4 rounded-full bg-gray-800">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 ">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
         </svg>
       </button>
     </div>
-  )
+  );
 }
