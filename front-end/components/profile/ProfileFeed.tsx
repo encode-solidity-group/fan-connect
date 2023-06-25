@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { onSnapshot, collection, query, orderBy, DocumentData, where } from 'firebase/firestore';
 import { db } from '../../firebase';
-import { useContractRead, useContractWrite } from 'wagmi';
+import { useContractRead, useContractWrite, useWaitForTransaction } from 'wagmi';
 import { BigNumber, ethers } from 'ethers';
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import useGetContractAddress from '../../custom hooks/useGetContractAddress';
@@ -12,12 +12,15 @@ import { QueryAddressContext } from '../../providers/QueryAddressProvider';
 import { RenderFeed } from '../feed/RenderFeed';
 import Input from '../home/Input';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
+import { toast } from "react-toastify";
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
   const { queryAddress } = useContext(QueryAddressContext);
   const { contractAddress } = useGetContractAddress();
   const { darkMode } = useContext(DarkModeContext);
+  const [success, setSuccess] = useState(false);
+
 
   const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
   const [posts, setPosts] = useState<DocumentData[]>([]);
@@ -40,7 +43,7 @@ const ProfileFeed = () => {
     watch: true,
   });
 
-  const { write: subscribeWrite } = useContractWrite({
+  const { write: subscribeWrite, data: tx } = useContractWrite({
     address: contractAddress,
     abi: contractJson.abi,
     functionName: 'payForSubscription',
@@ -89,6 +92,45 @@ const ProfileFeed = () => {
     setDaysSubscribed(selectedValue);
   };
 
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: tx?.hash,
+    // onSuccess() {
+    //   setSuccess(true);
+    // }
+  });
+
+  //Loading and Succes for Toasts.
+  useEffect(() => {
+    if (isLoading) {
+      toast.info('Please wait, processing subscription', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Subscribed!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [isSuccess]);
+
+
   if (typeof userAddress === 'undefined') {
     return null; // Return null to hide the component
   }
@@ -116,6 +158,7 @@ const ProfileFeed = () => {
 
           <div>
             <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-[#3FA0EF] rounded-md px-2'>Subscribe</button>
+            {isLoading ? '' : isSuccess ? '' : ''}
           </div>
 
         </div>
