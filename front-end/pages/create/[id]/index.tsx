@@ -1,5 +1,4 @@
 import { useContractRead } from "wagmi";
-import CreatorFee from "../../../components/create/CreatorFee";
 import { useContext } from "react";
 import contractJson from '../../../SubscriptionJson/SubscriptionService.json';
 import SideBar from "../../../components/sidebar/SideBar";
