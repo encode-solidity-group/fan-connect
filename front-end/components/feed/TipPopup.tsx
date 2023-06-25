@@ -1,7 +1,8 @@
-import React, { useState, useContext } from 'react';
-import { useSendTransaction } from 'wagmi'
-import { ethers } from 'ethers'
+import React, { useState, useContext, useEffect } from 'react';
+import { useSendTransaction, useWaitForTransaction } from 'wagmi';
+import { ethers } from 'ethers';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
+import { toast } from 'react-toastify';
 
 interface TipPopupProps {
   handleClose: () => void;
@@ -11,20 +12,54 @@ interface TipPopupProps {
 const TipPopup: React.FC<TipPopupProps> = ({ handleClose, recAddr }) => {
   const { darkMode } = useContext(DarkModeContext);
   const [tipValue, setTipValue] = useState('0');
+  const [loading, setLoading] = useState(false);
 
-  const { sendTransaction } = useSendTransaction({
+  const { sendTransaction, data } = useSendTransaction({
     to: recAddr,
-    value: ethers.utils.parseEther((tipValue != "" ? tipValue : "0")).toBigInt(),
-  })
+    value: ethers.utils.parseEther((tipValue !== "" ? tipValue : "0")).toBigInt(),
+  });
 
-  const handleTipSubmit = (e: React.FormEvent) => {
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
+  });
+
+  const handleTipSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // add your submit handler logic here
-    sendTransaction();
-    // reset tip value and close the popup after submitting
-    setTipValue('0');
-    handleClose();
-  }
+    setLoading(true);
+    await sendTransaction();
+  };
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.info('Tip Processing! Please wait a moment.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Tip Sent!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [isSuccess]);
+
+
 
   return (
     <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-75 z-10`}>
@@ -36,10 +71,12 @@ const TipPopup: React.FC<TipPopupProps> = ({ handleClose, recAddr }) => {
         </button>
         <label htmlFor="tipValue" className={`mb-2 text-lg ${darkMode ? 'text-white' : 'text-black'}`}>Enter tip value:</label>
         <input type="number" id="tipValue" name="tipValue" className="border-2 border-gray-300 p-2 rounded mb-4" value={tipValue} onChange={(e) => setTipValue(e.target.value)} required />
-        <button type="submit" className="bg-sky-600 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 hover:bg-sky-700 text-base font-medium text-white focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">Submit Tip</button>
+        <button type="submit" className="bg-sky-600 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 hover:bg-sky-700 text-base font-medium text-white focus:outline-none sm:ml-3 sm:w-auto sm:text-sm">
+          {isLoading ? 'Submitting...' : isSuccess ? 'Tip Sent' : 'Submit Tip'}
+        </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
 export default TipPopup;

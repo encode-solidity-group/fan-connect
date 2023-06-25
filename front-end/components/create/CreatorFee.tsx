@@ -1,10 +1,11 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { useContractWrite, useWaitForTransaction } from "wagmi";
 import contractJson from '../../SubscriptionJson/SubscriptionService.json';
 import { ImArrowRight2, ImSpinner9 } from 'react-icons/im';
 import { AiOutlineExclamationCircle, AiOutlineClose, AiOutlineCheckCircle } from 'react-icons/ai';
 import useGetContractAddress from "../../custom hooks/useGetContractAddress";
+import { toast } from 'react-toastify';
 
 export default function CreatorFee() {
   const [new30dayFee, setNew30DayFee] = useState<number | undefined>();
@@ -26,11 +27,49 @@ export default function CreatorFee() {
     }
   };
 
-  const { write, data: tx } = useContractWrite({
+  const { write, data: tx, data } = useContractWrite({
     address: contractAddress,
     abi: contractJson.abi,
     functionName: 'changeManySubscriptionFee',
   })
+
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: tx?.hash,
+    onSuccess() {
+      setSuccess(true);
+    }
+  })
+
+  useEffect(() => {
+    if (isLoading) {
+      toast.info('Changes Processing! Please wait a moment.', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Fees Updated!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [isSuccess]);
+
 
   const handleSubmit = () => {
     const newPrice30Days = new30dayFee !== undefined ? ethers.utils.parseEther(new30dayFee.toString()) : undefined;
@@ -67,12 +106,6 @@ export default function CreatorFee() {
     write({ args: [daysSubscribing, newFees] });
   };
 
-  const { isLoading } = useWaitForTransaction({
-    hash: tx?.hash,
-    onSuccess() {
-      setSuccess(true);
-    }
-  })
 
   return (
     <div className="flex flex-col justify-center items-center space-y-4">
@@ -141,7 +174,7 @@ export default function CreatorFee() {
         </button>
       </div>
 
-      {success &&
+      {/* {success &&
         <div className="flex flex-col justify-between lg:flex-row bg-green-400 text-black justify-center items-center rounded-md m-2 px-2">
           <div>
             <AiOutlineCheckCircle />
@@ -151,7 +184,7 @@ export default function CreatorFee() {
             <AiOutlineClose />
           </button>
         </div>
-      }
+      } */}
 
       {error &&
         <div className="flex flex-col justify-between lg:flex-row bg-red-400 text-black justify-center items-center rounded-md m-2 px-2">
