@@ -1,55 +1,13 @@
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { UserAddressContext } from '../../providers/UserAddressProvider';
-import RightSidebarProfile from './RightSidebarProfile';
+import { SearchContext } from '../../providers/SearchProvider';
 
 export const SideBarRight = () => {
-  const { userAddress } = useContext(UserAddressContext);
-
-  const [searchValue, setSearchValue] = useState('');
-  const [searchComponents, setSearchComponents] = useState<ReactElement<any, any>[]>([]);
+  const { searchValue, searchComponents, setSearchValue, handleSearch, handleKeyPress } = useContext(SearchContext);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
-
-  const handleSearch = () => {
-    if (searchValue.trim() !== '' && userAddress !== undefined) {
-      const existingIndex = searchComponents.findIndex(
-        component => component.props.address === searchValue
-      );
-
-      if (existingIndex !== -1) {
-        // Remove the existing component from the array
-        setSearchComponents(prev => [
-          ...prev.slice(0, existingIndex),
-          ...prev.slice(existingIndex + 1),
-        ]);
-      }
-
-      const newSearchComponent = (
-        <RightSidebarProfile address={searchValue} removeComponent={removeComponent}/>
-      );
-
-      // Add the new component at the beginning of the array
-      setSearchComponents(prev => [newSearchComponent, ...prev]);
-
-      setSearchValue('');
-    }
-  };
-
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  const removeComponent = (removeAddress: string) => {
-    const newSearchComponents = searchComponents.filter(
-      component => component.props.address !== removeAddress
-    );
-    setSearchComponents(newSearchComponents);
-  }
 
   return (
     <div className='hidden lg:block w-[450px] border-l border-gray-500 px-8'>

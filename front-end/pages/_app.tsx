@@ -14,6 +14,7 @@ import '../styles/typewriter.css';
 import UserAddressProvider from '../providers/UserAddressProvider';
 import QueryAddressProvider from '../providers/QueryAddressProvider';
 import DarkModeProvider from '../providers/DarkModeProvider';
+import SearchProvider from '../providers/SearchProvider';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [aurora, auroraTestnet, sepolia], [publicProvider()]
@@ -41,7 +42,9 @@ function MyApp({ Component, pageProps }: AppProps) {
             <UserAddressProvider>
               <QueryAddressProvider>
                 <DarkModeProvider>
-                  <Component {...pageProps} />
+                  <SearchProvider>
+                    <Component {...pageProps} />
+                  </SearchProvider>
                 </DarkModeProvider>
               </QueryAddressProvider>
             </UserAddressProvider>
