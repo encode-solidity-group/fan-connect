@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { SearchContext } from '../../providers/SearchProvider';
+import { UserAddressContext } from '../../providers/UserAddressProvider';
+import RightSidebarProfile from './RightSidebarProfile';
 
 export const SideBarRight = () => {
-  const { searchValue, searchComponents, setSearchValue, handleSearch, handleKeyPress } = useContext(SearchContext);
+  const { userAddress } = useContext(UserAddressContext);
+  const [searchValue, setSearchValue] = useState('');
+  const [searchComponents, setSearchComponents] = useState<ReactElement<any, any>[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
-
   const handleSearch = () => {
     if (searchValue.trim() !== '' && userAddress !== undefined) {
       const newSearchComponent = <RightSidebarProfile address={searchValue} />;
@@ -16,7 +18,6 @@ export const SideBarRight = () => {
       setSearchValue('');
     }
   };
-
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       handleSearch();
@@ -57,5 +58,4 @@ export const SideBarRight = () => {
     </div>
   );
 };
-
 export default SideBarRight;
