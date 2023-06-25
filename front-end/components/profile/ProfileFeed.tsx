@@ -12,14 +12,14 @@ import { QueryAddressContext } from '../../providers/QueryAddressProvider';
 import { RenderFeed } from '../feed/RenderFeed';
 import Input from '../home/Input';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
-import { toast } from 'react-toastify';
-import { ImSpinner9 } from 'react-icons/im';
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
   const { queryAddress } = useContext(QueryAddressContext);
   const { contractAddress } = useGetContractAddress();
   const { darkMode } = useContext(DarkModeContext);
+  const [success, setSuccess] = useState(false);
+
 
   const [foundPrice, setFoundPrice] = useState<BigNumber>(ethers.constants.Zero);
   const [posts, setPosts] = useState<DocumentData[]>([]);
@@ -126,6 +126,45 @@ const ProfileFeed = () => {
     setDaysSubscribed(selectedValue);
   };
 
+  const { isLoading, isSuccess } = useWaitForTransaction({
+    hash: tx?.hash,
+    // onSuccess() {
+    //   setSuccess(true);
+    // }
+  });
+
+  //Loading and Succes for Toasts.
+  useEffect(() => {
+    if (isLoading) {
+      toast.info('Please wait, processing subscription', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('Subscribed!', {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [isSuccess]);
+
+
   if (typeof userAddress === 'undefined') {
     return null; // Return null to hide the component
   }
@@ -153,11 +192,8 @@ const ProfileFeed = () => {
             <div className="mr-6 flex items-center">Price: {ethers.utils.formatUnits(foundPrice)} <SiEthereum /></div>
           </div>
 
-          <div className='flex'>
-            <div>
-              <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-[#3FA0EF] hover:bg-[#3FA0EF] rounded-md px-2'>Subscribe</button>
-            </div>
-            {isLoading && <ImSpinner9 className='animate-spin ml-2 mt-1' />}
+          <div>
+            <button onClick={() => subscribeWrite({ value: BigInt(foundPrice.toString()) })} className='border border-[#3FA0EF] rounded-md px-2'>Subscribe</button>
           </div>
 
         </div>

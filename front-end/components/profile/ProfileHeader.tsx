@@ -37,7 +37,7 @@ export default function ProfileHeader() {
   const defaultUsername = `${username.slice(0, 4)}...${username.slice(38)}`;
 
   if (typeof userAddress === 'undefined') {
-    return null; // Return null to hide the component
+    return null;
   }
 
 
