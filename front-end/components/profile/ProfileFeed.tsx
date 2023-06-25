@@ -12,6 +12,7 @@ import { QueryAddressContext } from '../../providers/QueryAddressProvider';
 import { RenderFeed } from '../feed/RenderFeed';
 import Input from '../home/Input';
 import { DarkModeContext } from '../../providers/DarkModeProvider';
+import { toast } from 'react-toastify';
 
 const ProfileFeed = () => {
   const { userAddress } = useContext(UserAddressContext);
@@ -56,40 +57,6 @@ const ProfileFeed = () => {
     args: [queryAddress],
     watch: true
   });
-
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: tx?.hash
-  })
-
-  useEffect(() => {
-    if (isLoading) {
-      toast.info('Subscribing! Please wait a moment.', {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
-  }, [isLoading]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success(`Subscribed for ${daysSubscribed} days!`, {
-        position: "top-center",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
-  }, [daysSubscribed, isSuccess]);
 
 
   useEffect(() => {
@@ -177,7 +144,6 @@ const ProfileFeed = () => {
       </div>
       {(userAddress !== queryAddress) && isCreator === true &&
         <div className="flex flex-col items-center sm:flex-row justify-center mx-5">
-          
           <div className='flex items-center'>
             <select
               value={daysSubscribed}
