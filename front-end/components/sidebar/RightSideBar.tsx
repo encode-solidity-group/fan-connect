@@ -15,7 +15,7 @@ export const SideBarRight = () => {
 
   const handleSearch = () => {
     if (searchValue.trim() !== '' && userAddress !== undefined) {
-      const newSearchComponent = <RightSidebarProfile address={searchValue} />;
+      const newSearchComponent = <RightSidebarProfile address={searchValue} removeComponent={removeComponent} />;
       setSearchComponents((prev) => [...prev, newSearchComponent]);
       setSearchValue('');
     }
@@ -26,6 +26,13 @@ export const SideBarRight = () => {
       handleSearch();
     }
   };
+
+  const removeComponent = (removeAddress: string) => {
+    const newSearchComponents = searchComponents.filter(
+      component => component.props.address !== removeAddress
+    );
+    setSearchComponents(newSearchComponents);
+  }
 
   return (
     <div className='hidden lg:block w-[450px] border-l border-gray-500 px-8'>
