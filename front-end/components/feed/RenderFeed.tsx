@@ -8,7 +8,7 @@ import FeedFooter from "./FeedFooter";
 export const RenderFeed = (posts: DocumentData[]) => {
   return posts.map((post, index: Key) => (
     <div key={index} className='border border-gray-500 my-5 rounded-md'>
-      <FeedHeader userAddress={post.username} timestamp={post.timestamp.seconds} text={post.text} />
+      <FeedHeader userAddress={post.username} timestamp={post.timestamp?.seconds} text={post.text} />
       {post.image !== undefined &&
         <Link href={post.image} target="_blank" rel="noopener noreferrer">
           <Image src={post.image} alt={post.text} width={1600} height={900} className='aspect-video object-cover' />
