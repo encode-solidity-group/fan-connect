@@ -15,8 +15,25 @@ export const SideBarRight = () => {
 
   const handleSearch = () => {
     if (searchValue.trim() !== '' && userAddress !== undefined) {
-      const newSearchComponent = <RightSidebarProfile address={searchValue} removeComponent={removeComponent} />;
-      setSearchComponents((prev) => [...prev, newSearchComponent]);
+      const existingIndex = searchComponents.findIndex(
+        component => component.props.address === searchValue
+      );
+
+      if (existingIndex !== -1) {
+        // Remove the existing component from the array
+        setSearchComponents(prev => [
+          ...prev.slice(0, existingIndex),
+          ...prev.slice(existingIndex + 1),
+        ]);
+      }
+
+      const newSearchComponent = (
+        <RightSidebarProfile address={searchValue} />
+      );
+
+      // Add the new component at the beginning of the array
+      setSearchComponents(prev => [newSearchComponent, ...prev]);
+
       setSearchValue('');
     }
   };
