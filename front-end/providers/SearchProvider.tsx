@@ -7,10 +7,7 @@ interface SearchContextProps {
   searchComponents: React.ReactElement<any, any>[];
   setSearchValue: React.Dispatch<React.SetStateAction<string>>;
   setSearchComponents: React.Dispatch<React.SetStateAction<React.ReactElement<any, any>[]>>;
-  handleInputChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   handleSearch: () => void;
-  handleKeyPress: (event: React.KeyboardEvent<HTMLInputElement>) => void;
-  removeComponent: (removeAddress: string) => void;
 }
 
 export const SearchContext = createContext<SearchContextProps>({
@@ -18,10 +15,7 @@ export const SearchContext = createContext<SearchContextProps>({
   searchComponents: [],
   setSearchValue: () => { },
   setSearchComponents: () => { },
-  handleInputChange: () => { },
-  handleSearch: () => { },
-  handleKeyPress: () => { },
-  removeComponent: () => { },
+  handleSearch: () => { }
 });
 
 const SearchProvider = ({ children }: React.PropsWithChildren<{}>) => {
@@ -29,10 +23,6 @@ const SearchProvider = ({ children }: React.PropsWithChildren<{}>) => {
 
   const [searchValue, setSearchValue] = useState('');
   const [searchComponents, setSearchComponents] = useState<React.ReactElement<any, any>[]>([]);
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value);
-  };
 
   const handleSearch = () => {
     if (searchValue.trim() !== '' && userAddress !== undefined) {
@@ -49,7 +39,7 @@ const SearchProvider = ({ children }: React.PropsWithChildren<{}>) => {
       }
 
       const newSearchComponent = (
-        <RightSidebarProfile address={searchValue} removeComponent={removeComponent} />
+        <RightSidebarProfile address={searchValue} />
       );
 
       // Add the new component at the beginning of the array
@@ -59,28 +49,12 @@ const SearchProvider = ({ children }: React.PropsWithChildren<{}>) => {
     }
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
-  const removeComponent = (removeAddress: string) => {
-    const newSearchComponents = searchComponents.filter(
-      component => component.props.address !== removeAddress
-    );
-    setSearchComponents(newSearchComponents);
-  };
-
   const value: SearchContextProps = {
     searchValue,
     searchComponents,
     setSearchValue,
     setSearchComponents,
-    handleInputChange,
     handleSearch,
-    handleKeyPress,
-    removeComponent,
   };
 
   return <SearchContext.Provider value={value}>{children}</SearchContext.Provider>;

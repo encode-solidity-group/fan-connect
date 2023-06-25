@@ -1,39 +1,24 @@
-import React, { ReactElement, useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { FiSearch } from 'react-icons/fi';
-import { UserAddressContext } from '../../providers/UserAddressProvider';
-import RightSidebarProfile from './RightSidebarProfile';
+import { SearchContext } from '../../providers/SearchProvider';
 
 export const SideBarRight = () => {
-  const { userAddress } = useContext(UserAddressContext);
-  const [searchValue, setSearchValue] = useState('');
-  const [searchComponents, setSearchComponents] = useState<ReactElement<any, any>[]>([]);
+
+  const { handleSearch, searchComponents, setSearchComponents, searchValue, setSearchValue } = useContext(SearchContext);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
   };
-  const handleSearch = () => {
-    if (searchValue.trim() !== '' && userAddress !== undefined) {
-      const newSearchComponent = <RightSidebarProfile address={searchValue} />;
-      setSearchComponents((prev) => [...prev, newSearchComponent]);
-      setSearchValue('');
-    }
-  };
+
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       handleSearch();
     }
   };
 
-  // const handleClose = (index: number) => {
-  //   setSearchComponents((prevComponents) =>
-  //     prevComponents.filter((_, i) => i !== index)
-  //   );
-  // };
-
   const handleClose = (index: number) => {
     setSearchComponents((prevComponents) => prevComponents.filter((_, i) => i !== index));
   };
-
 
   return (
     <div className='hidden lg:block w-[450px] border-l border-gray-500 px-8'>

@@ -15,13 +15,6 @@ export default function RightSidebarProfile({ address, onDelete }: PageProps) {
 
   const { darkMode } = useContext(DarkModeContext);
 
-  // const handleCloseClick = () => {
-  //   if (handleClose) {
-  //     handleClose();
-  //     console.log('Close button clicked');
-  //   }
-  // };
-
   const handleProfileClose = () => {
     if (onDelete) {
       onDelete();
