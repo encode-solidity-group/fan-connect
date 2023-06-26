@@ -10,6 +10,7 @@ The smart contract is not only about maintaining a ledger of creators and subscr
 
 ## Demo
 
+Click to See our Demo Video
 [![Fan Connect Demo](https://github.com/encode-solidity-group/fan-connect/blob/master/media/Landing%20Page.png?raw=true)](https://drive.google.com/file/d/1vRiYBdA_6QpAXLVCZdnekfldFb7tSZsD/view)
 
 
