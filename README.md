@@ -8,6 +8,11 @@ Our smart contract architecture effectively tracks creators' wallets, their set 
 
 The smart contract is not only about maintaining a ledger of creators and subscribers; it also handles payments, ensuring transparency, security, and accuracy in every transaction made on the platform.
 
+## Demo
+
+[![Fan Connect Demo](https://github.com/encode-solidity-group/fan-connect/blob/master/media/Landing%20Page.png?raw=true)](https://drive.google.com/file/d/1vRiYBdA_6QpAXLVCZdnekfldFb7tSZsD/view)
+
+
 ## Frontend
 
 Our frontend, built with Next.js, a powerful React framework, provides an intuitive and responsive interface. To start the development server, navigate to the `/frontend` directory in your terminal and run `npm run dev`.
