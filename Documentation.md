@@ -20,6 +20,8 @@ Our system is designed with three main components:
 
 Our experience developing with Solidity was enlightening. Solidity is a statically-typed language, which brought a level of safety and predictability to our code. It's specifically designed for the Ethereum Virtual Machine, and allowed us to write high-level code for complex transactions.
 
+Deploying our application on the Aurora Mainnet was an effortless and seamless experience. Thanks to Aurora's robust infrastructure, the deployment process was smooth, and we encountered no major hurdles. The transaction fees on Aurora were impressively low, enabling cost-effective operations, while the lightning-fast transaction speeds ensured optimal user experience.
+
 #### Challenges and Solutions:
 
 - **Challenge:** Learning curve with Solidity and the Ethereum ecosystem, especially dealing with gas prices and understanding how transactions are validated on the Ethereum network.
